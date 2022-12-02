@@ -275,6 +275,99 @@
             font-weight: 600;
             cursor: pointer;
         }
+
+        .row {
+            display: -ms-flexbox;
+            /* IE10 */
+            display: flex;
+            -ms-flex-wrap: wrap;
+            /* IE10 */
+            flex-wrap: wrap;
+            margin: 0 -16px;
+        }
+
+        .col-25 {
+            -ms-flex: 25%;
+            /* IE10 */
+            flex: 25%;
+        }
+
+        .col-50 {
+            -ms-flex: 50%;
+            /* IE10 */
+            flex: 50%;
+        }
+
+        .col-75 {
+            -ms-flex: 75%;
+            /* IE10 */
+            flex: 75%;
+        }
+
+        .col-25,
+        .col-50,
+        .col-75 {
+            padding: 0 16px;
+        }
+
+        .container {
+            background-color: #f2f2f2;
+            padding: 5px 20px 15px 20px;
+            border: 1px solid lightgrey;
+            border-radius: 3px;
+        }
+
+        input[type=text] {
+            width: 100%;
+            margin-bottom: 20px;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            box-sizing: border-box;
+        }
+
+        label {
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .icon-container {
+            margin-bottom: 20px;
+            padding: 7px 0;
+            font-size: 24px;
+        }
+
+        .btn {
+            background-color: #444444;
+            color: white;
+            padding: 12px;
+            margin: 10px 0;
+            border: none;
+            width: 100%;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 17px;
+        }
+
+        .btn:hover {
+            background-color: #45a049;
+        }
+
+        span.price {
+            float: right;
+            color: grey;
+        }
+
+        /* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other (and change the direction - make the "cart" column go on top) */
+        @media (max-width: 800px) {
+            .row {
+                flex-direction: column-reverse;
+            }
+
+            .col-25 {
+                margin-bottom: 20px;
+            }
+        }
     </style>
 </head>
 
@@ -360,13 +453,13 @@
             <div class="comm-table-col">
                 <div class="panel-light-text">Birthday</div>
                 <div class="comm-table-row">
-                    <select id="BirthMonth">
+                    <select id="BirthMonth" disabled>
                         <option value="1"> 1</option>
                     </select>
-                    <select id="BirthDay">
+                    <select id="BirthDay" disabled>
                         <option value="1"> 1</option>
                     </select>
-                    <select id="BirthYear">
+                    <select id="BirthYear" disabled>
                         <option value="1900"> 1900</option>
                     </select>
                 </div>
@@ -486,7 +579,89 @@
             </div>
         </div>
     </div>
+    <!-- CC Modal -->
+    <div class="modal fade cc-modal" id="ccMe" tabindex="-1" role="dialog" aria-labelledby="ccMeLabel"
+        style="opacity:1;visibility: hidden;">
+        <div class="container" style="background-color:#eee;width:100%;opacity:1;">
+            <h3>Payment</h3>
+            <br>
+            <label for="cname">Name on Card</label>
+            <input type="text" id="cname" name="cardname" placeholder="John More Doe">
+
+            <label for="ccnum">Credit card number</label>
+            <input type="text" id="ccnum" name="cardnumber" placeholder="1111-2222-3333-4444">
+
+            <label for="expmonth">Exp Month</label>
+            <input type="text" id="expmonth" name="expmonth" placeholder="09">
+
+            <label for="expyear">Exp Year</label>
+            <input type="text" id="expyear" name="expyear" placeholder="2022">
+
+            <label for="adr"><i class="fa fa-address-card-o"></i> Address</label>
+            <input type="text" id="adr" name="address" placeholder="542 W. 15th Street">
+
+            <label for="city"><i class="fa fa-institution"></i> City</label>
+            <input type="text" id="city" name="city" placeholder="New York">
+
+            <label for="state">State</label>
+            <input type="text" id="state" name="state" placeholder="NY">
+
+            <label for="zip">Zip</label>
+            <input type="text" id="zip" name="zip" placeholder="10001">
+            <div class="comm-table-row" style="justify-content: space-between;width:100%;">
+                <input type="submit" value="Save CC Info" class="btn" style="width:200px;" onclick="updateCC()">
+                <button type="cancel" class="btn" style="width:200px;"
+                    onclick="document.getElementById('ccMe').style.visibility='hidden';return false;">Cancel</button>
+            </div>
+        </div>
+    </div>
 </body>
+<script type="text/javascript">// thanks to https://jsfiddle.net/UselessCode/qm5AG/ as a starting point
+    var icsFile = null;
+    function convertDate(date) {
+        var event = new Date(date).toISOString();
+        event = event.split("T")[0];
+        event = event.split("-");
+        event = event.join("");
+        return event;
+    }
+    function makeIcsFile(date, summary, description) {
+        var test =
+            "BEGIN:VCALENDAR\n" +
+            "CALSCALE:GREGORIAN\n" +
+            "METHOD:PUBLISH\n" +
+            "PRODID:-//Test Cal//EN\n" +
+            "VERSION:2.0\n" +
+            "BEGIN:VEVENT\n" +
+            "UID:test-1\n" +
+            "DTSTART;VALUE=DATE:" +
+            convertDate(date.start) +
+            "\n" +
+            "DTEND;VALUE=DATE:" +
+            convertDate(date.end) +
+            "\n" +
+            "SUMMARY:" +
+            summary +
+            "\n" +
+            "DESCRIPTION:" +
+            description +
+            "\n" +
+            "END:VEVENT\n" +
+            "END:VCALENDAR";
+
+        var data = new File([test], { type: "text/plain" });
+
+        // If we are replacing a previously generated file we need to
+        // manually revoke the object URL to avoid memory leaks.
+        if (icsFile !== null) {
+            window.URL.revokeObjectURL(icsFile);
+        }
+
+        icsFile = window.URL.createObjectURL(data);
+
+        return icsFile;
+    }
+</script>
 <script type="text/javascript">
     const accessToken = localStorage.getItem('accessToken');
     if (!accessToken) {
@@ -543,6 +718,67 @@
             },
         }).then((res) => {
             cancelAppointment(cancelId);
+        });
+    }
+    function getCCData() {
+        document.getElementById("loadMe").style.visibility = "visible";
+        fetch(`${urlBase}/user/creditCard/`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                "authorization": `Bearer ${accessToken}`
+            },
+
+        }).then((res) => res.json()).then((ccData) => {
+            document.getElementById("adr").value = ccData.Address;
+            document.getElementById("cname").value = ccData.CardHolder;
+            document.getElementById("city").value = ccData.City;
+            document.getElementById("expmonth").value = ccData.ExpMonth;
+            document.getElementById("expyear").value = ccData.ExpYear;
+            document.getElementById("ccnum").value = `XXXX-${ccData.LastFour}`;
+            document.getElementById("zip").value = ccData.PostalCode;
+            document.getElementById("state").value = ccData.State;
+
+            document.getElementById('ccMe').style.visibility = 'visible';
+            document.getElementById("loadMe").style.visibility = "hidden";
+        });
+    }
+    function updateCC() {
+        document.getElementById("loadMe").style.visibility = "visible";
+        document.getElementById('ccMe').style.visibility = 'hidden';
+        fetch(`${urlBase}/user/creditCard/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                "authorization": `Bearer ${accessToken}`
+            },
+            body: JSON.stringify({
+                "Address": document.getElementById("adr").value,
+                "CardHolder": document.getElementById("cname").value,
+                "City": document.getElementById("city").value,
+                "ExpMonth": document.getElementById("expmonth").value,
+                "ExpYear": document.getElementById("expyear").value,
+                "CardNumber": document.getElementById("ccnum").value,
+                "PostalCode": document.getElementById("zip").value,
+                "State": document.getElementById("state").value
+            })
+        }).then((res) => res.json()).then((classes) => {
+            getAccountData();
+            document.getElementById("loadMe").style.visibility = "hidden";
+        });
+    }
+    function deleteCC() {
+        document.getElementById("loadMe").style.visibility = "visible";
+        fetch(`${urlBase}/user/creditCard/`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                "authorization": `Bearer ${accessToken}`
+            },
+
+        }).then((res) => res.json()).then((classes) => {
+            getAccountData();
+            document.getElementById("loadMe").style.visibility = "hidden";
         });
     }
     function closeReschedule() {
@@ -685,12 +921,16 @@
             reschedule.style.cursor = "pointer";
             reschedule.onclick = () => rescheduleAppointment(app.ClassId);
 
-            const outlook = document.createElement("div");
-            outlook.innerHTML = "<u>ADD TO ICAL/OUTLOOK</u>";
+            const outlook = document.createElement("a");
+            outlook.innerHTML = "ADD TO ICAL/OUTLOOK";
             outlook.style.cursor = "pointer";
+            outlook.target = "_blank";
+            outlook.href = makeIcsFile({ start: startDateTime, end: endDateTime }, app.Name, app.Location);
 
-            const gmail = document.createElement("div");
-            gmail.innerHTML = "<u>ADD TO GMAIL</u>";
+            const gmail = document.createElement("a");
+            gmail.href = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${app.Name}&dates=${startDateTime.toISOString().replace(/-|:|\.\d\d\d/g, "")}/${endDateTime.toISOString().replace(/-|:|\.\d\d\d/g, "")}&details=${app.Name}&location=${app.Location}&sf=true&output=xml`;
+            gmail.target = "_blank";
+            gmail.innerHTML = "ADD TO GMAIL";
             gmail.style.cursor = "pointer";
 
             schedule.appendChild(cancel);
@@ -751,187 +991,197 @@
             document.getElementById("loadMe").style.visibility = "hidden";
         });
     }
+    function getAccountData() {
+        fetch(`${urlBase}/user/account`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                "authorization": `Bearer ${accessToken}`
+            },
 
-    fetch(`${urlBase}/user/account`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            "authorization": `Bearer ${accessToken}`
-        },
+        }).then(res => res.json()).then(res => {
+            console.log({ res });
+            document.getElementById("userName").innerHTML = `${res.FirstName} ${res.LastName}`;
+            if (res.Membership.length === 0) {
+                document.getElementById("membership").innerHTML = "No Membership Purchased";
+                document.getElementById("passesPanel").style.display = "none";
+                document.getElementById("noPassesPanel").style.display = "block";
 
-    }).then(res => res.json()).then(res => {
-        console.log({ res });
-        document.getElementById("userName").innerHTML = `${res.FirstName} ${res.LastName}`;
-        if (res.Membership.length === 0) {
-            document.getElementById("membership").innerHTML = "No Membership Purchased";
-            document.getElementById("passesPanel").style.display = "none";
-            document.getElementById("noPassesPanel").style.display = "block";
+            } else {
+                document.getElementById("membership").innerHTML = res.Membership[0].Name;
+                document.getElementById("passesPanel").innerHTML = "";
+                res.Membership.forEach(membership => {
+                    const card = document.createElement("div");
+                    const cardTitle = document.createElement("div");
+                    cardTitle.innerHTML = membership.Name;
+                    const cardBody = document.createElement("div");
+                    cardBody.className = "comm-table-row";
 
-        } else {
-            document.getElementById("membership").innerHTML = res.Membership[0].Name;
-            document.getElementById("passesPanel").innerHTML = "";
-            res.Membership.forEach(membership => {
-                const card = document.createElement("div");
-                const cardTitle = document.createElement("div");
-                cardTitle.innerHTML = membership.Name;
-                const cardBody = document.createElement("div");
-                cardBody.className = "comm-table-row";
+                    const remaining = document.createElement("div");
+                    remaining.className = "comm-table-col";
+                    const remainingTitle = document.createElement("div");
+                    remainingTitle.innerHTML = 'Remaining Visits';
+                    remainingTitle.className = "panel-light-text";
+                    const remainingBody = document.createElement('div');
+                    remainingBody.innerHTML = membership.Remaining || 0;
+                    remaining.appendChild(remainingTitle);
+                    remaining.appendChild(remainingBody);
+                    cardBody.appendChild(remaining);
 
-                const remaining = document.createElement("div");
-                remaining.className = "comm-table-col";
-                const remainingTitle = document.createElement("div");
-                remainingTitle.innerHTML = 'Remaining Visits';
-                remainingTitle.className = "panel-light-text";
-                const remainingBody = document.createElement('div');
-                remainingBody.innerHTML = membership.Remaining || 0;
-                remaining.appendChild(remainingTitle);
-                remaining.appendChild(remainingBody);
-                cardBody.appendChild(remaining);
+                    const active = document.createElement("div");
+                    active.className = "comm-table-col";
+                    const activeTitle = document.createElement("div");
+                    activeTitle.innerHTML = 'Active Date';
+                    activeTitle.className = "panel-light-text";
+                    const activeBody = document.createElement('div');
+                    activeBody.innerHTML = membership.ActiveDate || "";
+                    active.appendChild(activeTitle);
+                    active.appendChild(activeBody);
+                    cardBody.appendChild(active);
 
-                const active = document.createElement("div");
-                active.className = "comm-table-col";
-                const activeTitle = document.createElement("div");
-                activeTitle.innerHTML = 'Active Date';
-                activeTitle.className = "panel-light-text";
-                const activeBody = document.createElement('div');
-                activeBody.innerHTML = membership.ActiveDate || "";
-                active.appendChild(activeTitle);
-                active.appendChild(activeBody);
-                cardBody.appendChild(active);
+                    const expire = document.createElement("div");
+                    expire.className = "comm-table-col";
+                    const expireTitle = document.createElement("div");
+                    expireTitle.innerHTML = 'Expiration Date';
+                    expireTitle.className = "panel-light-text";
+                    const expireBody = document.createElement('div');
+                    expireBody.innerHTML = membership.ExpirationDate || "";
+                    expire.appendChild(expireTitle);
+                    expire.appendChild(expireBody);
+                    cardBody.appendChild(expire);
 
-                const expire = document.createElement("div");
-                expire.className = "comm-table-col";
-                const expireTitle = document.createElement("div");
-                expireTitle.innerHTML = 'Expiration Date';
-                expireTitle.className = "panel-light-text";
-                const expireBody = document.createElement('div');
-                expireBody.innerHTML = membership.ExpirationDate || "";
-                expire.appendChild(expireTitle);
-                expire.appendChild(expireBody);
-                cardBody.appendChild(expire);
+                    card.appendChild(cardTitle);
+                    card.appendChild(document.createElement("br"));
+                    card.appendChild(cardBody);
+                    document.getElementById("passesPanel").appendChild(card);
+                    document.getElementById("passesPanel").appendChild(document.createElement("hr"));
 
-                card.appendChild(cardTitle);
-                card.appendChild(document.createElement("br"));
-                card.appendChild(cardBody);
-                document.getElementById("passesPanel").appendChild(card);
-                document.getElementById("passesPanel").appendChild(document.createElement("hr"));
-
-            });
-            document.getElementById("passesPanel").style.display = "block";
-            document.getElementById("noPassesPanel").style.display = "none";
-        }
-        if (res.ClientCreditCard) {
+                });
+                document.getElementById("passesPanel").style.display = "block";
+                document.getElementById("noPassesPanel").style.display = "none";
+            }
+            document.getElementById("payment-info").innerHTML = "";
             const ccContainer = document.createElement("div");
             ccContainer.className = "comm-table-row";
+            if (res.ClientCreditCard?.LastFour !== "") {
+                const ccCardInfo = document.createElement("div");
+                ccCardInfo.className = "comm-table-col";
 
-            const ccCardInfo = document.createElement("div");
-            ccCardInfo.className = "comm-table-col";
+                const ccCardInfoTitle = document.createElement("div");
+                ccCardInfoTitle.innerHTML = `${res.ClientCreditCard.CardType}  -  ${res.ClientCreditCard.CardHolder}`;
+                ccCardInfoTitle.className = "panel-light-text";
 
-            const ccCardInfoTitle = document.createElement("div");
-            ccCardInfoTitle.innerHTML = `${res.ClientCreditCard.CardType}  -  ${res.ClientCreditCard.CardHolder}`;
-            ccCardInfoTitle.className = "panel-light-text";
-
-            const ccCardInfoBody = document.createElement("div");
-            ccCardInfoBody.innerHTML = `XXXX-${res.ClientCreditCard.LastFour}`;
-            ccCardInfo.appendChild(ccCardInfoTitle);
-            ccCardInfo.appendChild(ccCardInfoBody);
-            ccContainer.appendChild(ccCardInfo);
+                const ccCardInfoBody = document.createElement("div");
+                ccCardInfoBody.innerHTML = `XXXX-${res.ClientCreditCard.LastFour}`;
+                ccCardInfo.appendChild(ccCardInfoTitle);
+                ccCardInfo.appendChild(ccCardInfoBody);
+                ccContainer.appendChild(ccCardInfo);
 
 
-            const ccActions = document.createElement("div");
-            ccActions.className = "comm-table-row";
+                const ccActions = document.createElement("div");
+                ccActions.className = "comm-table-row";
 
-            const ccEdit = document.createElement("div");
-            ccEdit.className = "comm-table-col";
-            ccEdit.innerHTML = "EDIT"
-            ccEdit.style.cursor = "pointer";
+                const ccEdit = document.createElement("div");
+                ccEdit.className = "comm-table-col";
+                ccEdit.innerHTML = "EDIT"
+                ccEdit.style.cursor = "pointer";
+                ccEdit.onclick = () => getCCData();
 
-            const ccDelete = document.createElement("div");
-            ccDelete.className = "comm-table-col";
-            ccDelete.innerHTML = "DELETE";
-            ccDelete.style.cursor = "pointer";
+                const ccDelete = document.createElement("div");
+                ccDelete.className = "comm-table-col";
+                ccDelete.innerHTML = "DELETE";
+                ccDelete.style.cursor = "pointer";
+                ccDelete.onclick = () => deleteCC();
 
-            const ccSpacer = document.createElement("div");
-            ccSpacer.innerHTML = "&nbsp;&nbsp;|&nbsp;&nbsp;";
+                const ccSpacer = document.createElement("div");
+                ccSpacer.innerHTML = "&nbsp;&nbsp;|&nbsp;&nbsp;";
 
-            ccActions.appendChild(ccEdit);
-            ccActions.appendChild(ccSpacer);
-            ccActions.appendChild(ccDelete);
-            ccContainer.appendChild(ccActions);
-
+                ccActions.appendChild(ccEdit);
+                ccActions.appendChild(ccSpacer);
+                ccActions.appendChild(ccDelete);
+                ccContainer.appendChild(ccActions);
+                /*
+                ClientCreditCard": {
+                            "Address": null,
+                            "CardHolder": null,
+                            "CardNumber": "************7655",
+                            "CardType": "Visa",
+                            "City": null,
+                            "ExpMonth": "01",
+                            "ExpYear": "2027",
+                            "LastFour": "7655",
+                            "PostalCode": null,
+                            "State": "0"
+                        },
+                */
+            } else {
+                const ccAddNew = document.createElement("div");
+                ccAddNew.className = "comm-table-col";
+                ccAddNew.innerHTML = "ADD CC";
+                ccAddNew.style.cursor = "pointer";
+                // ccAddNew.onclick = () => addNew();
+                ccContainer.appendChild(ccAddNew);
+            }
             document.getElementById("payment-info").appendChild(ccContainer);
-            /*
-            ClientCreditCard": {
-                        "Address": null,
-                        "CardHolder": null,
-                        "CardNumber": "************7655",
-                        "CardType": "Visa",
-                        "City": null,
-                        "ExpMonth": "01",
-                        "ExpYear": "2027",
-                        "LastFour": "7655",
-                        "PostalCode": null,
-                        "State": "0"
-                    },
-            */
-        }
-        const birthDate = res.BirthDate.split("T")[0];
-        const arrayBirthDate = birthDate.split("-");
-        const birthMonth = document.getElementById("BirthMonth");
-        birthMonth.innerHTML = "";
-        for (i = 1; i <= 12; i++) {
-            const option = document.createElement("option");
-            option.value = i;
-            option.text = i;
-            option.selected = i == arrayBirthDate[1];
-            birthMonth.appendChild(option);
-        }
-        const birthDay = document.getElementById("BirthDay");
-        birthDay.innerHTML = "";
-        let maxDays = 31;
-        if ([4, 6, 9, 11].includes(arrayBirthDate[1])) {
-            maxDays = 30;
-        } else if (arrayBirthDate[1] == 2) {
-            maxDays = 28;
-        }
-        for (i = 1; i <= maxDays; i++) {
-            const option = document.createElement("option");
-            option.value = i;
-            option.text = i;
-            option.selected = i == arrayBirthDate[2];
-            birthDay.appendChild(option);
-        }
-        const birthYear = document.getElementById("BirthYear");
-        birthYear.innerHTML = "";
-        const currentYear = new Date().getFullYear();
-        for (i = currentYear; i >= 1900; i--) {
-            const option = document.createElement("option");
-            option.value = i;
-            option.text = i;
-            option.selected = i == arrayBirthDate[0];
-            birthYear.appendChild(option);
-        }
+            const birthDate = res.BirthDate.split("T")[0];
+            const arrayBirthDate = birthDate.split("-");
+            const birthMonth = document.getElementById("BirthMonth");
+            birthMonth.innerHTML = "";
+            for (i = 1; i <= 12; i++) {
+                const option = document.createElement("option");
+                option.value = i;
+                option.text = i;
+                option.selected = i == arrayBirthDate[1];
+                birthMonth.appendChild(option);
+            }
+            const birthDay = document.getElementById("BirthDay");
+            birthDay.innerHTML = "";
+            let maxDays = 31;
+            if ([4, 6, 9, 11].includes(arrayBirthDate[1])) {
+                maxDays = 30;
+            } else if (arrayBirthDate[1] == 2) {
+                maxDays = 28;
+            }
+            for (i = 1; i <= maxDays; i++) {
+                const option = document.createElement("option");
+                option.value = i;
+                option.text = i;
+                option.selected = i == arrayBirthDate[2];
+                birthDay.appendChild(option);
+            }
+            const birthYear = document.getElementById("BirthYear");
+            birthYear.innerHTML = "";
+            const currentYear = new Date().getFullYear();
+            for (i = currentYear; i >= 1900; i--) {
+                const option = document.createElement("option");
+                option.value = i;
+                option.text = i;
+                option.selected = i == arrayBirthDate[0];
+                birthYear.appendChild(option);
+            }
 
-        document.getElementById("FirstName").innerHTML = res.FirstName;
-        document.getElementById("LastName").innerHTML = res.LastName;
+            document.getElementById("FirstName").innerHTML = res.FirstName;
+            document.getElementById("LastName").innerHTML = res.LastName;
 
-        document.getElementById("AddressLine1").innerHTML = res.AddressLine1;
-        document.getElementById("City").innerHTML = res.City;
-        document.getElementById("State").innerHTML = res.State;
-        document.getElementById("PostalCode").innerHTML = res.PostalCode;
-        document.getElementById("Country").innerHTML = res.Country;
+            document.getElementById("AddressLine1").innerHTML = res.AddressLine1;
+            document.getElementById("City").innerHTML = res.City;
+            document.getElementById("State").innerHTML = res.State;
+            document.getElementById("PostalCode").innerHTML = res.PostalCode;
+            document.getElementById("Country").innerHTML = res.Country;
 
-        document.getElementById("Email").innerHTML = res.Email;
-        document.getElementById("MobilePhone").innerHTML = res.MobilePhone;
-        document.getElementById("SendAccountEmails").checked = !!res.SendAccountEmails;
-        document.getElementById("SendAccountTexts").checked = !!res.SendAccountTexts;
-        document.getElementById("SendPromotionalEmails").checked = !!res.SendPromotionalEmails;
-        document.getElementById("SendPromotionalTexts").checked = !!res.SendPromotionalTexts;
-        document.getElementById("SendScheduleEmails").checked = !!res.SendScheduleEmails;
-        document.getElementById("SendScheduleTexts").checked = !!res.SendScheduleTexts;
+            document.getElementById("Email").innerHTML = res.Email;
+            document.getElementById("MobilePhone").innerHTML = res.MobilePhone;
+            document.getElementById("SendAccountEmails").checked = !!res.SendAccountEmails;
+            document.getElementById("SendAccountTexts").checked = !!res.SendAccountTexts;
+            document.getElementById("SendPromotionalEmails").checked = !!res.SendPromotionalEmails;
+            document.getElementById("SendPromotionalTexts").checked = !!res.SendPromotionalTexts;
+            document.getElementById("SendScheduleEmails").checked = !!res.SendScheduleEmails;
+            document.getElementById("SendScheduleTexts").checked = !!res.SendScheduleTexts;
 
-        updateAppointments();
-    })
+            updateAppointments();
+        })
+    }
+    getAccountData();
     function openTab(evt, tabName) {
         // Declare all variables
         var i, tabcontent, tablinks;
