@@ -153,7 +153,6 @@
         const urlBase = "https://formula-fig-staging.cyclic.app";
         function validateForm() {
             event.preventDefault();
-            console.log("VALIDATE")
             var uname = document.forms["myForm"]["uname"].value;
             var psw = document.forms["myForm"]["psw"].value;
             if (uname == "") {
@@ -164,7 +163,6 @@
                 alert("Password must be filled out");
                 return false;
             }
-            console.log({ uname, psw });
             fetch(`${urlBase}/auth/login`, {
                 method: 'POST',
                 headers: {
@@ -172,12 +170,12 @@
                 },
                 body: JSON.stringify({ email: uname, password: psw })
             }).then(res => res.json()).then(res => {
-                console.log({ res });
-                // if (res.success) {
-                //     window.location.href = `${urlBase}/public/`;
-                // }
+                localStorage.setItem("accessToken", res.accessToken);
+                if (res.accessToken) {
+                    window.location.href = '/public/dashboard.html';
+                }
+                document.getElementById('id01').style.display = 'none';
             })
-            document.getElementById('id01').style.display = 'none';
         }
     </script>
 </head>

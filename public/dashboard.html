@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Roboto:300,400);
+
+        body {
+            height: 100%;
+            padding: 0px;
+            margin: 0px;
+            font-family: 'Roboto', sans-serif !important;
+            font-size: 1em;
+            background-color: #eee;
+        }
+
+        h1 {
+            font-family: 'Roboto', sans-serif;
+            font-size: 30px;
+            color: #999;
+            font-weight: 300;
+            margin-bottom: 55px;
+            margin-top: 45px;
+            text-transform: uppercase;
+        }
+
+        h1 small {
+            display: block;
+            font-size: 18px;
+            text-transform: none;
+            letter-spacing: 1.5px;
+            margin-top: 12px;
+        }
+
+        .row {
+            max-width: 950px;
+            margin: 0 auto;
+        }
+
+        .btn {
+            white-space: normal;
+        }
+
+        .button-wrap {
+            position: relative;
+            text-align: center;
+        }
+
+        .button-wrap.btn {
+            font-family: 'Roboto', sans-serif;
+            box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.5);
+            border-radius: 0px;
+            border-color: #222;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-size: 1.1em;
+            font-weight: 400;
+            letter-spacing: 1px;
+
+        }
+
+        small.button-wrap.btn {
+            font-size: 0.8rem;
+            letter-spacing: normal;
+            text-transform: none;
+        }
+
+
+        /** SPINNER CREATION **/
+
+        .loader {
+            position: relative;
+            text-align: center;
+            margin: 15px auto 35px auto;
+            z-index: 9999;
+            display: block;
+            width: 80px;
+            height: 80px;
+            border: 10px solid rgba(0, 0, 0, .3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+            -webkit-animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to {
+                -webkit-transform: rotate(360deg);
+            }
+        }
+
+        @-webkit-keyframes spin {
+            to {
+                -webkit-transform: rotate(360deg);
+            }
+        }
+
+
+        /** MODAL STYLING **/
+        .modal {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            position: absolute;
+            background-color: black;
+            opacity: .9;
+            top: 0;
+        }
+
+        .modal-content {
+            border-radius: 0px;
+            box-shadow: 0 0 20px 8px rgba(0, 0, 0, 0.7);
+            width: 100px;
+        }
+
+        .modal-backdrop.show {
+            opacity: 0.75;
+        }
+
+        p.loader-txt {
+            font-size: 13px;
+            color: #666;
+
+        }
+
+        p.loader-txt p.small {
+            font-size: 11.5px;
+            color: #999;
+        }
+
+
+        #output {
+            padding: 25px 15px;
+            background: #222;
+            border: 1px solid #222;
+            max-width: 350px;
+            margin: 35px auto;
+            font-family: 'Roboto', sans-serif !important;
+
+        }
+
+        #output p.subtle {
+            color: #555;
+            font-style: italic;
+            font-family: 'Roboto', sans-serif !important;
+        }
+
+        #output h4 {
+            font-weight: 300 !important;
+            font-size: 1.1em;
+            font-family: 'Roboto', sans-serif !important;
+        }
+
+        #output p {
+            font-family: 'Roboto', sans-serif !important;
+            font-size: 0.9em;
+
+        }
+
+        #output p b {
+            text-transform: uppercase;
+            text-decoration: underline;
+        }
+
+        div.indent {
+            text-indent: 25px;
+        }
+
+        div.indent2x {
+            text-indent: 50px;
+        }
+
+        /* Style the tab */
+        .tab {
+            overflow: hidden;
+        }
+
+        /* Style the buttons that are used to open the tab content */
+        .tab button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+        }
+
+        /* Change background color of buttons on hover */
+        .tab button:hover {
+            background-color: #ddd;
+        }
+
+        /* Create an active/current tablink class */
+        .tab button.active {
+            border-bottom: 2px solid black;
+        }
+
+        /* Style the tab content */
+        .tabcontent {
+            display: none;
+        }
+
+        .comm-table-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .comm-table-col {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .panel {
+            width: auto;
+            left: 0px;
+            right: 0px;
+            max-width: 100%;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 0px;
+            padding: 20px 50px;
+            margin: 10px 100px;
+        }
+
+        .reschedule-modal {
+            width: auto;
+            left: 0px;
+            right: 0px;
+            max-width: 100%;
+            height: auto;
+            top: 0px;
+            bottom: 0px;
+            max-height: 100%;
+
+            border-radius: 0px;
+            padding: 100px;
+            visibility: hidden;
+
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            position: absolute;
+            background-color: black;
+            opacity: 1;
+            clear: both;
+        }
+
+        .panel-light-text {
+            color: #999;
+            font-size: small;
+        }
+
+        select {
+            height: 30px;
+            margin-right: 15px;
+            border: none;
+        }
+
+        #rescheduleModal {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+        }
+
+        .close {
+            font-size: 45px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="panel" style="padding-bottom: 0; margin-top: 50px;">
+        <div class="panel-light-text">YOUR ACCOUNT</div>
+        <hr>
+        <div class="comm-table-row">
+            <div class="comm-table-col">
+                <span id="userName">User</span>
+                <span id="membership" class="panel-light-text">No Membership Purchased</span>
+            </div>
+            <div style="cursor: pointer;" onclick="logout()"><u>Log out</u></div>
+        </div>
+        <hr>
+        <div class="tab">
+            <button class="tablinks active" onclick="openTab(event, 'Appointments')">Appointments</button>
+            <button class="tablinks" onclick="openTab(event, 'History')">History</button>
+            <button class="tablinks" onclick="openTab(event, 'Passes')">Passes</button>
+            <button class="tablinks" onclick="openTab(event, 'Purchases')">Purchases</button>
+            <button class="tablinks" onclick="openTab(event, 'Orders')">Order History</button>
+            <button class="tablinks" onclick="openTab(event, 'Account')">Account Info</button>
+        </div>
+    </div>
+    <div id="Appointments" class="tabcontent" style="display:block;">
+        <div class="panel" id="AppointmentsPanel" style="display:none;">APPOINTMENTS</div>
+        <div class="panel" id="noAppointments">NO APPOINTMENTS</div>
+    </div>
+    <div id="History" class="tabcontent">
+        <div class="panel" id="HistoryPanel" style="display:none;">HISTORY</div>
+        <div class="panel" id="noHistory">NO History</div>
+    </div>
+    <div id="Passes" class="tabcontent">
+        <div class="panel" id="passesPanel" style="display:none;"> </div>
+        <div class="panel" id="noPassesPanel">
+            <p>Time to buy a pass or autopay?</p>
+            <p style="font-size: small;">Your passes and autopays will show up here, ready for use.</p>
+        </div>
+    </div>
+    <div id="Purchases" class="tabcontent">
+        <div class="panel" id="purchasesPanel" style="display:none;"></div>
+        <div class="panel" id="noPurchasesPanel">
+            <p>Looks like you haven't purchased anything yet.</p>
+            <p style="font-size: small;">Your past purchases will be saved here for easy reference.</p>
+        </div>
+    </div>
+    <div id="Orders" class="tabcontent">
+        <div class="panel" id="orderPanel" style="display:none;"></div>
+        <div class="panel" id="noOrderPanel">
+            <p>Looks like you haven't ordered anything yet.</p>
+            <p style="font-size: small;">Your past orders will be saved here for easy reference.</p>
+        </div>
+    </div>
+    <div id="Account" class="tabcontent">
+        <div class="panel">
+            <h5>BASIC INFO</h5>
+            <hr>
+            <div class="comm-table-col">
+                <div class="panel-light-text">FIRST NAME</div>
+                <span id="FirstName"></span>
+            </div>
+            <hr>
+            <div class="comm-table-col">
+                <div class="panel-light-text">LAST NAME</div>
+                <span id="LastName"></span>
+            </div>
+            <hr>
+            <div class="comm-table-col">
+                <div class="panel-light-text">Email</div>
+                <span id="Email"></span>
+            </div>
+            <hr>
+            <div class="comm-table-col">
+                <div class="panel-light-text">Password</div>
+                <span id="Password">********</span>
+            </div>
+            <hr>
+            <div class="comm-table-col">
+                <div class="panel-light-text">Preferred Location</div>
+                <span id="Location">&nbsp;</span>
+            </div>
+            <hr>
+            <div class="comm-table-col">
+                <div class="panel-light-text">Birthday</div>
+                <div class="comm-table-row">
+                    <select id="BirthMonth">
+                        <option value="1"> 1</option>
+                    </select>
+                    <select id="BirthDay">
+                        <option value="1"> 1</option>
+                    </select>
+                    <select id="BirthYear">
+                        <option value="1900"> 1900</option>
+                    </select>
+                </div>
+            </div>
+            <hr>
+        </div>
+
+        <div class="panel">
+            <h5>PAYMENT INFO</h5>
+            <hr>
+            <div id="payment-info"></div>
+            <hr>
+        </div>
+
+
+
+        <div class="panel">
+            <h5>CONTACT INFO</h5>
+            <hr>
+            <div class="comm-table-col">
+                <div class="panel-light-text">ADDRESS</div>
+                <span id="AddressLine1"></span>
+            </div>
+            <hr>
+            <div class="comm-table-col">
+                <div class="panel-light-text">CITY</div>
+                <span id="City"></span>
+            </div>
+            <hr>
+            <div class="comm-table-col">
+                <div class="panel-light-text">STATE</div>
+                <span id="State"></span>
+            </div>
+            <hr>
+            <div class="comm-table-col">
+                <div class="panel-light-text">COUNTRY</div>
+                <span id="Country"></span>
+            </div>
+            <hr>
+            <div class="comm-table-col">
+                <div class="panel-light-text">POSTAL CODE</div>
+                <span id="PostalCode"></span>
+            </div>
+            <hr>
+            <div class="comm-table-col">
+                <div class="panel-light-text">MOBILE PHONE</div>
+                <span id="MobilePhone"></span>
+            </div>
+            <hr>
+        </div>
+
+        <div class="panel">
+            <h5>WHAT DO YOU WANT TO HEAR ABOUT?</h5>
+            <hr>
+            <div class="comm-table-row">
+                <div class="comm-table-col">
+                    <div>ACCOUNT MANAGEMENT</div>
+                    <div>Subscribe to reminders & notifications</div>
+                </div>
+                <div class="comm-table-row">
+                    <div>EMAIL</div>
+                    <input type="checkbox" id="SendAccountEmails" name="SendAccountEmails" value="false" disabled>
+                    <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                    <div>SMS</div>
+                    <input type="checkbox" id="SendAccountTexts" name="SendAccountTexts" value="false" disabled>
+
+                </div>
+            </div>
+            <hr>
+            <div class="comm-table-row">
+                <div class="comm-table-col">
+                    <div>SCHEDULE UPDATES</div>
+                    <div>A heads-up before bookings or when you schedule changes</div>
+                </div>
+                <div class="comm-table-row">
+                    <div>EMAIL</div>
+                    <input type="checkbox" id="SendScheduleEmails" name="SendScheduleEmails" value="false" disabled>
+                    <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                    <div>SMS</div>
+                    <input type="checkbox" id="SendScheduleTexts" name="SendScheduleTexts" value="false" disabled>
+                </div>
+            </div>
+            <hr>
+            <div class="comm-table-row">
+                <div class="comm-table-col">
+                    <div>ACCOUNT MANAGEMENT</div>
+                    <div>Subscribe to reminders & notifications</div>
+                </div>
+                <div class="comm-table-row">
+                    <div>EMAIL</div>
+                    <input type="checkbox" id="SendPromotionalEmails" name="SendPromotionalEmails" value="false"
+                        disabled>
+                    <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </div>
+                    <div>SMS</div>
+                    <input type="checkbox" id="SendPromotionalTexts" name="SendPromotionalTexts" value="false" disabled>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="loadMe" tabindex="-1" role="dialog" aria-labelledby="loadMeLabel">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <div class="loader"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Reschedule Modal -->
+    <div class="modal fade reschedule-modal" id="rescheduleMe" tabindex="-1" role="dialog"
+        aria-labelledby="rescheduleMeLabel">
+        <div class="modal-dialog modal-sm" role="document" style="background-color:#eee;width:100%;">
+            <div class="modal-content" style="width:100%;padding:50px;box-sizing: border-box;">
+                <div id="rescheduleModal" class="modal-body text-center"></div>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+    const accessToken = localStorage.getItem('accessToken');
+    if (!accessToken) {
+        window.location.href = `/public/login.html`;
+    }
+    document.getElementById("loadMe").style.visibility = "visible";
+    const urlBase = "https://formula-fig-staging.cyclic.app";
+    function formatAMPM(date) {
+        var hours = date.getHours();
+        var minutes = date.getMinutes();
+        var ampm = hours >= 12 ? 'pm' : 'am';
+        hours = hours % 12;
+        hours = hours ? hours : 12; // the hour '0' should be '12'
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        var strTime = hours + ':' + minutes + ' ' + ampm;
+        return strTime;
+    }
+    function padTo2Digits(num) {
+        return num.toString().padStart(2, '0');
+    }
+
+    function formatDate(date) {
+        const dayOfWeekName = new Date(date).toLocaleString(
+            'default', { weekday: 'long' }
+        );
+        return [
+            dayOfWeekName,
+            [
+                padTo2Digits(date.getMonth() + 1),
+                padTo2Digits(date.getDate()),
+                date.getFullYear(),
+            ].join('/'),
+        ].join(' ');
+    }
+    function cancelAppointment(dataId) {
+        fetch(`${urlBase}/user/visit/${dataId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                "authorization": `Bearer ${accessToken}`
+            },
+        }).then((res) => {
+            updateAppointments();
+        });
+    }
+    function processReschedule(cancelId, classId) {
+        document.getElementById("loadMe").style.visibility = "visible";
+        closeReschedule();
+        fetch(`${urlBase}/user/visit/${classId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                "authorization": `Bearer ${accessToken}`
+            },
+        }).then((res) => {
+            cancelAppointment(cancelId);
+        });
+    }
+    function closeReschedule() {
+        document.getElementById("rescheduleMe").style.visibility = "hidden";
+    }
+    function rescheduleAppointment(dataId) {
+        document.getElementById("loadMe").style.visibility = "visible";
+
+        fetch(`${urlBase}/user/reschedule/${dataId}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                "authorization": `Bearer ${accessToken}`
+            },
+
+        }).then((res) => res.json()).then((classes) => {
+            document.getElementById("loadMe").style.visibility = "hidden";
+            const rescheduleModal = document.getElementById("rescheduleModal");
+            rescheduleModal.innerHTML = '<div class="comm-table-row" style="width:100%;"><div>Select your appointment:</div><span class="close" onclick="closeReschedule()">&times;</span></div><br>';
+            rescheduleModal.style.opacity = 1;
+            classDates = {};
+            classes.map((classData) => {
+                const [date, time] = classData.StartDateTime.split('T');
+                if (Object.keys(classDates).includes(date)) {
+                    classDates[date].push(classData);
+                } else {
+                    classDates[date] = [classData];
+                }
+            });
+
+            Object.keys(classDates).map((dateKey) => {
+                const dateDiv = document.createElement('div');
+                // dateDiv.style.width = '100%';
+                dateDiv.style.marginBottom = '15px';
+                const dateTitle = document.createElement('div');
+                dateTitle.innerHTML = formatDate(new Date(`${dateKey}T00:00:00`));
+                dateTitle.className = "panel-light-text";
+                dateDiv.appendChild(dateTitle);
+
+                const dateContainer = document.createElement('div');
+                dateContainer.className = "comm-table-row";
+
+                classDates[dateKey].map((appt) => {
+                    const apptDiv = document.createElement('div');
+                    apptDiv.className = "comm-table-col";
+                    apptDiv.style.backgroundColor = "#fff";
+                    apptDiv.style.border = "1px solid black";
+                    apptDiv.style.padding = "10px 30px";
+                    apptDiv.style.textTransform = "uppercase";
+                    apptDiv.style.alignItems = "center";
+                    apptDiv.style.cursor = "pointer";
+                    apptDiv.onclick = () => processReschedule(dataId, appt.ClassId);
+
+                    const time = document.createElement('div');
+                    time.innerHTML = formatAMPM(new Date(appt.StartDateTime));
+
+                    const name = document.createElement('div');
+                    name.innerHTML = appt.Name;
+                    name.style.fontSize = "12px";
+
+                    apptDiv.appendChild(time);
+                    apptDiv.appendChild(name);
+                    dateContainer.appendChild(apptDiv);
+                });
+                dateDiv.appendChild(dateContainer);
+                rescheduleModal.appendChild(dateDiv);
+            })
+
+            document.getElementById("rescheduleMe").style.visibility = "visible";
+        });
+    }
+    function appointmentCard(app) {
+        const startDateTime = new Date(app.StartDate);
+        const inFuture = startDateTime > new Date();
+
+        const endDateTime = new Date(app.EndDate);
+
+        const container = document.createElement("div");
+        container.className = "comm-table-row";
+
+        const appointment = document.createElement("div");
+        appointment.className = "comm-table-col";
+        appointment.style.width = "45%";
+
+        const date = document.createElement("div");
+        date.innerHTML = formatDate(startDateTime);
+        appointment.appendChild(date);
+
+        const time = document.createElement("div");
+        time.innerHTML = formatAMPM(startDateTime) + " - " + formatAMPM(endDateTime);
+        time.className = "panel-light-text";
+        appointment.appendChild(time);
+
+        const location = document.createElement("div");
+        location.className = "comm-table-row";
+        location.style.marginTop = "20px";
+
+        const what = document.createElement("div");
+        what.className = "comm-table-col";
+        const whatTitle = document.createElement("div");
+        whatTitle.innerHTML = "WHAT";
+        whatTitle.className = "panel-light-text";
+        const whatContents = document.createElement("div");
+        whatContents.innerHTML = app.Name;
+
+        what.appendChild(whatTitle);
+        what.appendChild(whatContents);
+        location.appendChild(what);
+
+        const where = document.createElement("div");
+        where.className = "comm-table-col";
+        const whereTitle = document.createElement("div");
+        whereTitle.innerHTML = "WHERE";
+        whereTitle.className = "panel-light-text";
+        where.style.marginLeft = "20px";
+
+        const whereContents = document.createElement("div");
+        whereContents.innerHTML = app.Location;
+
+        where.appendChild(whereTitle);
+        where.appendChild(whereContents);
+        location.appendChild(where);
+
+        appointment.appendChild(location);
+        container.appendChild(appointment);
+
+        const schedule = document.createElement("div");
+        schedule.className = "comm-table-col";
+        schedule.style.width = "45%";
+        schedule.style.alignItems = "flex-end";
+        if (inFuture) {
+            const cancel = document.createElement("div");
+            cancel.innerHTML = "<u>Cancel</u>";
+            cancel.style.cursor = "pointer";
+            cancel.setAttribute("data-id", app.ClassId);
+            cancel.onclick = () => cancelAppointment(app.ClassId);
+
+            const reschedule = document.createElement("div");
+            reschedule.innerHTML = "<u>Reschedule</u>";
+            reschedule.style.cursor = "pointer";
+            reschedule.onclick = () => rescheduleAppointment(app.ClassId);
+
+            const outlook = document.createElement("div");
+            outlook.innerHTML = "<u>ADD TO ICAL/OUTLOOK</u>";
+            outlook.style.cursor = "pointer";
+
+            const gmail = document.createElement("div");
+            gmail.innerHTML = "<u>ADD TO GMAIL</u>";
+            gmail.style.cursor = "pointer";
+
+            schedule.appendChild(cancel);
+            schedule.appendChild(reschedule);
+            schedule.appendChild(document.createElement("br"));
+            schedule.appendChild(outlook);
+            schedule.appendChild(gmail);
+        } else {
+            const bookAgain = document.createElement("div");
+            bookAgain.innerHTML = "<u>Book Again</u>";
+            bookAgain.style.cursor = "pointer";
+
+            schedule.appendChild(bookAgain);
+        }
+        container.appendChild(schedule);
+        return container;
+    };
+    const updateAppointments = () => {
+        fetch(`${urlBase}/user/visits`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                "authorization": `Bearer ${accessToken}`
+            },
+
+        }).then(res => res.json()).then(({ Appointments, History }) => {
+            const appointmentsPanel = document.getElementById("AppointmentsPanel");
+            const noAppointments = document.getElementById("noAppointments");
+
+            const historyPanel = document.getElementById("HistoryPanel");
+            const noHistory = document.getElementById("noHistory");
+
+            if (Appointments.length === 0) {
+                noAppointments.style.display = "block";
+                appointmentsPanel.style.display = "none";
+            } else {
+                appointmentsPanel.innerHTML = "";
+                for (let i = 0; i < Appointments.length; i++) {
+                    appointmentsPanel.appendChild(appointmentCard(Appointments[i]));
+                    appointmentsPanel.appendChild(document.createElement("hr"));
+                }
+
+                noAppointments.style.display = "none";
+                appointmentsPanel.style.display = "block";
+            }
+            if (History.length === 0) {
+                noHistory.style.display = "block";
+                historyPanel.style.display = "none";
+            } else {
+                historyPanel.innerHTML = "";
+                for (let i = 0; i < History.length; i++) {
+                    historyPanel.appendChild(appointmentCard(History[i]));
+                    historyPanel.appendChild(document.createElement("hr"));
+                }
+                noHistory.style.display = "none";
+                historyPanel.style.display = "block";
+            }
+            document.getElementById("loadMe").style.visibility = "hidden";
+        });
+    }
+
+    fetch(`${urlBase}/user/account`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            "authorization": `Bearer ${accessToken}`
+        },
+
+    }).then(res => res.json()).then(res => {
+        console.log({ res });
+        document.getElementById("userName").innerHTML = `${res.FirstName} ${res.LastName}`;
+        if (res.Membership.length === 0) {
+            document.getElementById("membership").innerHTML = "No Membership Purchased";
+            document.getElementById("passesPanel").style.display = "none";
+            document.getElementById("noPassesPanel").style.display = "block";
+
+        } else {
+            document.getElementById("membership").innerHTML = res.Membership[0].Name;
+            document.getElementById("passesPanel").innerHTML = "";
+            res.Membership.forEach(membership => {
+                const card = document.createElement("div");
+                const cardTitle = document.createElement("div");
+                cardTitle.innerHTML = membership.Name;
+                const cardBody = document.createElement("div");
+                cardBody.className = "comm-table-row";
+
+                const remaining = document.createElement("div");
+                remaining.className = "comm-table-col";
+                const remainingTitle = document.createElement("div");
+                remainingTitle.innerHTML = 'Remaining Visits';
+                remainingTitle.className = "panel-light-text";
+                const remainingBody = document.createElement('div');
+                remainingBody.innerHTML = membership.Remaining || 0;
+                remaining.appendChild(remainingTitle);
+                remaining.appendChild(remainingBody);
+                cardBody.appendChild(remaining);
+
+                const active = document.createElement("div");
+                active.className = "comm-table-col";
+                const activeTitle = document.createElement("div");
+                activeTitle.innerHTML = 'Active Date';
+                activeTitle.className = "panel-light-text";
+                const activeBody = document.createElement('div');
+                activeBody.innerHTML = membership.ActiveDate || "";
+                active.appendChild(activeTitle);
+                active.appendChild(activeBody);
+                cardBody.appendChild(active);
+
+                const expire = document.createElement("div");
+                expire.className = "comm-table-col";
+                const expireTitle = document.createElement("div");
+                expireTitle.innerHTML = 'Expiration Date';
+                expireTitle.className = "panel-light-text";
+                const expireBody = document.createElement('div');
+                expireBody.innerHTML = membership.ExpirationDate || "";
+                expire.appendChild(expireTitle);
+                expire.appendChild(expireBody);
+                cardBody.appendChild(expire);
+
+                card.appendChild(cardTitle);
+                card.appendChild(document.createElement("br"));
+                card.appendChild(cardBody);
+                document.getElementById("passesPanel").appendChild(card);
+                document.getElementById("passesPanel").appendChild(document.createElement("hr"));
+
+            });
+            document.getElementById("passesPanel").style.display = "block";
+            document.getElementById("noPassesPanel").style.display = "none";
+        }
+        if (res.ClientCreditCard) {
+            const ccContainer = document.createElement("div");
+            ccContainer.className = "comm-table-row";
+
+            const ccCardInfo = document.createElement("div");
+            ccCardInfo.className = "comm-table-col";
+
+            const ccCardInfoTitle = document.createElement("div");
+            ccCardInfoTitle.innerHTML = `${res.ClientCreditCard.CardType}  -  ${res.ClientCreditCard.CardHolder}`;
+            ccCardInfoTitle.className = "panel-light-text";
+
+            const ccCardInfoBody = document.createElement("div");
+            ccCardInfoBody.innerHTML = `XXXX-${res.ClientCreditCard.LastFour}`;
+            ccCardInfo.appendChild(ccCardInfoTitle);
+            ccCardInfo.appendChild(ccCardInfoBody);
+            ccContainer.appendChild(ccCardInfo);
+
+
+            const ccActions = document.createElement("div");
+            ccActions.className = "comm-table-row";
+
+            const ccEdit = document.createElement("div");
+            ccEdit.className = "comm-table-col";
+            ccEdit.innerHTML = "EDIT"
+            ccEdit.style.cursor = "pointer";
+
+            const ccDelete = document.createElement("div");
+            ccDelete.className = "comm-table-col";
+            ccDelete.innerHTML = "DELETE";
+            ccDelete.style.cursor = "pointer";
+
+            const ccSpacer = document.createElement("div");
+            ccSpacer.innerHTML = "&nbsp;&nbsp;|&nbsp;&nbsp;";
+
+            ccActions.appendChild(ccEdit);
+            ccActions.appendChild(ccSpacer);
+            ccActions.appendChild(ccDelete);
+            ccContainer.appendChild(ccActions);
+
+            document.getElementById("payment-info").appendChild(ccContainer);
+            /*
+            ClientCreditCard": {
+                        "Address": null,
+                        "CardHolder": null,
+                        "CardNumber": "************7655",
+                        "CardType": "Visa",
+                        "City": null,
+                        "ExpMonth": "01",
+                        "ExpYear": "2027",
+                        "LastFour": "7655",
+                        "PostalCode": null,
+                        "State": "0"
+                    },
+            */
+        }
+        const birthDate = res.BirthDate.split("T")[0];
+        const arrayBirthDate = birthDate.split("-");
+        const birthMonth = document.getElementById("BirthMonth");
+        birthMonth.innerHTML = "";
+        for (i = 1; i <= 12; i++) {
+            const option = document.createElement("option");
+            option.value = i;
+            option.text = i;
+            option.selected = i == arrayBirthDate[1];
+            birthMonth.appendChild(option);
+        }
+        const birthDay = document.getElementById("BirthDay");
+        birthDay.innerHTML = "";
+        let maxDays = 31;
+        if ([4, 6, 9, 11].includes(arrayBirthDate[1])) {
+            maxDays = 30;
+        } else if (arrayBirthDate[1] == 2) {
+            maxDays = 28;
+        }
+        for (i = 1; i <= maxDays; i++) {
+            const option = document.createElement("option");
+            option.value = i;
+            option.text = i;
+            option.selected = i == arrayBirthDate[2];
+            birthDay.appendChild(option);
+        }
+        const birthYear = document.getElementById("BirthYear");
+        birthYear.innerHTML = "";
+        const currentYear = new Date().getFullYear();
+        for (i = currentYear; i >= 1900; i--) {
+            const option = document.createElement("option");
+            option.value = i;
+            option.text = i;
+            option.selected = i == arrayBirthDate[0];
+            birthYear.appendChild(option);
+        }
+
+        document.getElementById("FirstName").innerHTML = res.FirstName;
+        document.getElementById("LastName").innerHTML = res.LastName;
+
+        document.getElementById("AddressLine1").innerHTML = res.AddressLine1;
+        document.getElementById("City").innerHTML = res.City;
+        document.getElementById("State").innerHTML = res.State;
+        document.getElementById("PostalCode").innerHTML = res.PostalCode;
+        document.getElementById("Country").innerHTML = res.Country;
+
+        document.getElementById("Email").innerHTML = res.Email;
+        document.getElementById("MobilePhone").innerHTML = res.MobilePhone;
+        document.getElementById("SendAccountEmails").checked = !!res.SendAccountEmails;
+        document.getElementById("SendAccountTexts").checked = !!res.SendAccountTexts;
+        document.getElementById("SendPromotionalEmails").checked = !!res.SendPromotionalEmails;
+        document.getElementById("SendPromotionalTexts").checked = !!res.SendPromotionalTexts;
+        document.getElementById("SendScheduleEmails").checked = !!res.SendScheduleEmails;
+        document.getElementById("SendScheduleTexts").checked = !!res.SendScheduleTexts;
+
+        updateAppointments();
+    })
+    function openTab(evt, tabName) {
+        // Declare all variables
+        var i, tabcontent, tablinks;
+
+        // Get all elements with class="tabcontent" and hide them
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+
+        // Get all elements with class="tablinks" and remove the class "active"
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+
+        // Show the current tab, and add an "active" class to the button that opened the tab
+        document.getElementById(tabName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+    function logout() {
+        fetch(`${urlBase}/auth/logout`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                "authorization": `Bearer ${accessToken}`
+            },
+
+        }).then(res => {
+            localStorage.removeItem('accessToken');
+            window.location.href = '/public/login.html';
+        })
+    }
+</script>
+
+</html>
