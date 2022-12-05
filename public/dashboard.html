@@ -4,15 +4,48 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        @import url(https://fonts.googleapis.com/css?family=Roboto:300,400);
+        @import url('https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@400;500&display=swap');
+        @import url('https://fonts.cdnfonts.com/css/sf-pro-display');
+
+        .founder {
+            font-family: 'Darker Grotesque', sans-serif;
+        }
+
+        .medium {
+            font-weight: 500;
+        }
+
+        .bold {
+            font-weight: 700;
+        }
+
+        .light-grey {
+            color: #ADB5BD;
+        }
+
+        .medium-grey {
+            color: #6C757D;
+        }
+
+        .dark-grey {
+            color: #495057;
+        }
+
+        hr {
+            border: 1px solid #EAECEF;
+            margin-top: 18px;
+            margin-bottom: 18px;
+        }
 
         body {
+            font-size: 14px;
             height: 100%;
             padding: 0px;
             margin: 0px;
-            font-family: 'Roboto', sans-serif !important;
-            font-size: 1em;
-            background-color: #eee;
+            background-color: #F2F4F5;
+            font-family: 'SF Pro Display', sans-serif;
+            color: #343A40;
+            font-weight: 400;
         }
 
         h1 {
@@ -48,7 +81,6 @@
         }
 
         .button-wrap.btn {
-            font-family: 'Roboto', sans-serif;
             box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.5);
             border-radius: 0px;
             border-color: #222;
@@ -138,24 +170,20 @@
             border: 1px solid #222;
             max-width: 350px;
             margin: 35px auto;
-            font-family: 'Roboto', sans-serif !important;
 
         }
 
         #output p.subtle {
             color: #555;
             font-style: italic;
-            font-family: 'Roboto', sans-serif !important;
         }
 
         #output h4 {
             font-weight: 300 !important;
             font-size: 1.1em;
-            font-family: 'Roboto', sans-serif !important;
         }
 
         #output p {
-            font-family: 'Roboto', sans-serif !important;
             font-size: 0.9em;
 
         }
@@ -197,6 +225,8 @@
         /* Create an active/current tablink class */
         .tab button.active {
             border-bottom: 2px solid black;
+            color: #343A40;
+            font-weight: 500;
         }
 
         /* Style the tab content */
@@ -225,8 +255,8 @@
             background-color: #fff;
             border: 1px solid #ddd;
             border-radius: 0px;
-            padding: 20px 50px;
-            margin: 10px 100px;
+            padding: 30px 39px;
+            margin: 18px 100px 0;
         }
 
         .reschedule-modal {
@@ -368,28 +398,37 @@
                 margin-bottom: 20px;
             }
         }
+
+        .return-button {
+            background-color: #343A40;
+            color: white;
+            padding: 9px 35px;
+            font-weight: 500;
+
+        }
     </style>
 </head>
 
 <body>
-    <div class="panel" style="padding-bottom: 0; margin-top: 50px;">
-        <div class="panel-light-text">YOUR ACCOUNT</div>
+    <div class="panel" style="padding-bottom: 0; margin-top: 30px;">
+        <div class="founder light-grey medium">YOUR ACCOUNT</div>
         <hr>
         <div class="comm-table-row">
             <div class="comm-table-col">
                 <span id="userName">User</span>
-                <span id="membership" class="panel-light-text">No Membership Purchased</span>
+                <span id="membership" class="founder medium-grey" style="margin-top: 8px;">No Membership
+                    Purchased</span>
             </div>
-            <div style="cursor: pointer;" onclick="logout()"><u>Log out</u></div>
+            <div style="cursor: pointer;" class="medium-grey medium" onclick="logout()"><u>Log out</u></div>
         </div>
         <hr>
         <div class="tab">
-            <button class="tablinks active" onclick="openTab(event, 'Appointments')">Appointments</button>
-            <button class="tablinks" onclick="openTab(event, 'History')">History</button>
-            <button class="tablinks" onclick="openTab(event, 'Passes')">Passes</button>
-            <button class="tablinks" onclick="openTab(event, 'Purchases')">Purchases</button>
-            <button class="tablinks" onclick="openTab(event, 'Orders')">Order History</button>
-            <button class="tablinks" onclick="openTab(event, 'Account')">Account Info</button>
+            <button class="tablinks active medium-grey" onclick="openTab(event, 'Appointments')">Appointments</button>
+            <button class="tablinks medium-grey" onclick="openTab(event, 'History')">History</button>
+            <button class="tablinks medium-grey" onclick="openTab(event, 'Passes')">Passes</button>
+            <button class="tablinks medium-grey" onclick="openTab(event, 'Purchases')">Purchases</button>
+            <button class="tablinks medium-grey" onclick="openTab(event, 'Orders')">Order History</button>
+            <button class="tablinks medium-grey" onclick="openTab(event, 'Account')">Account Info</button>
         </div>
     </div>
     <div id="Appointments" class="tabcontent" style="display:block;">
@@ -668,6 +707,7 @@
         window.location.href = `/public/login.html`;
     }
     document.getElementById("loadMe").style.visibility = "visible";
+    // const urlBase = "http://localhost:3000";
     const urlBase = "https://formula-fig-staging.cyclic.app";
     function formatAMPM(date) {
         var hours = date.getHours();
@@ -681,6 +721,16 @@
     }
     function padTo2Digits(num) {
         return num.toString().padStart(2, '0');
+    }
+
+    function formatOrderDate(date) {
+        const monthName = date.toLocaleString('en-us', { month: 'short' });
+        console.log({ monthName });
+        return [
+            padTo2Digits(date.getMonth() + 1),
+            monthName.toUpperCase(),
+            date.getFullYear(),
+        ].join(' ');
     }
 
     function formatDate(date) {
@@ -697,7 +747,7 @@
         ].join(' ');
     }
     function cancelAppointment(dataId) {
-        fetch(`${urlBase}/user/visit/${dataId}`, {
+        fetch(`${urlBase}/user/visits/${dataId}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -710,7 +760,7 @@
     function processReschedule(cancelId, classId) {
         document.getElementById("loadMe").style.visibility = "visible";
         closeReschedule();
-        fetch(`${urlBase}/user/visit/${classId}`, {
+        fetch(`${urlBase}/user/visits/${classId}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -1000,7 +1050,6 @@
             },
 
         }).then(res => res.json()).then(res => {
-            console.log({ res });
             document.getElementById("userName").innerHTML = `${res.FirstName} ${res.LastName}`;
             if (res.Membership.length === 0) {
                 document.getElementById("membership").innerHTML = "No Membership Purchased";
@@ -1181,7 +1230,215 @@
             updateAppointments();
         })
     }
+    function getOrderData() {
+        openTab(null, "Orders");
+        fetch(`${urlBase}/user/orders`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                "authorization": `Bearer ${accessToken}`
+            },
+
+        }).then(res => res.json()).then(orders => {
+            console.log({ orders });
+            if (orders.length === 0) {
+                document.getElementById("orderPanel").style.display = "none";
+                document.getElementById("noOrderPanel").style.display = "block";
+                return;
+            }
+            //<div class="panel" id="orderPanel" style="display:none;"></div>
+            orders.forEach((order) => {
+                const orderContainer = document.createElement("div");
+                orderContainer.className = "panel";
+                const orderTitle = document.createElement("div");
+                orderTitle.className = "comm-table-row";
+
+                const orderNumber = document.createElement("div");
+                orderNumber.innerHTML = `<span class="dark-grey medium">ORDER NO:</span>&nbsp;${order.order_number}`;
+                orderTitle.appendChild(orderNumber);
+
+                const orderDate = document.createElement("div");
+                orderDate.innerHTML = `<span class="medium">ORDER DATE:</span>&nbsp;${formatOrderDate(new Date(order.created_at))}`;
+                orderTitle.appendChild(orderDate);
+
+                orderContainer.appendChild(orderTitle);
+                orderContainer.appendChild(document.createElement("hr"));
+                order.line_items.forEach((item) => {
+                    const itemContainer = document.createElement("div");
+                    itemContainer.className = "comm-table-row";
+                    itemContainer.style.justifyContent = "flex-start";
+                    const imageContainer = document.createElement("div");
+                    imageContainer.style.width = "103px";
+                    imageContainer.style.height = "103px";
+                    imageContainer.style.border = "1px solid #EAECEF";
+                    imageContainer.className = "comm-table-row";
+                    imageContainer.style.justifyContent = "center";
+                    const itemImage = document.createElement("img");
+                    itemImage.src = item.image.src === '' ? 'https://via.placeholder.com/74' : item.image.src;
+                    itemImage.alt = item.image.alt;
+                    itemImage.style.width = "74px";
+                    itemImage.style.height = "74px";
+                    itemImage.style.objectFit = "contain";
+                    imageContainer.appendChild(itemImage);
+                    itemContainer.appendChild(imageContainer);
+
+                    const itemDetails = document.createElement("div");
+                    itemDetails.style.marginLeft = "30px";
+                    itemDetails.style.gap = "9px";
+                    itemDetails.className = "comm-table-col";
+                    const itemTitle = document.createElement("div");
+                    itemTitle.innerHTML = item.name;
+                    itemTitle.className = "dark-grey";
+                    itemDetails.appendChild(itemTitle);
+
+                    const itemQuantity = document.createElement("div");
+                    itemQuantity.innerHTML = `QTY: ${item.quantity}`;
+                    itemQuantity.className = "dark-grey";
+                    itemDetails.appendChild(itemQuantity);
+
+                    const itemPrice = document.createElement("div");
+                    itemPrice.innerHTML = `Unit Price: $${item.price}`;
+                    itemPrice.className = "dark-grey";
+                    itemDetails.appendChild(itemPrice);
+
+                    const itemDelivery = document.createElement("div");
+                    itemDelivery.innerHTML = `Delivery status:&nbsp;<span class="medium">${item.fulfillment_status === "undefined" || item.fulfillment_status === "" ? "No information" : item.fulfillment_status}</span>`;
+                    itemDetails.appendChild(itemDelivery);
+
+                    itemContainer.appendChild(itemDetails);
+                    orderContainer.appendChild(itemContainer);
+                })
+                orderContainer.appendChild(document.createElement("hr"));
+                const summaryContainer = document.createElement("div");
+                summaryContainer.className = "comm-table-row";
+                summaryContainer.style.alignItems = "flex-start";
+
+                const orderSummary = document.createElement("div");
+                orderSummary.className = "comm-table-col";
+                orderSummary.justifyContent = "flex-start";
+                orderSummary.style.width = "200px";
+                const summaryTitle = document.createElement("div");
+                summaryTitle.innerHTML = "ORDER SUMMARY:";
+                summaryTitle.className = "founders dark-grey medium";
+                summaryTitle.style.marginBottom = '24px';
+                orderSummary.appendChild(summaryTitle);
+
+                const cartTotal = document.createElement("div");
+                cartTotal.className = "comm-table-row";
+                cartTotal.style.width = "100%";
+                cartTotal.style.marginBottom = '4px';
+
+                const cartTotalLabel = document.createElement("div");
+                cartTotalLabel.innerHTML = "Cart Total:";
+                const cartTotalValue = document.createElement("div");
+                cartTotalValue.innerHTML = `$${order.total_line_items_price}`;
+                cartTotalValue.className = "founders";
+                cartTotal.appendChild(cartTotalLabel);
+                cartTotal.appendChild(cartTotalValue);
+                orderSummary.appendChild(cartTotal);
+
+                const discount = document.createElement("div");
+                discount.className = "comm-table-row";
+                discount.style.width = "100%";
+                discount.style.marginBottom = '14px';
+
+                const discountLabel = document.createElement("div");
+                discountLabel.innerHTML = "Discount:";
+                const discountTotal = document.createElement("div");
+                discountTotal.innerHTML = `$${order.current_total_discounts}`;
+                discountTotal.className = "founders";
+                discount.appendChild(discountLabel);
+                discount.appendChild(discountTotal);
+                orderSummary.appendChild(discount);
+
+                const subTotal = document.createElement("div");
+                subTotal.className = "comm-table-row";
+                subTotal.style.width = "100%";
+                subTotal.style.marginBottom = '4px';
+                const subTotalLabel = document.createElement("div");
+                subTotalLabel.innerHTML = "Sub Total:";
+                const subTotalValue = document.createElement("div");
+                subTotalValue.innerHTML = `$${order.current_subtotal_price}`;
+                subTotalValue.className = "founders";
+                subTotal.appendChild(subTotalLabel);
+                subTotal.appendChild(subTotalValue);
+                orderSummary.appendChild(subTotal);
+
+                const orderTotal = document.createElement("div");
+                orderTotal.className = "comm-table-row";
+                orderTotal.style.width = "100%";
+                const orderTotalLabel = document.createElement("div");
+                orderTotalLabel.innerHTML = "Order Total:";
+                orderTotalLabel.className = "bold";
+                const orderTotalValue = document.createElement("div");
+                orderTotalValue.innerHTML = `$${order.current_subtotal_price}`;
+                orderTotalValue.className = "founders bold";
+                orderTotal.appendChild(orderTotalLabel);
+                orderTotal.appendChild(orderTotalValue);
+                orderSummary.appendChild(orderTotal);
+                summaryContainer.appendChild(orderSummary);
+
+                const deliveryContainer = document.createElement("div");
+                deliveryContainer.className = "comm-table-col";
+                deliveryContainer.justifyContent = "flex-start";
+                const deliveryTitle = document.createElement("div");
+                deliveryTitle.innerHTML = "DELIVERING TO:";
+                deliveryTitle.style.marginBottom = '24px';
+                deliveryTitle.className = "founders dark-grey medium";
+                deliveryContainer.appendChild(deliveryTitle);
+
+                const deliveryName = document.createElement("div");
+                deliveryName.innerHTML = order.shipping_address.name ? order.shipping_address.name : "No name provided";
+                deliveryName.className = "medium-grey";
+                deliveryName.style.marginBottom = '24px';
+                deliveryContainer.appendChild(deliveryName);
+
+                const deliveryAddress = document.createElement("div");
+                deliveryAddress.innerHTML = order.shipping_address.address1 ? order.shipping_address.address1 : "No address provided";
+                deliveryAddress.className = "medium-grey";
+                deliveryAddress.style.marginBottom = '4px';
+                deliveryContainer.appendChild(deliveryAddress);
+
+                const deliveryCityState = document.createElement("div");
+                deliveryCityState.innerHTML = order.shipping_address.city ? `${order.shipping_address.city}, ${order.shipping_address.state} ` : "No city provided";
+                deliveryCityState.className = "medium-grey";
+                deliveryCityState.style.marginBottom = '4px';
+                deliveryContainer.appendChild(deliveryCityState);
+
+                const deliveryZip = document.createElement("div");
+                deliveryZip.innerHTML = order.shipping_address.zip ? order.shipping_address.zip : "No zip provided";
+                deliveryZip.className = "medium-grey";
+                deliveryContainer.appendChild(deliveryZip);
+
+                summaryContainer.appendChild(deliveryContainer);
+
+                const actionContainer = document.createElement("div");
+                actionContainer.className = "comm-table-col";
+                actionContainer.style.justifyContent = "flex-start";
+                actionContainer.style.alignItems = "flex-end";
+
+                const returnButton = document.createElement("div");
+                returnButton.innerHTML = "LOG A RETURN";
+                returnButton.className = "return-button"
+                actionContainer.appendChild(returnButton);
+
+                const downloadInvoiceButton = document.createElement("div");
+                downloadInvoiceButton.innerHTML = "<u>Download Invoice</u>";
+                downloadInvoiceButton.style.marginTop = "18px";
+                downloadInvoiceButton.className = "medium"
+                actionContainer.appendChild(downloadInvoiceButton);
+
+                summaryContainer.appendChild(actionContainer);
+
+                orderContainer.appendChild(summaryContainer);
+
+                document.getElementById("Orders").append(orderContainer);
+            });
+            document.getElementById("noOrderPanel").style.display = "none";
+        })
+    }
     getAccountData();
+    getOrderData();
     function openTab(evt, tabName) {
         // Declare all variables
         var i, tabcontent, tablinks;
@@ -1200,10 +1457,12 @@
 
         // Show the current tab, and add an "active" class to the button that opened the tab
         document.getElementById(tabName).style.display = "block";
-        evt.currentTarget.className += " active";
+        if (evt) {
+            evt.currentTarget.className += " active";
+        }
     }
     function logout() {
-        fetch(`${urlBase}/auth/logout`, {
+        fetch(`${urlBase} /auth/logout`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
