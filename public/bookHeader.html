@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@400;500&display=swap');
+        @import url('https://fonts.cdnfonts.com/css/sf-pro-display');
+
+        .founder {
+            font-family: 'Darker Grotesque', sans-serif;
+        }
+
+        .medium {
+            font-weight: 500;
+        }
+
+        .bold {
+            font-weight: 700;
+        }
+
+        .light-grey {
+            color: #ADB5BD;
+        }
+
+        .medium-grey {
+            color: #6C757D;
+        }
+
+        .dark-grey {
+            color: #495057;
+        }
+
+        hr {
+            border: 1px solid #EAECEF;
+            margin-top: 18px;
+            margin-bottom: 18px;
+        }
+
+        body {
+            font-size: 14px;
+            height: 100%;
+            padding: 0px;
+            margin: 0px;
+            background-color: #F2F4F5;
+            font-family: 'SF Pro Display', sans-serif;
+            color: #343A40;
+            font-weight: 400;
+        }
+
+        .navbar {
+            overflow: hidden;
+            background-color: #E9ECEF;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            border-bottom: 1px solid #000000;
+            height: 66px;
+        }
+
+        a {
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        .main {
+            padding: 16px;
+            margin-top: 66px;
+        }
+
+        .flex-row {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .flex-col {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .flex-end {
+            justify-content: flex-end;
+        }
+
+        .flex-between {
+            justify-content: space-between;
+        }
+
+        button {
+            cursor: pointer;
+            background-color: transparent;
+            border: none;
+        }
+
+        .dropdown {
+            float: left;
+            overflow: hidden;
+            font-size: 14px;
+            border: none;
+            outline: none;
+            color: white;
+            background-color: inherit;
+            font-family: inherit;
+            margin: 0;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: fixed;
+            background-color: #fff;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            right: 140px;
+            width: 300px;
+            background: #FFFFFF 0% 0% no-repeat padding-box;
+            box-shadow: 0px 3px 6px #0000000D;
+            border: 1px solid #CFD4D9;
+            border-radius: 4px;
+            opacity: 1;
+        }
+
+        .dropdown-content a,
+        .dropdown-content div {
+            float: none;
+            color: #212529;
+            padding: 24px 36px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        /* Change color of dropdown links on hover */
+        .dropdown-content a:hover {
+            background-color: #ddd;
+        }
+
+        /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+        .show {
+            display: block;
+        }
+
+        .dropbtn {
+            cursor: pointer;
+        }
+
+        hr {
+            margin: 0;
+        }
+
+        .book-btn {
+            background-color: #343A40;
+            color: #FFFFFF;
+            opacity: 1;
+            font-weight: 500;
+            padding: 10px 39px;
+            text-decoration: none;
+        }
+
+        .right-nav {
+            gap: 35px;
+        }
+
+        .icon {
+            width: 18px;
+            height: 18px;
+        }
+
+        .nav-link {
+            color: #495057;
+            cursor: pointer;
+        }
+    </style>
+    <style>
+        /* Full-width input fields */
+        input[type=text],
+        input[type=password] {
+            width: 300px;
+            padding: 12px 20px;
+            margin: 9px 0;
+            display: inline-block;
+            box-sizing: border-box;
+            color: #ADB5BD;
+            border: 0;
+            border-bottom: 1px solid #E9ECEF;
+        }
+
+        .sub-btn {
+            width: 300px;
+            height: 40px;
+            opacity: 1;
+            background: #343A40;
+            color: #FFFFFF;
+            margin-top: 18px;
+            margin-bottom: 23px;
+            border: 0;
+
+        }
+
+        .inv-btn {
+            width: 300px;
+            height: 40px;
+            opacity: 1;
+            background-color: #fff;
+            color: #212529;
+            font-weight: 500;
+            border: 1px solid #CED4DA;
+            margin-bottom: 68px;
+        }
+
+        span.psw {
+            float: right;
+            padding-top: 16px;
+        }
+
+        /* The Modal (background) */
+        .modal {
+            display: none;
+            /* Hidden by default */
+            position: fixed;
+            /* Stay in place */
+            z-index: 1;
+            /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%;
+            /* Full width */
+            height: 100%;
+            /* Full height */
+            overflow: auto;
+            /* Enable scroll if needed */
+            background-color: rgb(0, 0, 0);
+            /* Fallback color */
+            background-color: rgba(0, 0, 0, 0.4);
+            /* Black w/ opacity */
+            padding-top: 60px;
+        }
+
+        /* Modal Content/Box */
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto 15% auto;
+            /* 5% from the top, 15% from the bottom and centered */
+            border: 1px solid #888;
+            width: 80%;
+            /* Could be more or less, depending on screen size */
+        }
+
+
+        .flex-col {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .login-hr {
+            border: 0;
+            clear: both;
+            display: block;
+            width: 100%;
+            background-color: #E9ECEF;
+            height: 1px;
+            margin: 28px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navbar flex-row flex-between">
+        <div class="flex-row" style="margin-left: 140px;gap: 24px;">
+            <a class="nav-link" href="pages/treatments">TREATMENTS</a>
+            <a class="nav-link" href="pages/membership">MEMBERSHIPS</a>
+            <a class="nav-link" href="#">SHOP</a>
+            <a class="nav-link" href="products/gift-card">GIFT CARDS</a>
+        </div>
+        <span>FF-logo-black-SM</span>
+
+        <div id="user-nav" class="flex-row right-nav" style="margin-right: 140px;">
+            <div id="dropdown-nav" class="dropdown" style="margin-left:20px;">
+                <button onclick="myFunction()" class="dropbtn">
+                    <img class="dropbtn icon" src="https://cdn-icons-png.flaticon.com/512/3114/3114957.png">
+                </button>
+                <div id="myDropdown" class="dropdown-content">
+                    <a href="dashboard.html?tab=appointments">Appointments</a>
+                    <hr>
+                    <a href="dashboard.html?tab=history">History</a>
+                    <hr>
+                    <a href="dashboard.html?tab=passes">Passes</a>
+                    <hr>
+                    <a href="dashboard.html?tab=purchases">Purchases</a>
+                    <hr>
+                    <a href="dashboard.html?tab=orders">Order History</a>
+                    <hr>
+                    <a href="dashboard.html?tab=account">Account</a>
+                    <hr>
+                    <a class="bold" style="color:#343A40" onclick="logout(event)">Logout</a>
+                </div>
+                <div id="guest-myDropdown" class="dropdown-content">
+                    <div id="signin-nav" class="bold" style="color:#343A40;" onclick="openSignIn()">SIGN
+                        IN</div>
+                </div>
+            </div>
+            <a href="search">
+                <img class="dropbtn icon" src="https://cdn-icons-png.flaticon.com/512/4202/4202650.png">
+            </a>
+            <a href="cart">
+                <img class="dropbtn icon" src="https://cdn-icons-png.flaticon.com/512/5317/5317094.png">
+            </a>
+            <a href="pages/appointments" class="book-btn">BOOK NOW</a>
+        </div>
+    </div>
+    <div class="main">
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit cum deserunt quam. Voluptatum, obcaecati
+            iure! Debitis minus fuga dolores, vel tenetur laudantium ratione in quibusdam! Harum saepe dolorem vel
+            dolorum?</p>
+        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Saepe, tempora magnam voluptates distinctio quasi
+            laudantium aut ullam minima excepturi nemo ipsa doloremque omnis animi tempore vero consequuntur! Saepe,
+            esse sint.</p>
+        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Illo corporis eaque, necessitatibus cumque
+            doloribus consequuntur, consectetur architecto aliquam quas deleniti maxime facilis maiores beatae ipsum
+            fuga dignissimos quia saepe vel.</p>
+        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Suscipit, reiciendis ullam iste neque delectus ex
+            fuga blanditiis! Odio, eligendi. Rerum doloribus perferendis magni repudiandae quam voluptatibus provident
+            sapiente praesentium officiis.</p>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis deleniti aperiam, molestiae ut voluptatem
+            sed quia corrupti, blanditiis, earum ad provident! Consectetur, aliquam? Blanditiis provident, incidunt
+            expedita vel praesentium minus?</p>
+        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Amet in fuga quo aspernatur suscipit accusamus
+            tenetur quaerat sunt delectus corporis voluptatum harum ullam quam ratione accusantium cumque,
+            necessitatibus perspiciatis magnam!</p>
+        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Molestiae consequuntur ducimus totam aut ipsa
+            beatae officia, commodi cum, eos labore nam unde vitae, est aliquam id corrupti temporibus quae illo.</p>
+        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Perferendis nam tempore sapiente omnis voluptatem,
+            architecto vel molestiae labore neque unde corporis voluptas, ut deserunt facilis quos. Iure earum autem
+            voluptate!</p>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel sequi doloremque, inventore pariatur laudantium
+            nostrum, consequuntur expedita nesciunt itaque tempora dignissimos rem unde voluptatibus dicta quos in
+            sapiente provident accusamus.</p>
+
+    </div>
+
+    <div id="id01" class="modal">
+
+        <form style="padding:87px 122px;width:300px;" name="myForm" class="modal-content animate flex-col"
+            onSubmit="return validateForm()">
+            <div style="font-size: 22px;">Book your appointment</div>
+            <div style="font-size:16px;margin-bottom:39px;margin-top:19px;max-width:300px;text-align: center;">Please
+                sign in or create
+                an account to
+                secure your booking.
+            </div>
+            <input type="text" placeholder="Email" name="uname" required>
+            <input type="password" placeholder="Password" name="psw" required>
+
+            <button type="submit" class="sub-btn">SIGN IN</button>
+            <span class="psw"><a href="#">Need a new password??</a></span>
+            <hr class="login-hr">
+            <button type="button" onclick="document.getElementById('id01').style.display='none'" class="inv-btn">CREATE
+                PROFILE
+            </button>
+        </form>
+    </div>
+</body>
+<script type="text/javascript">
+    const urlBase = "https://formula-fig-staging.cyclic.app";
+    const accessToken = localStorage.getItem('accessToken');
+    let loggedIn = accessToken !== null;
+    /* When the user clicks on the button,
+    toggle between hiding and showing the dropdown content */
+    function myFunction() {
+        if (loggedIn) {
+            document.getElementById("myDropdown").classList.toggle("show");
+        } else {
+            document.getElementById("guest-myDropdown").classList.toggle("show");
+        }
+    }
+    function openSignIn() {
+        document.getElementById("myDropdown").classList.remove("show");
+        document.getElementById("guest-myDropdown").classList.remove("show");
+        document.getElementById('id01').style.display = 'block'
+    }
+    // Close the dropdown menu if the user clicks outside of it
+    window.onclick = function (event) {
+        if (!event.target.matches('.dropbtn')) {
+            var dropdowns = document.getElementsByClassName("dropdown-content");
+            var i;
+            for (i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                }
+            }
+        }
+    }
+    function logout(e) {
+        e.preventDefault();
+        fetch(`${urlBase}/auth/logout`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                "authorization": `Bearer ${accessToken}`
+            },
+        }).then(res => {
+            loggedIn = false;
+            localStorage.removeItem('accessToken');
+            localStorage.removeItem('user');
+            document.getElementById("myDropdown").classList.remove("show");
+            document.getElementById("guest-myDropdown").classList.remove("show");
+        })
+    }
+</script>
+<script>
+    // Get the modal
+    var modal = document.getElementById('id01');
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>
+<script type="text/javascript">
+    function validateForm() {
+        event.preventDefault();
+        document.getElementById("myDropdown").classList.remove("show");
+        document.getElementById("guest-myDropdown").classList.remove("show");
+        var uname = document.forms["myForm"]["uname"].value;
+        var psw = document.forms["myForm"]["psw"].value;
+        if (uname == "") {
+            alert("Name must be filled out");
+            return false;
+        }
+        if (psw == "") {
+            alert("Password must be filled out");
+            return false;
+        }
+        fetch(`${urlBase}/auth/login`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email: uname, password: psw })
+        }).then(res => res.json()).then(res => {
+            localStorage.setItem("accessToken", res.accessToken);
+            fetch(`${urlBase}/user/account`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    "authorization": `Bearer ${res.accessToken}`
+                },
+            }).then(res => res.json()).then(res => {
+                if (res.Membership.length === 0) {
+                    localStorage.setItem('user', JSON.stringify({
+                        name: `${res.FirstName} ${res.LastName}`,
+                        membership: "No Membership Purchased",
+                    }));
+                } else {
+                    localStorage.setItem('user', JSON.stringify({
+                        name: `${res.FirstName} ${res.LastName}`,
+                        membership: res.Membership[0].Name,
+                    }));
+                }
+                document.getElementById('id01').style.display = 'none';
+                loggedIn = true;
+            })
+        })
+    }
+</script>
+
+</html>
