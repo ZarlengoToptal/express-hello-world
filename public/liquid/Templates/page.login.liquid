@@ -1,0 +1,90 @@
+<style>
+    /* Full-width input fields */
+    input[type=text],
+    input[type=password] {
+        width: 300px;
+        padding: 12px 20px;
+        margin: 9px 0;
+        display: inline-block;
+        box-sizing: border-box;
+        color: #ADB5BD;
+        border: 0;
+        border-bottom: 1px solid #E9ECEF;
+    }
+
+    .sub-btn {
+        background: #343A40;
+        color: #FFFFFF;
+        margin-top: 18px;
+        margin-bottom: 23px;
+        border: 0;
+
+    }
+
+    .inv-btn {
+        background-color: #fff;
+        color: #212529;
+        font-weight: 500;
+        border: 1px solid #CED4DA;
+        margin-bottom: 68px;
+        width: 300px;
+        height: 40px;
+        opacity: 1;
+        cursor: pointer;
+    }
+
+    span.psw {
+        float: right;
+        padding-top: 16px;
+    }
+</style>
+<script type="text/javascript">
+    const return_to = window.location.origin + "/pages/account";
+    function validateForm(event) {
+        event.preventDefault();
+        var uname = document.forms["myForm"]["uname"].value;
+        var psw = document.forms["myForm"]["psw"].value;
+        if (uname == "") {
+            alert("Email must be filled out");
+            return false;
+        }
+        if (psw == "") {
+            alert("Password must be filled out");
+            return false;
+        }
+        fetch(`${urlBase}/auth/login`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email: uname, password: psw, return_to })
+        }).then(res => res.json()).then(res => {
+            localStorage.setItem("accessToken", res.accessToken);
+            if (res.accessToken) {
+                window.location.replace(res.url);
+            }
+            document.getElementById('id01').style.display = 'none';
+        })
+    }
+</script>
+
+<div class="main">
+    <form style="padding:87px 122px;width:300px;" name="myForm" class="modal-content animate flex-col"
+        onSubmit="return validateForm(event)">
+        <div style="font-size: 22px;">Book your appointment</div>
+        <div style="font-size:16px;margin-bottom:39px;margin-top:19px;max-width:300px;text-align: center;">Please
+            sign in or create
+            an account to
+            secure your booking.
+        </div>
+        <input type="text" placeholder="Email" name="uname" required>
+        <input type="password" placeholder="Password" name="psw" required>
+
+        <button type="submit" class="sub-btn">SIGN IN</button>
+        <span class="psw"><a href="#">Need a new password??</a></span>
+        <hr>
+        <a href="signup.html" class="inv-btn flex-row">CREATE
+            PROFILE
+        </a>
+    </form>
+</div>

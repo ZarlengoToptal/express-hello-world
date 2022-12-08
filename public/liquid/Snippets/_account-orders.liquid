@@ -1,0 +1,220 @@
+<script>
+  
+  function getOrderData() {
+    fetch(`${urlBase}/user/orders`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        "authorization": `Bearer ${accessToken}`
+      },
+    }).then(res => res.json()).then(orders => {
+      if (orders.length === 0) {
+        document.getElementById("orderPanel").style.display = "none";
+        document.getElementById("noOrderPanel").style.display = "block";
+        return;
+      }
+
+
+      orders.forEach((order) => {
+        const orderContainer = document.createElement("div");
+        orderContainer.className = "panel";
+        const orderTitle = document.createElement("div");
+        orderTitle.className = "comm-table-row";
+  
+        const orderNumber = document.createElement("div");
+        orderNumber.className = "flex-row";
+  
+        const orderIcon = document.createElement("img");
+        orderIcon.src = "https://via.placeholder.com/18x23";
+        orderIcon.alt = "company-logo";
+        orderIcon.style.marginRight = "12px";
+        orderNumber.appendChild(orderIcon);
+  
+        const orderNumberText = document.createElement("div");
+        orderNumberText.innerHTML = `<span class="medium" style="color:var(--unnamed-color-495057);">ORDER NO:</span>&nbsp;&nbsp;${order.order_number}`;
+        orderNumber.appendChild(orderNumberText);
+        orderTitle.appendChild(orderNumber);
+  
+        const orderDate = document.createElement("div");
+        orderDate.style.color = "var(--unnamed-color-6c757d)";
+        orderDate.innerHTML = `<span class="medium">ORDER DATE:</span>&nbsp;&nbsp;${formatOrderDate(new Date(order.created_at))}`;
+        orderTitle.appendChild(orderDate);
+  
+        orderContainer.appendChild(orderTitle);
+        orderContainer.appendChild(document.createElement("hr"));
+        order.line_items.forEach((item) => {
+          const itemContainer = document.createElement("div");
+          itemContainer.className = "comm-table-row";
+          itemContainer.style.justifyContent = "flex-start";
+          const imageContainer = document.createElement("div");
+          imageContainer.style.width = "103px";
+          imageContainer.style.height = "103px";
+          imageContainer.style.border = "1px solid #EAECEF";
+          imageContainer.className = "comm-table-row";
+          imageContainer.style.justifyContent = "center";
+          const itemImage = document.createElement("img");
+          itemImage.src = item.image.src === '' ? 'https://via.placeholder.com/74' : item.image.src;
+          itemImage.alt = item.image.alt;
+          itemImage.style.width = "74px";
+          itemImage.style.height = "74px";
+          itemImage.style.objectFit = "contain";
+          imageContainer.appendChild(itemImage);
+          itemContainer.appendChild(imageContainer);
+
+          const itemDetails = document.createElement("div");
+          itemDetails.style.marginLeft = "30px";
+          itemDetails.style.gap = "9px";
+          itemDetails.className = "comm-table-col";
+          const itemTitle = document.createElement("div");
+          itemTitle.innerHTML = item.name;
+          itemTitle.style.color = "var(--unnamed-color-495057)";
+          itemTitle.className = "SF";
+          itemDetails.appendChild(itemTitle);
+
+          const itemQuantity = document.createElement("div");
+          itemQuantity.innerHTML = `QTY: ${item.quantity}`;
+          itemQuantity.style.color = "var(--unnamed-color-495057)";
+          itemQuantity.className = "SF";
+          itemDetails.appendChild(itemQuantity);
+
+          const itemPrice = document.createElement("div");
+          itemPrice.innerHTML = `Unit Price: $${item.price}`;
+          itemPrice.style.color = "var(--unnamed-color-495057)";
+          itemPrice.className = "SF";
+          itemDetails.appendChild(itemPrice);
+
+          const itemDelivery = document.createElement("div");
+          itemDelivery.innerHTML = `Delivery status:&nbsp;<span class="medium">${item.fulfillment_status === "undefined" || item.fulfillment_status === "" ? "No information" : item.fulfillment_status}</span>`;
+          itemDelivery.className = "SF";
+          itemDetails.appendChild(itemDelivery);
+
+          itemContainer.appendChild(itemDetails);
+          orderContainer.appendChild(itemContainer);
+        })
+        orderContainer.appendChild(document.createElement("hr"));
+        const summaryContainer = document.createElement("div");
+        summaryContainer.className = "flex-row";
+        summaryContainer.style.justifyContent = "flex-start";
+        summaryContainer.style.alignItems = "flex-start";
+        summaryContainer.style.gap = "97px";
+  
+        const orderSummary = document.createElement("div");
+        orderSummary.className = "comm-table-col";
+        orderSummary.justifyContent = "flex-start";
+        orderSummary.style.width = "200px";
+        const summaryTitle = document.createElement("div");
+        summaryTitle.innerHTML = "ORDER SUMMARY:";
+        summaryTitle.className = "medium";
+        summaryTitle.style.marginBottom = '24px';
+        summaryTitle.style.color = "var(--unnamed-color-495057)";
+        orderSummary.appendChild(summaryTitle);
+  
+        const cartTotal = document.createElement("div");
+        cartTotal.className = "comm-table-row";
+        cartTotal.style.width = "100%";
+  
+        const cartTotalLabel = document.createElement("div");
+        cartTotalLabel.innerHTML = "Cart Total:";
+        cartTotalLabel.className = "SF";
+        const cartTotalValue = document.createElement("div");
+        cartTotalValue.innerHTML = `$${order.total_line_items_price}`;
+        cartTotal.appendChild(cartTotalLabel);
+        cartTotal.appendChild(cartTotalValue);
+        orderSummary.appendChild(cartTotal);
+  
+        const discount = document.createElement("div");
+        discount.className = "comm-table-row SF";
+        discount.style.width = "100%";
+        discount.style.marginBottom = '14px';
+  
+        const discountLabel = document.createElement("div");
+        discountLabel.innerHTML = "Discount:";
+        discountLabel.className = "SF";
+        const discountTotal = document.createElement("div");
+        discountTotal.innerHTML = `$${order.current_total_discounts}`;
+        discount.appendChild(discountLabel);
+        discount.appendChild(discountTotal);
+        orderSummary.appendChild(discount);
+  
+        const subTotal = document.createElement("div");
+        subTotal.className = "comm-table-row SF";
+        subTotal.style.width = "100%";
+        const subTotalLabel = document.createElement("div");
+        subTotalLabel.innerHTML = "Sub Total:";
+        subTotalLabel.className = "SF";
+        const subTotalValue = document.createElement("div");
+        subTotalValue.innerHTML = `$${order.current_subtotal_price}`;
+        subTotal.appendChild(subTotalLabel);
+        subTotal.appendChild(subTotalValue);
+        orderSummary.appendChild(subTotal);
+  
+        const orderTotal = document.createElement("div");
+        orderTotal.className = "comm-table-row SF";
+        orderTotal.style.width = "100%";
+        const orderTotalLabel = document.createElement("div");
+        orderTotalLabel.innerHTML = "Order Total:";
+        orderTotalLabel.className = "bold SF";
+        const orderTotalValue = document.createElement("div");
+        orderTotalValue.innerHTML = `$${order.current_subtotal_price}`;
+        orderTotalValue.className = "bold";
+        orderTotal.appendChild(orderTotalLabel);
+        orderTotal.appendChild(orderTotalValue);
+        orderSummary.appendChild(orderTotal);
+        summaryContainer.appendChild(orderSummary);
+  
+        const deliveryContainer = document.createElement("div");
+        deliveryContainer.className = "comm-table-col SF";
+        deliveryContainer.justifyContent = "flex-start";
+        const deliveryTitle = document.createElement("div");
+        deliveryTitle.innerHTML = "DELIVERING TO:";
+        deliveryTitle.style.marginBottom = '24px';
+        deliveryTitle.style.color = "var(--unnamed-color-495057)";
+        deliveryTitle.className = "medium";
+        deliveryContainer.appendChild(deliveryTitle);
+  
+        const deliveryName = document.createElement("div");
+        deliveryName.innerHTML = order.shipping_address.name ? order.shipping_address.name : "No name provided";
+        deliveryName.style.color = "var(--unnamed-color-6c757d)";
+        deliveryName.style.marginBottom = '24px';
+        deliveryName.className = "SF";
+        deliveryContainer.appendChild(deliveryName);
+  
+        const deliveryAddress = document.createElement("div");
+        deliveryAddress.innerHTML = order.shipping_address.address1 ? order.shipping_address.address1 : "No address provided";
+        deliveryAddress.style.color = "var(--unnamed-color-6c757d)";
+        deliveryAddress.style.marginBottom = '4px';
+        deliveryAddress.className = "SF";
+        deliveryContainer.appendChild(deliveryAddress);
+  
+        const deliveryCityState = document.createElement("div");
+        deliveryCityState.innerHTML = order.shipping_address.city ? `${order.shipping_address.city}, ${order.shipping_address.state} ` : "No city provided";
+        deliveryCityState.style.color = "var(--unnamed-color-6c757d)";
+        deliveryCityState.style.marginBottom = '4px';
+        deliveryCityState.className = "SF";
+        deliveryContainer.appendChild(deliveryCityState);
+  
+        const deliveryZip = document.createElement("div");
+        deliveryZip.innerHTML = order.shipping_address.zip ? order.shipping_address.zip : "No zip provided";
+        deliveryZip.style.color = "var(--unnamed-color-6c757d)";
+        deliveryZip.className = "SF";
+        deliveryContainer.appendChild(deliveryZip);
+  
+        summaryContainer.appendChild(deliveryContainer);
+  
+        orderContainer.appendChild(summaryContainer);
+  
+        document.getElementById("orders").append(orderContainer);
+      });
+      document.getElementById("noOrderPanel").style.display = "none";
+    })
+  }
+  getOrderData();
+</script>
+<div id="orders" class="tabcontent">
+  <div class="panel" id="orderPanel" style="display:none;"></div>
+  <div class="panel" id="noOrderPanel">
+    <p class="panel-title">Looks like you haven't ordered anything yet.</p>
+    <p style="color:var(--unnamed-color-495057)">Your past orders will be saved here for easy reference.</p>
+    <hr class="account-hr">
+  </div>
+</div>

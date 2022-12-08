@@ -1,0 +1,538 @@
+<style>
+
+
+
+    .account-save-btn {
+        background-color: var(--unnamed-color-212529);
+        width: 100%;
+        height: 40px;
+        color: white;
+        font-size: 14px;
+    }
+
+    .account-save-btn:disabled {
+        background-color: var(--unnamed-color-ced4da);
+    }
+    .info-title {
+        color: var(--unnamed-color-495057);
+    }
+
+    .account-input-label {
+        color: var(--unnamed-color-ced4da);
+        font-size: 12px;
+        text-transform: uppercase;
+    }
+
+    .account-input {
+        color: var(--unnamed-color-495057) !important;
+        padding: 0;
+        border: none !important;
+        margin-bottom: 0 !important;
+        font-size: 14px !important;
+    }
+</style>
+    <script type="text/javascript">
+        addEventListener("load", (event) => {
+            const SaveListener = document.getElementById("account-save-btn");
+            let passwordChanged = false;
+
+            const updatedInputs = [
+                "FirstName",
+                "LastName",
+                "Email",
+                "Location",
+                "BirthMonth",
+                "BirthDay",
+                "BirthYear",
+                "AddressLine1",
+                "City",
+                "State",
+                "Country",
+                "PostalCode",
+                "MobilePhone"];
+            const updatedCheckboxes = [
+                "SendAccountEmails",
+                "SendAccountTexts",
+                "SendScheduleEmails",
+                "SendScheduleTexts",
+                "SendPromotionalEmails",
+                "SendPromotionalTexts"];
+            ["Password", ...updatedInputs, ...updatedCheckboxes].forEach((input) => {
+                const listener = document.getElementById(input);
+                listener.addEventListener('input', () => {
+                    SaveListener.disabled = false;
+                    if (input === "Password") {
+                        passwordChanged = true;
+                    }
+                });
+            });
+
+            function updateAccountInfo() {
+                const valuesToUpdate = {};
+                updatedInputs.forEach((inputKey) => {
+                    const input = document.getElementById(inputKey);
+                    const oldValue = input.getAttribute("data-value");
+                    if (input.value != oldValue) {
+                        valuesToUpdate[inputKey] = input.value;
+                    }
+                });
+                updatedCheckboxes.forEach((inputKey) => {
+                    const input = document.getElementById(inputKey);
+                    const oldValue = input.getAttribute("data-value") === "true";
+                    if (input.checked != oldValue) {
+                        valuesToUpdate[inputKey] = input.checked;
+                    }
+                });
+                if (passwordChanged) {
+                    valuesToUpdate.password = document.getElementById("Password").value;
+                }
+                console.log(valuesToUpdate)
+                if (Object.keys(valuesToUpdate) === 0) {
+                    passwordChanged = false;
+                    SaveListener.disabled = true;
+                    return;
+                }
+
+                document.getElementById("loadMe").style.visibility = "visible";
+                scroll(0, 0);
+                fetch(`${urlBase}/user/update`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        "authorization": `Bearer ${accessToken}`
+                    },
+                    body: JSON.stringify(valuesToUpdate),
+                }).then(res => res.json()).then(res => {
+                    getAccountData(false);
+                    passwordChanged = false;
+                    SaveListener.disabled = true;
+                    document.getElementById("loadMe").style.visibility = "hidden";
+                });
+            }
+            SaveListener.addEventListener('click', updateAccountInfo);
+        });
+    </script>
+    <script>
+        function getCCData() {
+            document.getElementById("loadMe").style.visibility = "visible";
+            fetch(`${urlBase}/user/creditCard/`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    "authorization": `Bearer ${accessToken}`
+                },
+
+            }).then((res) => res.json()).then((ccData) => {
+                document.getElementById("adr").value = ccData.Address;
+                document.getElementById("cname").value = ccData.CardHolder;
+                document.getElementById("city").value = ccData.City;
+                document.getElementById("expmonth").value = ccData.ExpMonth;
+                document.getElementById("expyear").value = ccData.ExpYear;
+                document.getElementById("ccnum").value = `XXXX-${ccData.LastFour}`;
+                document.getElementById("zip").value = ccData.PostalCode;
+                document.getElementById("state").value = ccData.State;
+
+                document.getElementById('ccMe').style.visibility = 'visible';
+                document.getElementById("loadMe").style.visibility = "hidden";
+            });
+        }
+        function deleteCC() {
+            document.getElementById("loadMe").style.visibility = "visible";
+            fetch(`${urlBase}/user/creditCard/`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    "authorization": `Bearer ${accessToken}`
+                },
+
+            }).then((res) => res.json()).then((classes) => {
+                getAccountData();
+                document.getElementById("loadMe").style.visibility = "hidden";
+            });
+        }
+        function getAccountData(shouldUpdateAppointments = true) {
+            fetch(`${urlBase}/user/account`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    "authorization": `Bearer ${accessToken}`
+                },
+
+            }).then(res => res.json()).then(res => {
+                updateAccountData(res);
+                if (shouldUpdateAppointments) updateAppointments();
+            });
+        }
+        function updateAccountData(res) {
+            document.getElementById("Location").setAttribute("data-value", res.HomeLocationId || 0)
+            document.getElementById("userName").innerHTML = `${res.FirstName} ${res.LastName}`;
+            if (res.Membership.length === 0) {
+                document.getElementById("membership").innerHTML = "No Membership Purchased";
+                document.getElementById("passesPanel").style.display = "none";
+                document.getElementById("noPassesPanel").style.display = "block";
+                localStorage.setItem('user', JSON.stringify({
+                    name: `${res.FirstName} ${res.LastName}`,
+                    membership: "No Membership Purchased",
+                }));
+            } else {
+                document.getElementById("membership").innerHTML = res.Membership[0].Name;
+                document.getElementById("SendPromotionalTexts").disabled = true;
+                localStorage.setItem('user', JSON.stringify({
+                    name: `${res.FirstName} ${res.LastName}`,
+                    membership: res.Membership[0].Name,
+                }));
+                document.getElementById("passesPanel").innerHTML = "";
+                res.Membership.forEach(membership => {
+                    const card = document.createElement("div");
+                    const cardTitle = document.createElement("div");
+                    cardTitle.innerHTML = membership.Name;
+                    cardTitle.style.color = "var(--unnamed-color-6c757d)";
+                    cardTitle.className = "medium";
+                    const cardBody = document.createElement("div");
+                    cardBody.className = "comm-table-row";
+
+                    const remaining = document.createElement("div");
+                    remaining.className = "comm-table-col";
+                    const remainingTitle = document.createElement("div");
+                    remainingTitle.innerHTML = 'Remaining Visits';
+                    remainingTitle.style.color = "var(--unnamed-color-6c757d)";
+                    remainingTitle.className = "";
+                    const remainingBody = document.createElement('div');
+                    remainingBody.innerHTML = membership.Remaining || 0;
+                    remainingBody.style.color = "var(--unnamed-color-6c757d)";
+                    remainingBody.style.fontSize = "18px";
+                    remainingBody.className = "medium";
+                    remaining.appendChild(remainingTitle);
+                    remaining.appendChild(remainingBody);
+                    cardBody.appendChild(remaining);
+
+                    const active = document.createElement("div");
+                    active.className = "comm-table-col";
+                    const activeTitle = document.createElement("div");
+                    activeTitle.innerHTML = 'Active Date';
+                    activeTitle.style.color = "var(--unnamed-color-6c757d)";
+                    const activeBody = document.createElement('div');
+                    activeBody.innerHTML = formatOrderDate(new Date(membership.ActiveDate)) || "";
+                    activeBody.style.color = "var(--unnamed-color-6c757d)";
+                    activeBody.style.fontSize = "18px";
+                    activeBody.className = "medium";
+                    active.appendChild(activeTitle);
+                    active.appendChild(activeBody);
+                    cardBody.appendChild(active);
+
+                    const expire = document.createElement("div");
+                    expire.className = "comm-table-col";
+                    const expireTitle = document.createElement("div");
+                    expireTitle.innerHTML = 'Expiration Date';
+                    expireTitle.style.color = "var(--unnamed-color-6c757d)";
+                    const expireBody = document.createElement('div');
+                    expireBody.innerHTML = formatOrderDate(new Date(membership.ExpirationDate)) || "";
+                    expireBody.style.color = "var(--unnamed-color-6c757d)";
+                    expireBody.style.fontSize = "18px";
+                    expireBody.className = "medium";
+                    expire.appendChild(expireTitle);
+                    expire.appendChild(expireBody);
+                    cardBody.appendChild(expire);
+
+                    card.appendChild(cardTitle);
+                    card.appendChild(document.createElement("br"));
+                    card.appendChild(cardBody);
+                    document.getElementById("passesPanel").appendChild(card);
+                    document.getElementById("passesPanel").appendChild(document.createElement("hr"));
+
+                });
+                document.getElementById("passesPanel").style.display = "block";
+                document.getElementById("noPassesPanel").style.display = "none";
+            }
+            document.getElementById("payment-info").innerHTML = "";
+            const ccContainer = document.createElement("div");
+            ccContainer.className = "comm-table-row";
+            if (res.ClientCreditCard?.LastFour !== "") {
+                const ccCardInfo = document.createElement("div");
+                ccCardInfo.className = "comm-table-col";
+
+                const ccCardInfoTitle = document.createElement("div");
+                ccCardInfoTitle.innerHTML = `${res.ClientCreditCard.CardType}  -  ${res.ClientCreditCard.CardHolder}`;
+                ccCardInfoTitle.className = "";
+
+                const ccCardInfoBody = document.createElement("div");
+                ccCardInfoBody.innerHTML = `XXXX-${res.ClientCreditCard.LastFour}`;
+                ccCardInfo.appendChild(ccCardInfoTitle);
+                ccCardInfo.appendChild(ccCardInfoBody);
+                ccContainer.appendChild(ccCardInfo);
+
+
+                const ccActions = document.createElement("div");
+                ccActions.className = "comm-table-row";
+
+                const ccEdit = document.createElement("div");
+                ccEdit.className = "comm-table-col";
+                ccEdit.innerHTML = "EDIT"
+                ccEdit.style.cursor = "pointer";
+                ccEdit.onclick = () => getCCData();
+
+                const ccDelete = document.createElement("div");
+                ccDelete.className = "comm-table-col";
+                ccDelete.innerHTML = "DELETE";
+                ccDelete.style.cursor = "pointer";
+                ccDelete.onclick = () => deleteCC();
+
+                const ccSpacer = document.createElement("div");
+                ccSpacer.innerHTML = "&nbsp;&nbsp;|&nbsp;&nbsp;";
+
+                ccActions.appendChild(ccEdit);
+                ccActions.appendChild(ccSpacer);
+                ccActions.appendChild(ccDelete);
+                ccContainer.appendChild(ccActions);
+                /*
+                ClientCreditCard": {
+                            "Address": null,
+                            "CardHolder": null,
+                            "CardNumber": "************7655",
+                            "CardType": "Visa",
+                            "City": null,
+                            "ExpMonth": "01",
+                            "ExpYear": "2027",
+                            "LastFour": "7655",
+                            "PostalCode": null,
+                            "State": "0"
+                        },
+                */
+            } else {
+                const ccAddNew = document.createElement("div");
+                ccAddNew.className = "comm-table-col";
+                ccAddNew.innerHTML = "ADD CC";
+                ccAddNew.style.cursor = "pointer";
+                // ccAddNew.onclick = () => addNew();
+                ccContainer.appendChild(ccAddNew);
+            }
+            document.getElementById("payment-info").appendChild(ccContainer);
+            let arrayBirthDate = [1900, 1, 1];
+            if (res.BirthDate != "") {
+                const birthDate = res.BirthDate.split("T")[0];
+                arrayBirthDate = birthDate.split("-");
+            }
+            const birthMonth = document.getElementById("BirthMonth");
+            birthMonth.innerHTML = "";
+            birthMonth.setAttribute("data-value", arrayBirthDate[1]);
+            for (i = 1; i <= 12; i++) {
+                const option = document.createElement("option");
+                option.value = i;
+                option.text = i;
+                option.selected = i == arrayBirthDate[1];
+                birthMonth.appendChild(option);
+            }
+            const birthDay = document.getElementById("BirthDay");
+            birthDay.innerHTML = "";
+            birthDay.setAttribute("data-value", arrayBirthDate[2]);
+            let maxDays = 31;
+            if ([4, 6, 9, 11].includes(arrayBirthDate[2])) {
+                maxDays = 30;
+            } else if (arrayBirthDate[2] == 2) {
+                maxDays = 28;
+            }
+            for (i = 1; i <= maxDays; i++) {
+                const option = document.createElement("option");
+                option.value = i;
+                option.text = i;
+                option.selected = i == arrayBirthDate[2];
+                birthDay.appendChild(option);
+            }
+            const birthYear = document.getElementById("BirthYear");
+            birthYear.innerHTML = "";
+            birthYear.setAttribute("data-value", arrayBirthDate[0]);
+            const currentYear = new Date().getFullYear();
+            for (i = currentYear; i >= 1900; i--) {
+                const option = document.createElement("option");
+                option.value = i;
+                option.text = i;
+                option.selected = i == arrayBirthDate[0];
+                birthYear.appendChild(option);
+            }
+
+            document.getElementById("FirstName").value = res.FirstName;
+            document.getElementById("FirstName").setAttribute("data-value", res.FirstName);
+            document.getElementById("LastName").value = res.LastName;
+            document.getElementById("LastName").setAttribute("data-value", res.LastName);
+
+            document.getElementById("AddressLine1").value = res.AddressLine1;
+            document.getElementById("AddressLine1").setAttribute("data-value", res.AddressLine1);
+            document.getElementById("City").value = res.City;
+            document.getElementById("City").setAttribute("data-value", res.City);
+            document.getElementById("State").value = res.State;
+            document.getElementById("State").setAttribute("data-value", res.State);
+            document.getElementById("PostalCode").value = res.PostalCode;
+            document.getElementById("PostalCode").setAttribute("data-value", res.PostalCode);
+            document.getElementById("Country").value = res.Country;
+            document.getElementById("Country").setAttribute("data-value", res.Country);
+
+            document.getElementById("Email").value = res.Email;
+            document.getElementById("Email").setAttribute("data-value", res.Email);
+            document.getElementById("MobilePhone").value = res.MobilePhone;
+            document.getElementById("MobilePhone").setAttribute("data-value", res.MobilePhone);
+            document.getElementById("SendAccountEmails").checked = !!res.SendAccountEmails;
+            document.getElementById("SendAccountEmails").setAttribute("data-value", res.SendAccountEmails);
+            document.getElementById("SendAccountTexts").checked = !!res.SendAccountTexts;
+            document.getElementById("SendAccountTexts").setAttribute("data-value", res.SendAccountTexts);
+            document.getElementById("SendPromotionalEmails").checked = !!res.SendPromotionalEmails;
+            document.getElementById("SendPromotionalEmails").setAttribute("data-value", res.SendPromotionalEmails);
+            document.getElementById("SendPromotionalTexts").checked = !!res.SendPromotionalTexts;
+            document.getElementById("SendPromotionalTexts").setAttribute("data-value", res.SendPromotionalTexts);
+            document.getElementById("SendScheduleEmails").checked = !!res.SendScheduleEmails;
+            document.getElementById("SendScheduleEmails").setAttribute("data-value", res.SendScheduleEmails);
+            document.getElementById("SendScheduleTexts").checked = !!res.SendScheduleTexts;
+            document.getElementById("SendScheduleTexts").setAttribute("data-value", res.SendScheduleTexts);
+        }
+
+  getAccountData();
+</script>
+<div id="account-tab" class="tabcontent">
+  <div class="panel">
+    <div class="info-title medium">BASIC INFO</div>
+    <hr class="account-hr">
+    <div class="flex-col start">
+      <label class="account-input-label SF" for="FirstName">First Name</label>
+      <input class="account-input SF" type="text" id="FirstName" name="FirstName" placeholder="First Name">
+    </div>
+    <hr class="account-hr">
+    <div class="flex-col start">
+      <label class="account-input-label SF" for="LastName">Last Name</label>
+      <input class="account-input SF" type="text" id="LastName" name="LastName" placeholder="Last Name">
+    </div>
+    <hr class="account-hr">
+    <div class="flex-col start">
+      <label class="account-input-label SF" for="Email">Email</label>
+      <input class="account-input SF" type="text" id="Email" name="Email" placeholder="Email">
+    </div>
+    <hr class="account-hr">
+    <div class="flex-col start">
+      <label class="account-input-label SF" for="Password">Password</label>
+      <input class="account-input SF" type="password" id="Password" name="Password" placeholder="********">
+  </div>
+    <hr class="account-hr">
+    <div class="flex-col start">
+      <label class="account-input-label SF" for="Location">Preferred Location</label>
+      <select class="account-input SF" name="Location" id="Location">
+      </select>
+    </div>
+    <hr class="account-hr">
+    <div class="comm-table-col">
+      <div class="account-input-label SF">Birthday</div>
+      <div class="comm-table-row">
+        <select style="padding-right: 13px;width: 60px;" class="account-input SF" id="BirthMonth">
+          <option value="1">1</option>
+        </select>
+        <select style="padding-right: 13px;width: 60px;" class="account-input SF" id="BirthDay">
+          <option value="1">1</option>
+        </select>
+        <select style="padding-right: 13px;width: 60px;" class="account-input SF" id="BirthYear">
+          <option value="1900">1900</option>
+        </select>
+      </div>
+    </div>
+    <hr class="account-hr">
+  </div>
+
+  <div class="panel">
+    <div class="info-title medium">PAYMENT INFO</div>
+    <hr class="account-hr">
+    <div id="payment-info"></div>
+    <hr class="account-hr">
+  </div>
+
+  <div class="panel">
+    <div class="info-title medium">CONTACT INFO</div>
+    <hr class="account-hr">
+    <div class="flex-col start">
+      <label class="account-input-label SF" for="AddressLine1">Address</label>
+      <input class="account-input SF" type="text" id="AddressLine1" name="AddressLine1" placeholder="Address">
+    </div>
+    <hr class="account-hr">
+    <div class="flex-col start">
+      <label class="account-input-label SF" for="City">City</label>
+      <input class="account-input SF" type="text" id="City" name="City" placeholder="City">
+    </div>
+    <hr class="account-hr">
+    <div class="flex-col start">
+      <label class="account-input-label SF" for="State">State</label>
+      <input class="account-input SF" type="text" id="State" name="State" placeholder="State">
+    </div>
+    <hr class="account-hr">
+    <div class="flex-col start">
+      <label class="account-input-label SF" for="Country">Country</label>
+      <input class="account-input SF" type="text" id="Country" name="Country" placeholder="Country">
+    </div>
+    <hr class="account-hr">
+    <div class="flex-col start">
+      <label class="account-input-label SF" for="PostalCode">Postal Code</label>
+      <input class="account-input SF" type="text" id="PostalCode" name="PostalCode" placeholder="PostalCode">
+    </div>
+    <hr class="account-hr">
+    <div class="flex-col start">
+      <label class="account-input-label SF" for="MobilePhone">Mobile Phone</label>
+      <input class="account-input SF" type="text" id="MobilePhone" name="MobilePhone"
+        placeholder="MobilePhone">
+    </div>
+    <hr class="account-hr">
+  </div>
+
+  <div class="panel">
+    <div class="info-title medium">WHAT DO YOU WANT TO HEAR ABOUT?</div>
+    <hr class="account-hr">
+
+    <hr class="account-hr">
+    <div class="comm-table-row">
+      <div class="comm-table-col">
+        <div class="SF" style="font-size:12px;color:var(--unnamed-color-6c757d)">ACCOUNT MANAGEMENT</div>
+        <div class="SF" style="font-size:12px;color:var(--unnamed-color-495057)">Subscribe to reminders &
+          notifications</div>
+      </div>
+      <div class="comm-table-row" style="gap:14px;">
+        <label class="comm-check-label" for="SendAccountEmails"
+          style="font-size:12px;color:var(--unnamed-color-6c757d)">EMAIL</label>
+        {% render "_round-checkbox", id:"SendAccountEmails" %}
+        <div>&nbsp;</div>
+        <div style="font-size:12px;color:var(--unnamed-color-6c757d)">SMS</div>
+        {% render "_round-checkbox", id:"SendAccountTexts" %}
+        <div style="width:13px;height:13px;">&nbsp;</div>
+      </div>
+    </div>
+    <hr class="account-hr">
+    <div class="comm-table-row">
+      <div class="comm-table-col">
+        <div class="SF" style="font-size:12px;color:var(--unnamed-color-6c757d)">SCHEDULE UPDATES</div>
+        <div class="SF" style="font-size:12px;color:var(--unnamed-color-495057)">A heads-up before bookings
+          or when you schedule changes</div>
+      </div>
+      <div class="comm-table-row" style="gap:14px;">
+        <div style="font-size:12px;color:var(--unnamed-color-6c757d)">EMAIL</div>
+        {% render "_round-checkbox", id:"SendScheduleEmails" %}
+        <div>&nbsp;</div>
+        <div style="font-size:12px;color:var(--unnamed-color-6c757d)">SMS</div>
+        {% render "_round-checkbox", id:"SendScheduleTexts" %}
+        <div style="width:13px;height:13px;">&nbsp;</div>
+      </div>
+    </div>
+    <hr class="account-hr">
+    <div class="comm-table-row">
+      <div class="comm-table-col">
+        <div class="SF" style="font-size:12px;color:var(--unnamed-color-6c757d)">NEWS & PROMOS</div>
+        <div class="SF" style="font-size:12px;color:var(--unnamed-color-495057)">Subscribe to reminders &
+          notifications</div>
+      </div>
+      <div class="comm-table-row" style="gap:14px;">
+        <div style="font-size:12px;color:var(--unnamed-color-6c757d)">EMAIL</div>
+        {% render "_round-checkbox", id:"SendPromotionalEmails" %}
+        <div>&nbsp;</div>
+        <div style="font-size:12px;color:var(--unnamed-color-6c757d)">SMS</div>
+        {% render "_round-checkbox", id:"SendPromotionalTexts" %}
+        <img src="https://static.mindbodyonline.com/a/asp/adm/images/info-icon-dark.svg" alt=""
+          title="For privacy reasons, you have to opt in to promotional messages directly through mindbody.">
+      </div>
+    </div>
+  </div>
+
+  <div class="panel" style="padding:0;">
+    <button id="account-save-btn" class="account-save-btn" disabled>SAVE CHANGES</button>
+  </div>
+</div>

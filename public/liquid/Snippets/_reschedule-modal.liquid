@@ -1,0 +1,42 @@
+<style>
+
+  #rescheduleModal {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+
+  .reschedule-modal {
+    width: auto;
+    left: 0px;
+    right: 0px;
+    max-width: 100%;
+    height: auto;
+    top: 0px;
+    bottom: 0px;
+    max-height: 100%;
+
+    border-radius: 0px;
+    padding: 100px;
+    visibility: hidden;
+
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    position: absolute;
+    background-color: black;
+    opacity: 1;
+    clear: both;
+  }
+  
+</style>
+<!-- Reschedule Modal -->
+<div class="modal fade reschedule-modal" id="rescheduleMe" tabindex="-1" role="dialog"
+  aria-labelledby="rescheduleMeLabel">
+  <div class="modal-dialog modal-sm" role="document" style="background-color:#eee;width:100%;">
+    <div class="modal-content" style="width:100%;padding:50px;box-sizing: border-box;">
+      <div id="rescheduleModal" class="modal-body text-center"></div>
+    </div>
+  </div>
+</div>

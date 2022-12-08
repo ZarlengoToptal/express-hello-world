@@ -1,0 +1,172 @@
+
+<style>
+    /* #myDropdown */
+       .login-menu-hr {
+        border: 0;
+        clear: both;
+        display: block;
+        width: 100%;
+        background-color: #E9ECEF;
+        height: 1px;
+        margin: 0;
+    }
+
+    .link-drp {
+        text-decoration: underline;
+        cursor: pointer;
+    }
+
+    .dropdown-content a {
+        float: none;
+        color: #212529;
+        padding: 14px 36px;
+        text-decoration: none;
+        display: block;
+        text-align: left;
+    }
+
+    .dropdown-content a:hover {
+        background-color: #ddd;
+    }
+
+    .show {
+        display: block;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: fixed;
+        background-color: #fff;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+        right: 200px;
+        top:70px;
+        width: 300px;
+        background: #FFFFFF 0% 0% no-repeat padding-box;
+        box-shadow: 0px 3px 6px #0000000D;
+        border: 1px solid #CFD4D9;
+        border-radius: 4px;
+        opacity: 1;
+    }
+  .drop-btn {
+    width: auto !important;
+    flex-shrink: 0;
+  }
+  #logged-in-drop-dwn {
+    display: none;
+  }
+  .account-header-username {
+    text-decoration:underline;
+    font-size:12px;
+    width: 100%;
+    text-align: end;    
+  }
+</style>
+<div id="membership-user-icon" class="flex-row" style="height:100%">
+  <div id="signin-nav" onclick="document.getElementById('signin-modal').style.display='flex'" class="account-header-username SF point">
+    SIGN IN
+  </div>
+  <div id="user-nav" class="flex-col" style="display:none;">
+      <div id="name-nav" class="account-header-username SF">
+          USER
+      </div>
+      <div id="membership-nav" style="font-size:12px; width: 100%;text-align: end;">
+          Membership
+      </div>
+  </div>
+  <button id="account-menu" onclick="accountMenuFunction(event)" class="navlink drop-btn">
+    {% if section.settings.use_icons %}
+      {% render 'icon-account' %}
+      <span class="visually-hidden drop-btn">{{ 'customer.account.title' | t }}</span>
+    {% else %}
+      <span class="navtext ">{{ 'layout.customer.account' | t }}</span>
+    {% endif %}
+  </button>
+  <div id="myDropdown" class="dropdown-content">
+    <div id="logged-in-drop-dwn">
+      <a class="link-drp SF" href="/pages/account?tab=appointments">Appointments</a>
+      <hr class="login-menu-hr">
+      <a class="link-drp SF" href="/pages/account?tab=history">History</a>
+      <hr class="login-menu-hr">
+      <a class="link-drp SF" href="/pages/account?tab=passes">Passes</a>
+      <hr class="login-menu-hr">
+      <a class="link-drp SF" href="/pages/account?tab=purchases">Purchases</a>
+      <hr class="login-menu-hr">
+      <a class="link-drp SF" href="/pages/account?tab=orders">Order History</a>
+      <hr class="login-menu-hr">
+      <a class="link-drp SF" href="/pages/account?tab=account-tab">Account Info</a>
+      <hr class="login-menu-hr">
+      <a class="bold link-drp SF" style="color:#343A40" onclick="headerLogout(event)">Logout</a>
+    </div>
+    <div id="logged-out-drop-dwn">
+      <a class="bold link-drp SF" style="color:#343A40" onclick="openHeaderLoginModal();">Sign In</a>
+    </div>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+    const headerUrlBase = "https://formula-fig-staging.cyclic.app";
+    const accessToken = localStorage.getItem('accessToken');
+    let loggedIn = accessToken !== null;
+    const setHeader = () => {
+        if (!loggedIn) {
+            document.getElementById("user-nav").style.display = "none";
+            document.getElementById("signin-nav").style.display = "block";
+            document.getElementById("logged-out-drop-dwn").style.display = "block";
+            document.getElementById("logged-in-drop-dwn").style.display = "none";
+        } else {
+            document.getElementById("logged-out-drop-dwn").style.display = "none";
+            document.getElementById("logged-in-drop-dwn").style.display = "block";
+            const { name, membership } = JSON.parse(localStorage.getItem('user'));
+            document.getElementById("name-nav").innerHTML = `<u>${name}</u>`;
+            document.getElementById("membership-nav").innerHTML = membership;
+            document.getElementById("user-nav").style.display = "flex";
+            document.getElementById("signin-nav").style.display = "none";
+        }
+    }
+  
+    function accountMenuFunction(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        document.getElementById("myDropdown").classList.add("show");
+    }
+  
+  window.addEventListener('load', function () {
+        // Close the dropdown menu if the user clicks outside of it
+      setHeader();
+    })
+    function headerLogout(e) {
+        e.preventDefault();
+        fetch(`${headerUrlBase}/auth/logout`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                "authorization": `Bearer ${accessToken}`
+            },
+        }).then(res => {
+            loggedIn = false;
+            localStorage.removeItem('accessToken');
+            localStorage.removeItem('user');
+            setHeader();
+            if (window.location.pathname.includes("account")) {
+              window.location.href = '/';
+            }
+        })
+    }
+    // Get the modal
+    var signInModal = document.getElementById('signin-modal');
+    const accountMenu = document.getElementById('account-menu');
+
+    // When the user clicks anywhere outside of the modal, close it
+  window.addEventListener('click', function (event) {
+        if (event.target == signInModal) {
+          console.log('signinModal')
+            modal.style.display = "none";
+        }
+        document.getElementById("myDropdown").classList.remove("show");
+    });
+
+
+</script>

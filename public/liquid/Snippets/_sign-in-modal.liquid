@@ -1,0 +1,236 @@
+<style>
+    .signin-modal-title {
+      font-size: 22px;
+    }
+    .signin-modal-input {
+        padding: 12px 20px;
+        display: inline-block;
+        box-sizing: border-box;
+        color: var(--unnamed-color-adb5bd) !important;
+        border: 0 !important;
+        border-bottom: 1px solid var(--unnamed-color-adb5bd) !important;
+    }
+    .signin-modal-input.filled {
+        color: var(--unnamed-color-6c757d);
+        border-bottom: 1px solid var(--unnamed-color-6c757d);
+    }
+
+    .signin-modal-sub-btn {
+        width: 300px;
+        height: 40px;
+        opacity: 1;
+        background: #343A40;
+        color: #FFFFFF;
+        margin-top: 28px;
+        margin-bottom: 23px;
+        border: 0;
+
+    }
+
+    .signin-modal-inv-btn {
+        width: 300px;
+        height: 40px;
+        opacity: 1;
+        background-color: #fff;
+        color: #212529;
+        font-weight: 500;
+        border: 1px solid #CED4DA;
+        margin-bottom: 48px;
+    }
+
+    signin-modal-new-psw {
+        float: right;
+        padding-top: 16px;
+        text-decoration: underline;
+    }
+
+    .signin-modal-hr {
+        border: 0;
+        clear: both;
+        display: block;
+        width: 100%;
+        background-color: #E9ECEF;
+        height: 1px;
+        margin: 28px 0;
+    }
+
+    .signin-modal {
+        display: none;
+        /* Hidden by default */
+        position: fixed;
+        /* Stay in place */
+        z-index: 10000;
+        /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%;
+        /* Full width */
+        height: 100%;
+        /* Full height */
+        overflow: auto;
+        /* Enable scroll if needed */
+        background-color: rgb(0, 0, 0);
+        /* Fallback color */
+        background-color: rgba(0, 0, 0, 0.4);
+        /* Black w/ opacity */
+        justify-content: center;
+        align-items: center;
+    }
+
+    .signin-modal-container {
+        width: 536px;
+        /* UI Properties */
+        background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
+        background: #FFFFFF 0% 0% no-repeat padding-box;
+        opacity: 1;
+        padding: 60px 0 46px;
+        position: relative;
+    }
+
+    .signin-modal-content {
+        margin: auto;
+        /* Could be more or less, depending on screen size */
+        box-sizing: content-box;
+        width: 300px;
+      
+    }
+    .signin-modal-text{
+      font-size:16px;
+      margin-bottom:34px;
+      margin-top:11px;
+      max-width:300px;
+      text-align: center;
+      display: none;
+      color: var(--unnamed-color-212529);
+    }
+    .signin-modal-title{
+      font-size:22px;
+      max-width:300px;
+      text-align: center;
+      display: none;
+    }
+    .signin-modal-close-button {
+      position: absolute;
+      right: 25px;
+      top: 23px;
+      background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
+      border: 1px solid #CFD4D9;
+      opacity: 1;
+      width: 40px;
+      height: 40px;
+      opacity: 0.3;
+    }
+    .signin-modal-close-button:before, .signin-modal-close-button:after {
+      position: absolute;
+      left: 19px;
+      content: " ";
+      height: 38px;
+      width: 2px;
+      background-color: #333;
+    }
+    .signin-modal-close-button:hover {
+      opacity: 1;
+    }
+    .signin-modal-close-button:before {
+      transform: rotate(45deg);
+    }
+    .signin-modal-close-button:after {
+      transform: rotate(-45deg);
+    }
+</style>
+
+<script type="text/javascript">
+  function openHeaderLoginModal(isBooking = false) {
+    document.getElementById('signin-modal').style.display='flex';
+    if (isBooking) {
+       document.getElementById("signin-modal-title-booking").classList.add("show");
+       document.getElementById("signin-modal-text-booking").classList.add("show");
+       document.getElementById("signin-modal-title-user").classList.remove("show");
+       document.getElementById("signin-modal-text-user").classList.remove("show");
+      return;
+    }
+       document.getElementById("signin-modal-title-user").classList.add("show");
+       document.getElementById("signin-modal-text-user").classList.add("show"); 
+       document.getElementById("signin-modal-title-booking").classList.remove("show");
+       document.getElementById("signin-modal-text-booking").classList.remove("show");   
+  }
+  function headerValidateForm() {
+      event.preventDefault();
+      var uname = document.forms["signin-myForm"]["uname"].value;
+      var psw = document.forms["signin-myForm"]["psw"].value;
+      if (uname == "") {
+          alert("Name must be filled out");
+          return false;
+      }
+      if (psw == "") {
+          alert("Password must be filled out");
+          return false;
+      }
+      fetch(`${headerUrlBase}/auth/login`, {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ email: uname, password: psw, return_to: window.location.href })
+      }).then(res => res.json()).then(res => {
+          localStorage.setItem("accessToken", res.accessToken);
+          const shopifyUrl = res.url;
+          fetch(`${headerUrlBase}/user/account`, {
+              method: 'GET',
+              headers: {
+                  'Content-Type': 'application/json',
+                  "authorization": `Bearer ${res.accessToken}`
+              },
+          }).then(res => res.json()).then(res => {
+              if (res.Membership.length === 0) {
+                  localStorage.setItem('user', JSON.stringify({
+                      name: `${res.FirstName} ${res.LastName}`,
+                      membership: "No Membership Purchased",
+                  }));
+              } else {
+                  localStorage.setItem('user', JSON.stringify({
+                      name: `${res.FirstName} ${res.LastName}`,
+                      membership: res.Membership[0].Name,
+                  }));
+              }
+              document.getElementById("myDropdown").classList.remove("show");
+              document.getElementById('signin-modal').style.display = 'none';
+              loggedIn = true;
+              setHeader();
+              window.location.replace(shopifyUrl);
+          })
+      })
+  }
+</script>
+
+<div id="signin-modal" class="signin-modal">
+  <div class="signin-modal-container">
+    <span onclick="document.getElementById('signin-modal').style.display='none'" class="signin-modal-close-button"></span>
+  <form
+    name="signin-myForm"
+    class="signin-modal-content animate flex-col"
+    onSubmit="return headerValidateForm()"
+  >
+    <div id="signin-modal-title-booking" class="signin-modal-title SF">Book your appointment</div>
+    <div id="signin-modal-title-user" class="signin-modal-title SF">Sign In</div>
+    <div id="signin-modal-text-booking regular" class="signin-modal-text">
+      Please sign in or create an account to secure your booking.
+    </div>
+    <div id="signin-modal-text-user regular" class="signin-modal-text">WELCOME BACK</div>
+    <input class="signin-modal-input SF" type="text" placeholder="Email" name="uname" required>
+    <input class="signin-modal-input SF" type="password" placeholder="Password" name="psw" required>
+
+    <button type="submit" class="signin-modal-sub-btn SF medium">SIGN IN</button>
+    <span class="signin-modal-new-psw SF">Need a new password?</span>
+    <hr class="signin-modal-hr">
+    <button
+      type="button"
+      onclick="document.getElementById('signin-modal').style.display='none'"
+      class="signin-modal-inv-btn SF"
+    >
+      CREATE PROFILE
+    </button>
+    <img src="https://via.placeholder.com/16x20" class="signin-logo" alt="company-logo">
+    </div>
+  </form>
+</div>

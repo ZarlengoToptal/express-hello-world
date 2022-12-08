@@ -1,0 +1,149 @@
+<style>
+    .account-hr {
+        border: 1px solid #EAECEF;
+        margin-top: 18px;
+        margin-bottom: 18px;
+    }
+
+    /* Style the tab */
+    .tab {
+        overflow: hidden;
+    }
+
+    /* Style the buttons that are used to open the tab content */
+    .tab button {
+        background-color: inherit;
+        float: left;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 14px 16px;
+        transition: 0.3s;
+    }
+
+    /* Change background color of buttons on hover */
+    .tab button:hover {
+        background-color: #ddd;
+    }
+
+    /* Create an active/current tablink class */
+    .tab button.active {
+        border-bottom: 2px solid black;
+        color: #343A40;
+        font-weight: 500;
+    }
+
+    /* Style the tab content */
+    .tabcontent {
+        display: none;
+    }
+
+    .panel {
+        width: auto;
+        left: 0px;
+        right: 0px;
+        max-width: 100%;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 0px;
+        padding: 30px 39px;
+        margin: 18px 100px 0;
+    }
+
+    .tab-links {
+        color: var(--unnamed-color-6c757d);
+        font-size: 14px !important;
+    }
+
+    .panel-title {
+        font-size: 22px;
+    }
+
+
+</style>
+<div class="account-body">
+    <div class="panel" style="padding-bottom: 0; margin-top: 91px;">
+        <div class="flex-row" style="justify-content:space-between">
+            <div style="color:var(--unnamed-color-adb5bd)" class="medium">YOUR ACCOUNT</div>
+            <img src="https://via.placeholder.com/18x23" alt="company-logo">
+        </div>
+        <hr class="account-hr">
+        <div class="comm-table-row">
+            <div class="comm-table-col">
+                <span id="userName" class="SF">User</span>
+                <span id="membership" style="margin-top: 8px;color:var(--unnamed-color-6c757d)" ;">No Membership
+                    Purchased</span>
+            </div>
+            <div style="cursor: pointer;color:var(--unnamed-color-6C757D);text-decoration: underline;" class="medium SF"
+                onclick="headerLogout(event)">Log out</div>
+        </div>
+        <hr class="account-hr">
+        <div class="tab">
+            <button id="appointments-btn" class="tab-links active SF"
+                onclick="openTab(event, 'appointments')">Appointments</button>
+            <button id="history-btn" class="tab-links SF" onclick="openTab(event, 'history')">History</button>
+            <button id="passes-btn" class="tab-links SF" onclick="openTab(event, 'passes')">Passes</button>
+            <button id="purchases-btn" class="tab-links SF" onclick="openTab(event, 'purchases')">Purchases</button>
+            <button id="orders-btn" class="tab-links SF" onclick="openTab(event, 'orders')">Order
+                History</button>
+            <button id="account-tab-btn" class="tab-links SF" onclick="openTab(event, 'account-tab')">Account
+                Info</button>
+        </div>
+    </div>
+    {% render '_account-visits' %}
+    <div id="passes" class="tabcontent">
+        <div class="panel" id="passesPanel" style="display:none;"></div>
+        <div class="panel" id="noPassesPanel">
+            <p class="panel-title">Time to buy a pass or autopay?</p>
+            <p style="color:var(--unnamed-color-495057)">Your passes and autopays will show up here, ready for use.</p>
+            <hr class="account-hr">
+        </div>
+    </div>
+    <div id="purchases" class="tabcontent">
+        <div class="panel" id="purchasesPanel" style="display:none;"></div>
+        <div class="panel" id="noPurchasesPanel">
+            <p class="panel-title">Looks like you haven't purchased anything yet.</p>
+            <p style="color:var(--unnamed-color-495057)">Your past purchases will be saved here for easy reference.</p>
+            <hr class="account-hr">
+        </div>
+    </div>
+    {% render '_account-orders' %}
+    {% render '_account-info' %}
+    <script type="text/javascript">
+        if (!accessToken) {
+            window.location.href = `/pages/login`;
+        }
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const tab = urlParams.get('tab')
+        if (tab) {
+            openTab(null, tab);
+        }
+
+        document.getElementById("loadMe").style.visibility = "visible";
+
+        function openTab(evt, tabName) {
+            // Declare all variables
+            var i, tabcontent, tab-links;
+
+            // Get all elements with class="tabcontent" and hide them
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+
+            // Get all elements with class="tab-links" and remove the class "active"
+            tab-links = document.getElementsByClassName("tab-links");
+            for (i = 0; i < tab-links.length; i++) {
+                tab-links[i].className = tab-links[i].className.replace(" active", "");
+            }
+
+            // Show the current tab, and add an "active" class to the button that opened the tab
+            document.getElementById(tabName).style.display = "block";
+            if (evt) {
+                evt.currentTarget.className += " active";
+            } else {
+                document.getElementById(`${tabName}-btn`).className += " active";
+            }
+        }
+    </script>

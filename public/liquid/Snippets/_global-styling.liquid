@@ -1,0 +1,100 @@
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@400;500&display=swap');
+  @import url('https://fonts.cdnfonts.com/css/sf-pro-display');
+:root {
+  --header-height: 64px;
+  --announcemnt-height: 25px;
+  --top-shift: 91px;
+  /* Colors: */
+  --unnamed-color-212529: #212529; /*  33  37  41 -> grey90 */
+  --unnamed-color-343a40: #343A40; /*  52  58  64 -> grey80 */
+  --unnamed-color-495057: #495057; /*  73  80  87 -> grey70 */
+  --unnamed-color-6c757d: #6C757D; /* 108 117 125 -> grey60 */
+  --unnamed-color-adb5bd: #ADB5BD; /* 173 181 189 -> grey30 */
+  --unnamed-color-ced4da: #CED4DA; /* 206 212 218 -> grey20 */
+  --unnamed-color-e9ecef: #E9ECEF; /* 233 236 239 -> grey10 */
+  --unnamed-color-ffffff: #FFFFFF; /* 255 255 255 -> grey00 */
+}
+
+  body {
+    font-size: 14px;
+    height: 100%;
+    padding: 0px;
+    margin: 0px;
+    background-color: #F2F4F5;
+    color: var(--unnamed-color-343a40);
+    font-weight: 400;
+  }
+  .SF {
+    font-family: 'SF Pro Display', sans-serif !important;
+  }
+  .medium {
+    font-weight: 700;
+  }
+  .SF.medium {
+    font-weight: 500 !important; /* Missing 500 file for Grotesk */
+  }
+
+  .bold {
+    font-weight: 700;
+  }
+
+  .main-content {
+    top: var(--top-shift);
+    color: var(--unnamed-color-343a40) !important;
+  }
+  .show {
+    display: block;
+  }
+  .flex-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .flex-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .start {
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+  .point {
+    cursor: pointer;
+  }
+  
+  .modal {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    position: absolute;
+    background-color: black;
+    opacity: .9;
+    top: 0;
+    z-index: 50;
+  }
+
+  .modal-content {
+    border-radius: 0px;
+    box-shadow: 0 0 20px 8px rgba(0, 0, 0, 0.7);
+    width: 100px;
+  }
+  .comm-table-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .comm-table-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+</style>

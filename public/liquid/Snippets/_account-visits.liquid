@@ -1,0 +1,359 @@
+<script type="text/javascript">// thanks to https://jsfiddle.net/UselessCode/qm5AG/ as a starting point
+  var icsFile = null;
+  function makeIcsFile(date, summary, description) {
+    var test =
+      "BEGIN:VCALENDAR\n" +
+      "CALSCALE:GREGORIAN\n" +
+      "METHOD:PUBLISH\n" +
+      "PRODID:-//Test Cal//EN\n" +
+      "VERSION:2.0\n" +
+      "BEGIN:VEVENT\n" +
+      "UID:test-1\n" +
+      "DTSTART;VALUE=DATE:" +
+      convertDate(date.start) +
+      "\n" +
+      "DTEND;VALUE=DATE:" +
+      convertDate(date.end) +
+      "\n" +
+      "SUMMARY:" +
+      summary +
+      "\n" +
+      "DESCRIPTION:" +
+      description +
+      "\n" +
+      "END:VEVENT\n" +
+      "END:VCALENDAR";
+
+    var data = new File([test], { type: "text/plain" });
+
+    // If we are replacing a previously generated file we need to
+    // manually revoke the object URL to avoid memory leaks.
+    if (icsFile !== null) {
+      window.URL.revokeObjectURL(icsFile);
+    }
+
+    icsFile = window.URL.createObjectURL(data);
+
+    return icsFile;
+  }
+</script>
+<script>
+  function closeReschedule() {
+    document.getElementById("rescheduleMe").style.visibility = "hidden";
+  }
+  function cancelAppointment(dataId) {
+    fetch(`${urlBase}/user/visits/${dataId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        "authorization": `Bearer ${accessToken}`
+      },
+    }).then((res) => {
+      updateAppointments();
+    });
+  }
+  function processReschedule(cancelId, classId) {
+    document.getElementById("loadMe").style.visibility = "visible";
+    closeReschedule();
+    fetch(`${urlBase}/user/visits/${classId}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        "authorization": `Bearer ${accessToken}`
+      },
+    }).then((res) => {
+      cancelAppointment(cancelId);
+    });
+  }
+  function rescheduleAppointment(dataId) {
+    document.getElementById("loadMe").style.visibility = "visible";
+
+    fetch(`${urlBase}/user/reschedule/${dataId}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        "authorization": `Bearer ${accessToken}`
+      },
+    }).then((res) => res.json()).then((classes) => {
+      document.getElementById("loadMe").style.visibility = "hidden";
+      const rescheduleModal = document.getElementById("rescheduleModal");
+      rescheduleModal.innerHTML = '<div class="comm-table-row" style="width:100%;align-items:flex-end"><div class="SF" style="font-size:22px;">Select your appointment:</div><span class="close" onclick="closeReschedule()">&times;</span></div>';
+      rescheduleModal.style.opacity = 1;
+      classDates = {};
+      classes.map((classData) => {
+          const [date, time] = classData.StartDateTime.split('T');
+          if (Object.keys(classDates).includes(date)) {
+              classDates[date].push(classData);
+          } else {
+              classDates[date] = [classData];
+          }
+      });
+
+      Object.keys(classDates).map((dateKey) => {
+        const dateDiv = document.createElement('div');
+        dateDiv.style.marginBottom = '29px';
+        const dateTitle = document.createElement('div');
+        dateTitle.innerHTML = formatAppointmentDate(new Date(`${dateKey}T00:00:00`));
+        dateTitle.style.textAlign = "left";
+        dateTitle.className = "";
+        dateTitle.style.color = "var(--unnamed-color-adb5bd)";
+        dateTitle.style.marginBottom = '29px';
+        dateTitle.style.fontSize = '12px';
+        dateDiv.appendChild(dateTitle);
+
+        const dateContainer = document.createElement('div');
+        dateContainer.className = "comm-table-row";
+
+        classDates[dateKey].map((appt) => {
+          const apptDiv = document.createElement('div');
+          apptDiv.className = "comm-table-col";
+          apptDiv.style.backgroundColor = "#fff";
+          apptDiv.style.border = "1px solid #CFD4D9";
+          apptDiv.style.padding = "26px 94px";
+          apptDiv.style.textTransform = "uppercase";
+          apptDiv.style.alignItems = "center";
+          apptDiv.style.cursor = "pointer";
+          apptDiv.onclick = () => processReschedule(dataId, appt.ClassId);
+
+          const time = document.createElement('div');
+          time.innerHTML = formatAMPM(new Date(appt.StartDateTime));
+          time.style.color = "var(--unnamed-color-212529)";
+          time.style.fontSize = "16px";
+
+          const name = document.createElement('div');
+          name.innerHTML = appt.Name;
+          name.className = "SF";
+          name.style.textTransform = "none";
+          name.style.color = "var(--unnamed-color-495057)";
+
+          apptDiv.appendChild(time);
+          apptDiv.appendChild(name);
+          dateContainer.appendChild(apptDiv);
+        });
+        dateDiv.appendChild(dateContainer);
+        rescheduleModal.appendChild(dateDiv);
+      })
+
+      document.getElementById("rescheduleMe").style.visibility = "visible";
+    });
+  }
+  function appointmentCard(app) {
+    const startDateTime = new Date(app.StartDate);
+    const inFuture = startDateTime > new Date();
+
+    const endDateTime = new Date(app.EndDate);
+
+    const container = document.createElement("div");
+    container.className = "comm-table-row";
+    container.style.alignItems = "flex-start";
+
+    const appointment = document.createElement("div");
+    appointment.className = "comm-table-col";
+    appointment.style.width = "45%";
+
+    const date = document.createElement("div");
+    date.innerHTML = formatDate(startDateTime);
+    date.className = "medium";
+    date.style.textTransform = "uppercase";
+    appointment.appendChild(date);
+
+    const time = document.createElement("div");
+    time.innerHTML = `${formatAMPM(startDateTime)} - ${formatAMPM(endDateTime)} ${getTimeZone(startDateTime)}`;
+    time.className = "medium SF";
+    time.style.color = "var(--unnamed-color-6c757d)";
+    appointment.appendChild(time);
+
+    const location = document.createElement("div");
+    location.className = "comm-table-row";
+    location.style.marginTop = "20px";
+
+    const what = document.createElement("div");
+    what.className = "comm-table-col";
+    const whatTitle = document.createElement("div");
+    whatTitle.innerHTML = "WHAT";
+    whatTitle.style.color = "var(--unnamed-color-6c757d)";
+    whatTitle.style.fontSize = "12px";
+    whatTitle.className = "";
+    const whatContents = document.createElement("div");
+    whatContents.innerHTML = app.Name;
+    whatContents.className = "medium SF";
+    whatContents.style.color = "var(--unnamed-color-212529)";
+    whatContents.style.fontSize = "18px";
+
+    what.appendChild(whatTitle);
+    what.appendChild(whatContents);
+    location.appendChild(what);
+
+    const where = document.createElement("div");
+    where.className = "comm-table-col";
+    const whereTitle = document.createElement("div");
+    whereTitle.innerHTML = "WHERE";
+    whereTitle.className = "";
+    whereTitle.style.color = "var(--unnamed-color-6c757d)";
+    whereTitle.style.fontSize = "12px";
+    where.style.marginLeft = "20px";
+
+    const whereContents = document.createElement("div");
+    whereContents.className = "medium SF";
+    whereContents.innerHTML = app.Location;
+    whereContents.style.color = "var(--unnamed-color-212529)";
+    whereContents.style.fontSize = "18px";
+
+    where.appendChild(whereTitle);
+    where.appendChild(whereContents);
+    location.appendChild(where);
+
+    appointment.appendChild(location);
+    container.appendChild(appointment);
+
+    const schedule = document.createElement("div");
+    schedule.className = "comm-table-col";
+    schedule.style.width = "45%";
+    schedule.style.alignItems = "flex-end";
+    if (inFuture) {
+      const cancel = document.createElement("div");
+      cancel.innerHTML = "CANCEL";
+      cancel.style.textDecoration = "underline";
+      cancel.style.cursor = "pointer";
+      cancel.style.color = "var(--unnamed-color-212529)";
+      cancel.setAttribute("data-id", app.ClassId);
+      cancel.onclick = () => cancelAppointment(app.ClassId);
+
+      const reschedule = document.createElement("div");
+      reschedule.innerHTML = "RESCHEDULE";
+      reschedule.style.textDecoration = "underline";
+      reschedule.style.cursor = "pointer";
+      reschedule.style.color = "var(--unnamed-color-212529)";
+      reschedule.onclick = () => rescheduleAppointment(app.ClassId);
+
+      const outlookContainer = document.createElement("div");
+      outlookContainer.className = "flex-row";
+      outlookContainer.style.justifyContent = "flex-end";
+
+      const outlookIcon = document.createElement("img");
+      outlookIcon.src = "https://cdn.icon-icons.com/icons2/842/PNG/512/Outlook_icon-icons.com_67000.png";
+      outlookIcon.alt = "OUTLOOK";
+      outlookIcon.style.width = "17px";
+      outlookIcon.style.height = "16px";
+      outlookIcon.style.marginRight = "13px";
+      outlookContainer.appendChild(outlookIcon);
+
+      const outlook = document.createElement("a");
+      outlook.innerHTML = "ADD TO ICAL/OUTLOOK";
+      outlook.style.cursor = "pointer";
+      outlook.target = "_blank";
+      outlook.href = makeIcsFile({ start: startDateTime, end: endDateTime }, app.Name, app.Location);
+      outlook.style.color = "var(--unnamed-color-6c757d)";
+      outlookContainer.appendChild(outlook);
+
+      const gmailContainer = document.createElement("div");
+      gmailContainer.className = "flex-row";
+      gmailContainer.style.justifyContent = "flex-end";
+
+      const gmailIcon = document.createElement("img");
+      gmailIcon.src = "https://seeklogo.com/images/G/gmail-google-grayscale-logo-CA6AF2BB00-seeklogo.com.png";
+      gmailIcon.alt = "GMAIL";
+      gmailIcon.style.width = "17px";
+      gmailIcon.style.height = "13px";
+      gmailIcon.style.marginRight = "13px";
+      gmailContainer.appendChild(gmailIcon);
+
+      const gmail = document.createElement("a");
+      gmail.href = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${app.Name}&dates=${startDateTime.toISOString().replace(/-|:|\.\d\d\d/g, "")}/${endDateTime.toISOString().replace(/-|:|\.\d\d\d/g, "")}&details=${app.Name}&location=${app.Location}&sf=true&output=xml`;
+      gmail.target = "_blank";
+      gmail.innerHTML = "ADD TO GMAIL";
+      gmail.style.cursor = "pointer";
+      gmail.style.color = "var(--unnamed-color-6c757d)";
+      gmailContainer.appendChild(gmail);
+
+      schedule.appendChild(cancel);
+      schedule.appendChild(reschedule);
+      schedule.appendChild(document.createElement("br"));
+      schedule.appendChild(outlookContainer);
+      schedule.appendChild(gmailContainer);
+    } else {
+      const bookAgain = document.createElement("div");
+      bookAgain.innerHTML = "BOOK AGAIN";
+      bookAgain.style.textDecoration = "underline";
+      bookAgain.style.color = "var(--unnamed-color-212529)";
+      bookAgain.style.cursor = "pointer";
+      bookAgain.onclick = () => window.location.href = '/pages/appointments';
+
+      schedule.appendChild(bookAgain);
+    }
+    container.appendChild(schedule);
+    return container;
+  };
+        
+  const updateAppointments = () => {
+    fetch(`${urlBase}/user/visits`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        "authorization": `Bearer ${accessToken}`
+      },
+
+    }).then(res => res.json()).then(({ Appointments, History, Locations }) => {
+      const appointmentsPanel = document.getElementById("AppointmentsPanel");
+      const noAppointments = document.getElementById("noAppointments");
+
+      const historyPanel = document.getElementById("HistoryPanel");
+      const noHistory = document.getElementById("noHistory");
+
+      if (Appointments.length === 0) {
+        noAppointments.style.display = "block";
+        appointmentsPanel.style.display = "none";
+      } else {
+        appointmentsPanel.innerHTML = "";
+        for (let i = 0; i < Appointments.length; i++) {
+          appointmentsPanel.appendChild(appointmentCard(Appointments[i]));
+          appointmentsPanel.appendChild(document.createElement("hr"));
+        }
+
+        noAppointments.style.display = "none";
+        appointmentsPanel.style.display = "block";
+      }
+      if (History.length === 0) {
+        noHistory.style.display = "block";
+        historyPanel.style.display = "none";
+      } else {
+        historyPanel.innerHTML = "";
+        for (let i = 0; i < History.length; i++) {
+          historyPanel.appendChild(appointmentCard(History[i]));
+          historyPanel.appendChild(document.createElement("hr"));
+        }
+        noHistory.style.display = "none";
+        historyPanel.style.display = "block";
+      }
+
+      const locationSelect = document.getElementById("Location");
+      locationSelect.innerHTML = "";
+      if (Object.keys(Locations).length !== 0) {
+        Object.keys(Locations).forEach((location) => {
+          const locationOption = document.createElement("option");
+          locationOption.value = location;
+          locationOption.text = Locations[location];
+          locationOption.selected = location === locationSelect.getAttribute("data-value");
+          locationSelect.appendChild(locationOption);
+        })
+      }
+      document.getElementById("loadMe").style.visibility = "hidden";
+    });
+  }
+</script>
+<div id="appointments" class="tabcontent" style="display:block;">
+  <div class="panel" id="AppointmentsPanel" style="display:none;"></div>
+  <div class="panel" id="noAppointments">
+    <p class="panel-title">Sign up for an appointment today.</p>
+    <p style="color:var(--unnamed-color-495057)">Your future appointments will show up here.</p>
+    <hr class="account-hr">
+  </div>
+</div>
+<div id="history" class="tabcontent">
+  <div class="panel" id="HistoryPanel" style="display:none;"></div>
+  <div class="panel" id="noHistory">
+    <p class="panel-title">Sign up for an appointment today.</p>
+    <p style="color:var(--unnamed-color-495057)">Your past appointments will show up here.</p>
+    <hr class="account-hr">
+  </div>
+</div>
