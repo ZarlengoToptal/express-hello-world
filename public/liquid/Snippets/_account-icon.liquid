@@ -107,9 +107,6 @@
 
 
 <script type="text/javascript">
-    const headerUrlBase = "https://formula-fig-staging.cyclic.app";
-    const accessToken = localStorage.getItem('accessToken');
-    let loggedIn = accessToken !== null;
     const setHeader = () => {
         if (!loggedIn) {
             document.getElementById("user-nav").style.display = "none";

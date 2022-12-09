@@ -60,6 +60,7 @@
             body: JSON.stringify({ email: uname, password: psw, return_to })
         }).then(res => res.json()).then(res => {
             localStorage.setItem("accessToken", res.accessToken);
+            accessToken = res.accessToken;
             if (res.accessToken) {
                 window.location.replace(res.url);
             }

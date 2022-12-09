@@ -217,7 +217,11 @@
       cancel.style.cursor = "pointer";
       cancel.style.color = "var(--unnamed-color-212529)";
       cancel.setAttribute("data-id", app.ClassId);
-      cancel.onclick = () => cancelAppointment(app.ClassId);
+      cancel.onclick = () => {
+        if (confirm('Are you sure you want to cancel this appointment?')) {
+          cancelAppointment(app.ClassId);
+        }
+        };
 
       const reschedule = document.createElement("div");
       reschedule.innerHTML = "RESCHEDULE";
@@ -231,7 +235,7 @@
       outlookContainer.style.justifyContent = "flex-end";
 
       const outlookIcon = document.createElement("img");
-      outlookIcon.src = "https://cdn.icon-icons.com/icons2/842/PNG/512/Outlook_icon-icons.com_67000.png";
+      outlookIcon.src = "https://cdn.shopify.com/s/files/1/0555/5945/5032/t/3/assets/_outlook-icon.svg";
       outlookIcon.alt = "OUTLOOK";
       outlookIcon.style.width = "17px";
       outlookIcon.style.height = "16px";
@@ -251,7 +255,7 @@
       gmailContainer.style.justifyContent = "flex-end";
 
       const gmailIcon = document.createElement("img");
-      gmailIcon.src = "https://seeklogo.com/images/G/gmail-google-grayscale-logo-CA6AF2BB00-seeklogo.com.png";
+      gmailIcon.src = "https://cdn.shopify.com/s/files/1/0555/5945/5032/t/3/assets/_gmail-icon.svg";
       gmailIcon.alt = "GMAIL";
       gmailIcon.style.width = "17px";
       gmailIcon.style.height = "13px";

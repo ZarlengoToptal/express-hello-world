@@ -120,11 +120,12 @@
             openTab(null, tab);
         }
 
-        document.getElementById("loadMe").style.visibility = "visible";
-
+        addEventListener("load", (event) => {
+            document.getElementById("loadMe").style.visibility = "visible";
+        });
         function openTab(evt, tabName) {
             // Declare all variables
-            var i, tabcontent, tab-links;
+            var i, tabcontent, tabLinks;
 
             // Get all elements with class="tabcontent" and hide them
             tabcontent = document.getElementsByClassName("tabcontent");
@@ -133,9 +134,9 @@
             }
 
             // Get all elements with class="tab-links" and remove the class "active"
-            tab-links = document.getElementsByClassName("tab-links");
-            for (i = 0; i < tab-links.length; i++) {
-                tab-links[i].className = tab-links[i].className.replace(" active", "");
+            tabLinks = document.getElementsByClassName("tab-links");
+            for (i = 0; i < tabLinks.length; i++) {
+                tabLinks[i].className = tabLinks[i].className.replace(" active", "");
             }
 
             // Show the current tab, and add an "active" class to the button that opened the tab

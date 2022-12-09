@@ -1,0 +1,79 @@
+<style>
+    .cc-cancel-btn, .cc-submit-btn {
+        background-color: #444444;
+        color: white;
+        padding: 12px;
+        margin: 10px 0;
+        border: none;
+        width: 100%;
+        border-radius: 3px;
+        cursor: pointer;
+        font-size: 17px;
+    }
+
+    .cc-cancel-btn:hover, .cc-submit-btn:hover {
+        background-color: #45a049;
+    }
+</style>
+<!-- CC Modal -->
+<div class="modal fade cc-modal" id="ccMe" tabindex="-1" role="dialog" aria-labelledby="ccMeLabel"
+  style="opacity:1;visibility: hidden;">
+  <div class="container" style="background-color:#eee;width:100%;opacity:1;">
+    <h3>Payment</h3>
+    <br>
+    <label for="cname">Name on Card</label>
+    <input type="text" id="cname" name="cardname" placeholder="John More Doe">
+
+    <label for="ccnum">Credit card number</label>
+    <input type="text" id="ccnum" name="cardnumber" placeholder="1111-2222-3333-4444">
+
+    <label for="expmonth">Exp Month</label>
+    <input type="text" id="expmonth" name="expmonth" placeholder="09">
+
+    <label for="expyear">Exp Year</label>
+    <input type="text" id="expyear" name="expyear" placeholder="2022">
+
+    <label for="adr"><i class="fa fa-address-card-o"></i> Address</label>
+    <input type="text" id="adr" name="address" placeholder="542 W. 15th Street">
+
+    <label for="city"><i class="fa fa-institution"></i> City</label>
+    <input type="text" id="city" name="city" placeholder="New York">
+
+    <label for="state">State</label>
+    <input type="text" id="state" name="state" placeholder="NY">
+
+    <label for="zip">Zip</label>
+    <input type="text" id="zip" name="zip" placeholder="10001">
+    <div class="comm-table-row" style="justify-content: space-between;width:100%;">
+      <input type="submit" value="Save CC Info" class="cc-submit-btn" style="width:200px;" onclick="updateCC()">
+      <button type="cancel" class="cc-cancel-btn" style="width:200px;"
+        onclick="document.getElementById('ccMe').style.visibility='hidden';return false;">Cancel</button>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  function updateCC() {
+    document.getElementById("loadMe").style.visibility = "visible";
+    document.getElementById('ccMe').style.visibility = 'hidden';
+    fetch(`${urlBase}/user/creditCard/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        "authorization": `Bearer ${accessToken}`
+      },
+      body: JSON.stringify({
+        "Address": document.getElementById("adr").value,
+        "CardHolder": document.getElementById("cname").value,
+        "City": document.getElementById("city").value,
+        "ExpMonth": document.getElementById("expmonth").value,
+        "ExpYear": document.getElementById("expyear").value,
+        "CardNumber": document.getElementById("ccnum").value,
+        "PostalCode": document.getElementById("zip").value,
+        "State": document.getElementById("state").value
+      })
+    }).then((res) => res.json()).then((classes) => {
+      getAccountData();
+      document.getElementById("loadMe").style.visibility = "hidden";
+    });
+  }
+</script>
