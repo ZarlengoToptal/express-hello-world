@@ -54,7 +54,7 @@
         }
 
         /* The Modal (background) */
-        .modal {
+        .login-modal {
             display: none;
             /* Hidden by default */
             position: fixed;
@@ -77,7 +77,7 @@
         }
 
         /* Modal Content/Box */
-        .modal-content {
+        .login-modal-content {
             background-color: #fefefe;
             margin: 5% auto 15% auto;
             /* 5% from the top, 15% from the bottom and centered */
@@ -103,6 +103,35 @@
             margin: 28px 0;
         }
     </style>
+</head>
+
+<body>
+
+    <h2>Modal Login Form</h2>
+    <button onclick="document.getElementById('login-modal').style.display='block'" style="width:auto;">Login</button>
+
+
+    <div id="login-modal" class="login-modal">
+        <form style="padding:87px 122px;width:300px;" name="myForm" class="login-modal-content animate flex-col"
+            onSubmit="return validateForm()">
+            <div style="font-size: 22px;">Book your appointment</div>
+            <div style="font-size:16px;margin-bottom:39px;margin-top:19px;max-width:300px;text-align: center;">Please
+                sign in or create
+                an account to
+                secure your booking.
+            </div>
+            <input type="text" placeholder="Email" name="uname" required>
+            <input type="password" placeholder="Password" name="psw" required>
+
+            <button type="submit" class="sub-btn">SIGN IN</button>
+            <span class="psw"><a href="#">Need a new password??</a></span>
+            <hr class="login-hr">
+            <button type="button" onclick="document.getElementById('login-modal').style.display='none'"
+                class="inv-btn">CREATE
+                PROFILE
+            </button>
+        </form>
+    </div>
     <script type="text/javascript">
         const urlBase = "https://formula-fig-staging.cyclic.app";
         function validateForm() {
@@ -128,52 +157,21 @@
                 if (res.accessToken) {
                     window.location.href = '/public/dashboard.html';
                 }
-                document.getElementById('id01').style.display = 'none';
+                document.getElementById('login-modal').style.display = 'none';
             })
         }
     </script>
-</head>
-
-<body>
-
-    <h2>Modal Login Form</h2>
-
-    <button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Login</button>
-
-    <div id="id01" class="modal">
-
-        <form style="padding:87px 122px;width:300px;" name="myForm" class="modal-content animate flex-col"
-            onSubmit="return validateForm()">
-            <div style="font-size: 22px;">Book your appointment</div>
-            <div style="font-size:16px;margin-bottom:39px;margin-top:19px;max-width:300px;text-align: center;">Please
-                sign in or create
-                an account to
-                secure your booking.
-            </div>
-            <input type="text" placeholder="Email" name="uname" required>
-            <input type="password" placeholder="Password" name="psw" required>
-
-            <button type="submit" class="sub-btn">SIGN IN</button>
-            <span class="psw"><a href="#">Need a new password??</a></span>
-            <hr class="login-hr">
-            <button type="button" onclick="document.getElementById('id01').style.display='none'" class="inv-btn">CREATE
-                PROFILE
-            </button>
-        </form>
-    </div>
-
     <script>
         // Get the modal
-        var modal = document.getElementById('id01');
+        var loginModal = document.getElementById('login-modal');
 
         // When the user clicks anywhere outside of the modal, close it
         window.onclick = function (event) {
-            if (event.target == modal) {
+            if (event.target == loginModal) {
                 modal.style.display = "none";
             }
         }
     </script>
-
 </body>
 
 </html>

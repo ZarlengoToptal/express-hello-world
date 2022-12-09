@@ -58,10 +58,6 @@
             height: 66px;
         }
 
-        a {
-            text-decoration: underline;
-            cursor: pointer;
-        }
 
         .main {
             padding: 16px;
@@ -90,7 +86,7 @@
             justify-content: space-between;
         }
 
-        button {
+        .drop-btn {
             cursor: pointer;
             background-color: transparent;
             border: none;
@@ -108,50 +104,31 @@
             margin: 0;
         }
 
-        .dropdown-content {
-            display: none;
-            position: fixed;
-            background-color: #fff;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-            z-index: 1;
-            right: 140px;
-            width: 300px;
-            background: #FFFFFF 0% 0% no-repeat padding-box;
-            box-shadow: 0px 3px 6px #0000000D;
-            border: 1px solid #CFD4D9;
-            border-radius: 4px;
-            opacity: 1;
-        }
-
-        .dropdown-content a {
-            float: none;
-            color: #212529;
-            padding: 24px 36px;
-            text-decoration: none;
-            display: block;
-            text-align: left;
-        }
-
-        /* Change color of dropdown links on hover */
-        .dropdown-content a:hover {
-            background-color: #ddd;
-        }
-
         /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
-        .show {
-            display: block;
-        }
 
-        .dropbtn {
-            cursor: pointer;
-        }
-
-        hr {
-            margin: 0;
-        }
 
         /* Full-width input fields */
+
+        /* The Modal (background) */
+
+        /* Modal Content/Box */
+
+
+        .flex-col {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #signin-nav {
+            font-size: 12px;
+            width: 60px;
+            margin-right: 140px;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+    </style>
+    <style>
         input[type=text],
         input[type=password] {
             width: 300px;
@@ -192,8 +169,17 @@
             padding-top: 16px;
         }
 
-        /* The Modal (background) */
-        .modal {
+        .login-hr {
+            border: 0;
+            clear: both;
+            display: block;
+            width: 100%;
+            background-color: #E9ECEF;
+            height: 1px;
+            margin: 28px 0;
+        }
+
+        .signin-modal {
             display: none;
             /* Hidden by default */
             position: fixed;
@@ -215,8 +201,7 @@
             padding-top: 60px;
         }
 
-        /* Modal Content/Box */
-        .modal-content {
+        .signin-modal-content {
             background-color: #fefefe;
             margin: 5% auto 15% auto;
             /* 5% from the top, 15% from the bottom and centered */
@@ -224,15 +209,10 @@
             width: 80%;
             /* Could be more or less, depending on screen size */
         }
-
-
-        .flex-col {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .login-hr {
+    </style>
+    <style>
+        /* #myDropdown */
+        .login-menu-hr {
             border: 0;
             clear: both;
             display: block;
@@ -242,12 +222,43 @@
             margin: 28px 0;
         }
 
-        #signin-nav {
-            font-size: 12px;
-            width: 60px;
-            margin-right: 140px;
+        .link-drp {
             text-decoration: underline;
             cursor: pointer;
+        }
+
+        .dropdown-content a {
+            float: none;
+            color: #212529;
+            padding: 24px 36px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
+
+        /* Change color of dropdown links on hover */
+        .dropdown-content a:hover {
+            background-color: #ddd;
+        }
+
+        .show {
+            display: block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: fixed;
+            background-color: #fff;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            right: 140px;
+            width: 300px;
+            background: #FFFFFF 0% 0% no-repeat padding-box;
+            box-shadow: 0px 3px 6px #0000000D;
+            border: 1px solid #CFD4D9;
+            border-radius: 4px;
+            opacity: 1;
         }
     </style>
 </head>
@@ -256,7 +267,8 @@
     <div class="navbar flex-row flex-between">
         <span style="width: 60px; margin-left: 140px;"></span>
         <span>FF-logo-black-SM</span>
-        <div id="signin-nav" onclick="document.getElementById('id01').style.display='block'" class="founder">SIGN
+        <div id="signin-nav" onclick="document.getElementById('signin-modal').style.display='block'" class="founder">
+            SIGN
             IN</div>
         <div id="user-nav" class="flex-row" style="margin-right: 140px;">
             <div id="user-nav" class="flex-col">
@@ -268,24 +280,24 @@
                 </div>
             </div>
             <div id="dropdown-nav" class="dropdown" style="margin-left:20px;">
-                <button onclick="myFunction()" class="dropbtn">
-                    <img class="dropbtn" src="https://cdn-icons-png.flaticon.com/512/3114/3114957.png"
+                <button onclick="myFunction()" class="drop-btn">
+                    <img class="drop-btn" src="https://cdn-icons-png.flaticon.com/512/3114/3114957.png"
                         style="width: 24px; height: 24px;">
                 </button>
                 <div id="myDropdown" class="dropdown-content">
-                    <a href="dashboard.html?tab=appointments">Appointments</a>
-                    <hr>
-                    <a href="dashboard.html?tab=history">History</a>
-                    <hr>
-                    <a href="dashboard.html?tab=passes">Passes</a>
-                    <hr>
-                    <a href="dashboard.html?tab=purchases">Purchases</a>
-                    <hr>
-                    <a href="dashboard.html?tab=orders">Order History</a>
-                    <hr>
-                    <a href="dashboard.html?tab=account">Account</a>
-                    <hr>
-                    <a class="bold" style="color:#343A40" onclick="logout(event)">Logout</a>
+                    <a class="link-drp" href="dashboard.html?tab=appointments">Appointments</a>
+                    <hr class="login-menu-hr">
+                    <a class="link-drp" href="dashboard.html?tab=history">History</a>
+                    <hr class="login-menu-hr">
+                    <a class="link-drp" href="dashboard.html?tab=passes">Passes</a>
+                    <hr class="login-menu-hr">
+                    <a class="link-drp" href="dashboard.html?tab=purchases">Purchases</a>
+                    <hr class="login-menu-hr">
+                    <a class="link-drp" href="dashboard.html?tab=orders">Order History</a>
+                    <hr class="login-menu-hr">
+                    <a class="link-drp" href="dashboard.html?tab=account">Account</a>
+                    <hr class="login-menu-hr">
+                    <a class="bold link-drp" style="color:#343A40" onclick="headerLogout(event)">Logout</a>
                 </div>
             </div>
         </div>
@@ -319,10 +331,9 @@
             sapiente provident accusamus.</p>
 
     </div>
-    <div id="id01" class="modal">
-
-        <form style="padding:87px 122px;width:300px;" name="myForm" class="modal-content animate flex-col"
-            onSubmit="return validateForm()">
+    <div id="signin-modal" class="signin-modal">
+        <form style="padding:87px 122px;width:300px;" name="myForm" class="signin-modal-content animate flex-col"
+            onSubmit="return headerValidateForm()">
             <div style="font-size: 22px;">Book your appointment</div>
             <div style="font-size:16px;margin-bottom:39px;margin-top:19px;max-width:300px;text-align: center;">Please
                 sign in or create
@@ -335,16 +346,17 @@
             <button type="submit" class="sub-btn">SIGN IN</button>
             <span class="psw"><a href="#">Need a new password??</a></span>
             <hr class="login-hr">
-            <button type="button" onclick="document.getElementById('id01').style.display='none'" class="inv-btn">CREATE
+            <button type="button" onclick="document.getElementById('signin-modal').style.display='none'"
+                class="inv-btn">CREATE
                 PROFILE
             </button>
         </form>
     </div>
 </body>
 <script type="text/javascript">
-    const urlBase = "https://formula-fig-staging.cyclic.app";
-    const accessToken = localStorage.getItem('accessToken');
-    let loggedIn = accessToken !== null;
+    const headerUrlBase = "https://formula-fig-staging.cyclic.app";
+    const headerAccessToken = localStorage.getItem('headerAccessToken');
+    let loggedIn = headerAccessToken !== null;
     const setHeader = () => {
         if (!loggedIn) {
             document.getElementById("user-nav").style.display = "none";
@@ -366,7 +378,7 @@
 
     // Close the dropdown menu if the user clicks outside of it
     window.onclick = function (event) {
-        if (!event.target.matches('.dropbtn')) {
+        if (!event.target.matches('.drop-btn')) {
             var dropdowns = document.getElementsByClassName("dropdown-content");
             var i;
             for (i = 0; i < dropdowns.length; i++) {
@@ -377,33 +389,33 @@
             }
         }
     }
-    function logout(e) {
+    function headerLogout(e) {
         e.preventDefault();
-        fetch(`${urlBase}/auth/logout`, {
+        fetch(`${headerUrlBase}/auth/logout`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                "authorization": `Bearer ${accessToken}`
+                "authorization": `Bearer ${headerAccessToken}`
             },
         }).then(res => {
             loggedIn = false;
-            localStorage.removeItem('accessToken');
+            localStorage.removeItem('headerAccessToken');
             localStorage.removeItem('user');
             setHeader();
         })
     }
     // Get the modal
-    var modal = document.getElementById('id01');
+    var signInModal = document.getElementById('signin-modal');
 
     // When the user clicks anywhere outside of the modal, close it
     window.onclick = function (event) {
-        if (event.target == modal) {
+        if (event.target == signInModal) {
             modal.style.display = "none";
         }
     }
 </script>
 <script type="text/javascript">
-    function validateForm() {
+    function headerValidateForm() {
         event.preventDefault();
         var uname = document.forms["myForm"]["uname"].value;
         var psw = document.forms["myForm"]["psw"].value;
@@ -415,19 +427,19 @@
             alert("Password must be filled out");
             return false;
         }
-        fetch(`${urlBase}/auth/login`, {
+        fetch(`${headerUrlBase}/auth/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({ email: uname, password: psw })
         }).then(res => res.json()).then(res => {
-            localStorage.setItem("accessToken", res.accessToken);
-            fetch(`${urlBase}/user/account`, {
+            localStorage.setItem("headerAccessToken", res.headerAccessToken);
+            fetch(`${headerUrlBase}/user/account`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    "authorization": `Bearer ${res.accessToken}`
+                    "authorization": `Bearer ${res.headerAccessToken}`
                 },
             }).then(res => res.json()).then(res => {
                 if (res.Membership.length === 0) {
@@ -442,7 +454,7 @@
                     }));
                 }
                 document.getElementById("myDropdown").classList.remove("show");
-                document.getElementById('id01').style.display = 'none';
+                document.getElementById('signin-modal').style.display = 'none';
                 loggedIn = true;
                 setHeader();
             })
