@@ -29,14 +29,71 @@
     opacity: 1;
     clear: both;
   }
-  
+  .dateRangePicker {
+    margin-bottom: 0 !important;
+    width: 200px !important;
+  }
+  .reschedule-img {
+    cursor:pointer;
+  }
+  .modal-dialog {    
+    max-height: calc(100vh - 200px);
+    overflow-y: scroll;
+  }
+  #rescheduleModalContents{
+    width: 100%;
+  }
 </style>
 <!-- Reschedule Modal -->
 <div class="modal fade reschedule-modal" id="rescheduleMe" tabindex="-1" role="dialog"
   aria-labelledby="rescheduleMeLabel">
   <div class="modal-dialog modal-sm" role="document" style="background-color:#eee;width:100%;">
     <div class="modal-content" style="width:100%;padding:50px;box-sizing: border-box;">
-      <div id="rescheduleModal" class="modal-body text-center"></div>
+      <div id="rescheduleModal" class="modal-body text-center">
+        <div class="comm-table-row" style="width:100%;align-items:flex-end">
+          <div class="SF" style="font-size:22px;">Select your appointment:</div>
+          <img class="reschedule-img" src="{{ '_close.svg' | asset_url }}" onclick="closeReschedule()">
+        </div>
+        <div class="flex-row" style="justify-content:flex-start; gap:10px;margin:20px 0;">
+          <label for="datePickerStart">Choose Dates</label>
+          <input class="dateRangePicker" type="text" id="datePickerStart" name="datePickerStart"/>
+          <input class="dateRangePicker" type="text" id="datePickerEnd" name="datePickerEnd"/>
+          <img class="reschedule-img" src="{{ '_search.svg' | asset_url }}" onclick="searchReschedule()">
+        </div>
+        <div id="rescheduleModalContents" class="text-center"></div>
+      </div>
     </div>
   </div>
 </div>
+<script>
+  let rescheduleNextFunction = () => {};
+  function searchReschedule() {
+    console.log("SEARCH")
+    document.getElementById("rescheduleModalContents").innerHTML = "";
+    rescheduleNextFunction();
+  }
+  function loadRescheduleModal(next) {
+      window.scrollTo(0, 0);
+      document.getElementById("account").style.overflowY = 'hidden';
+      const today = new Date();
+      const nextWeek = new Date(today).setDate(today.getDate() + 7);
+      var picker = new Lightpick({
+        field: document.getElementById('datePickerStart'),
+        secondField: document.getElementById('datePickerEnd'),
+        singleDate: false,
+        lang: 'en',
+        format: "DD MMM YYYY",
+        startDate: today,
+        endDate: new Date(nextWeek),
+        minDate: today,
+        onSelect: function(start, end){
+            var str = '';
+            str += start ? start.format('Do MMMM YYYY') + ' to ' : '';
+            str += end ? end.format('Do MMMM YYYY') : '...';
+          console.log({str})
+        }
+    });
+    document.getElementById("rescheduleMe").style.visibility = "visible";
+    rescheduleNextFunction = next;
+  }
+</script>

@@ -1,0 +1,381 @@
+<style>
+  .booking-bar {
+    margin: 40px;
+    box-sizing: content-box;
+    justify-content: center;
+    box-shadow: 0px 1px 6px #00000008;
+    border: 1px solid #CFD4D9;
+    height: 85px;
+  }
+  .booking-bar-container {
+    border-right: 1px solid #EAECEF;
+    height: 60px;
+    padding: 12px 24px;
+  }
+  .option-select:focus, .option-select:focus-enabled {
+    outline: none !important;
+  }
+  .option-select:disabled {
+    opacity: 0.7;
+  }
+  .option-select {
+    margin-bottom: 0 !important;
+    color: var(--unnamed-color-343a40);
+    font-size: 18px;
+    border: none !important;
+    padding: 0 !important;
+    background-color: transparent !important;
+  }
+  .booking-icon-container {
+    marginRight:12px;
+    background-color: #F8F9FA;
+    width: 37px;
+    height: 37px;
+    margin-right: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .booking-icon {
+    width: 13px;
+    height: 19px;
+  }
+  .option-title {
+    color: var(--unnamed-color-6c757d);
+    font-size: 12px;
+  }
+  .book-btn.disabled {
+    background: var(--unnamed-color-e9ecef) 0% 0% no-repeat padding-box;
+  }
+  .book-btn {
+    width: 163px;
+    height: 48px;
+    background: var(--unnamed-color-343a40) 0% 0% no-repeat padding-box;
+    color: var(--unnamed-color-ffffff);
+    font-size: 14px;
+  }
+  .option-493689, .option-5726529 {
+    display: none;
+  }
+</style>
+<div class="booking-bar flex-row">
+  <div class="flex-row booking-bar-container">
+    <div class="booking-icon-container">
+      <img src="{{ '_location.svg' | asset_url }}" class="booking-icon" alt="location-logo">
+    </div>
+    <div class="flex-col" style="align-items: flex-start; width: 200px;">
+      <div class="option-title">WHERE</div>
+      <select class="option-select SF" name="options_site_id" id="options_site_id">
+          <option value="0">Select location</option>
+          <option value="493689">Vancouver, CA</option>
+          <option value="5726529">Toronto, CA</option>
+      </select>
+    </div>
+  </div>
+  <div class="flex-row booking-bar-container">
+    <div class="booking-icon-container">
+      <img src="{{ '_ff-single.svg' | asset_url }}" class="booking-icon" alt="ff-logo">
+    </div>
+    <div class="flex-col" style="align-items: flex-start; width: 200px;">
+      <div class="option-title">FIG BAR</div>
+      <select class="option-select SF" name="options_bar_id" id="options_bar_id" disabled>
+        <option value="0">Select Fig Bar</option>
+        <option class="bar-option-493689" value="493689-4">Ambleside</option>
+        <option class="bar-option-493689" value="493689-1">Kitsilano</option>
+        <option class="bar-option-493689" value="493689-3">Mount Pleasant</option>
+        <option class="bar-option-5726529" value="5726529-1">Ossington</option>
+      </select>
+    </div>
+  </div>
+  <div class="flex-row booking-bar-container">
+    <div class="booking-icon-container">
+      <img src="{{ '_facial-roller.svg' | asset_url }}" class="booking-icon" alt="roller-logo">
+    </div>
+    <div class="flex-col" style="align-items: flex-start; width: 200px;">
+      <div class="option-title">WHAT</div>
+      <select class="option-select SF" name="options_treatment_id" id="options_treatment_id" disabled>
+        <option value="0">Select treatment</option>
+        <optgroup class="treat-option-493689" label=". Injectables">
+          <option value="493689-4073">Fig Shot</option>
+          <option value="493689-24">Stingers Consultation</option>
+          <option value="493689-13">Stingers Treatment</option>
+        </optgroup>
+        <optgroup class="treat-option-493689" label=".. High Tech Facials">
+          <option value="493689-2041">All-In Supers Facial</option>
+          <option value="493689-2042">Collagen + Texture Supers Facial</option>
+          <option value="493689-14">Hydrate + Glow Core Facial</option>
+          <option value="493689-12">LED + Lymphatic Core Facial</option>
+          <option value="493689-10">Lift + Tone Core Facial</option>
+          <option value="493689-2046">Pregnancy Core Facial</option>
+          <option value="493689-4074">Radiance + Renewal Laser Facial</option>
+        </optgroup>
+        <optgroup class="treat-option-493689" label="... Light Therapy Boost">
+          <option value="493689-2051">Light Therapy Boost Self-Serve Facial</option>
+        </optgroup>
+        <optgroup class="treat-option-5726529" label=". Injectables">
+            <option value="5726529-20">Fig Shot</option>
+            <option value="5726529-19">IV + LED</option>
+            <option value="5726529-18">Stingers Consultation</option>
+            <option value="5726529-27">Stingers Follow Up</option>
+            <option value="5726529-17">Stingers Treatment</option>
+        </optgroup>
+        <optgroup class="treat-option-5726529"  label=".. High Tech Facials">
+            <option value="5726529-12">All-In Supers Facial</option>
+            <option value="5726529-13">Collagen + Texture Supers Facial</option>
+            <option value="5726529-9">Hydrate + Glow Core Facial</option>
+            <option value="5726529-8">LED + Lymphatic Core Facial</option>
+            <option value="5726529-7">Lift + Tone Core Facial</option>
+            <option value="5726529-14">Pregnancy Core Facial</option>
+            <option value="5726529-15">Radiance + Renewal Laser Facial</option>
+        </optgroup>
+        <optgroup class="treat-option-5726529"  label="... Light Therapy Boost">
+            <option value="5726529-22">Light Therapy Boost Self-Serve Facial</option>
+        </optgroup>
+      </select>
+    </div>
+  </div>
+  <div class="flex-row booking-bar-container">
+    <div class="booking-icon-container">
+      <img src="{{ '_calendar.svg' | asset_url }}" class="booking-icon" alt="calendar-logo">
+    </div>
+    <div class="flex-col" style="align-items: flex-start; width: 200px;">
+      <div class="option-title">WHEN</div>
+      <input class="dateRangePicker option-select SF" type="text" id="options_date_id" name="options_date_id" placeholder="Select your date" disabled/>
+    </div>
+  </div>
+  <div class="flex-row booking-bar-container" style="border-right: none;">
+    <button id="book-btn" class="book-btn SF" disabled onClick="quickbarBookAppointment()">BOOK NOW</button>
+  </div>
+</div>
+<div class="booking-contents flex-col" id="booking-contents"></div>
+<div class="booking-contents" id="booking-not-available" style="display:none">
+  <h1>No appointments are available.</h1>
+  <p>We’re sorry, but there are currently no available appointments for Wednesday, September 14. You can amend your dates or choose a time at another Fig Bar location.</p>
+</div>
+<script>
+  const where = document.getElementById("options_site_id");
+  const bar = document.getElementById("options_bar_id");
+  const treatment = document.getElementById("options_treatment_id");
+  const dateSelect = document.getElementById("options_date_id");
+  const barCollection493689 = document.getElementsByClassName("bar-option-493689");
+  const barCollection5726529 = document.getElementsByClassName("bar-option-5726529");
+  const treatCollection493689 = document.getElementsByClassName("treat-option-493689");
+  const treatCollection5726529 = document.getElementsByClassName("treat-option-5726529");
+  const bookBtn = document.getElementById("book-btn");
+  const bookingContents = document.getElementById("booking-contents");
+  const bookingNotAvailable = document.getElementById("booking-not-available");
+  
+  where.addEventListener("change", function(e) {
+    bar.value = '0';
+    treatment.value = '0';
+    bar.disabled = true;
+    treatment.disabled = true;
+    dateSelect.disabled = true;
+    bookBtn.disabled = true;
+    
+    for(let i = 0; i < barCollection493689.length; i++) {
+      barCollection493689[i].style.display = "none";
+    };
+    for(let i = 0; i < barCollection5726529.length; i++) {
+      barCollection5726529[i].style.display = "none";
+    };
+    
+    if (e.target.value === '493689') {
+      bar.disabled = false;
+      bar.value = '0';
+      treatment.value = '0';
+      for(let i = 0; i < barCollection493689.length; i++) {
+        barCollection493689[i].style.display = "block";
+      };
+      return;
+    }
+    if (e.target.value === '5726529') {
+      bar.disabled = false;
+      for(let i = 0; i < barCollection5726529.length; i++) {
+        barCollection5726529[i].style.display = "block";
+      };
+      bar.value = '5726529-1';
+      treatment.disabled = false;
+      for(let i = 0; i < treatCollection493689.length; i++) {
+        treatCollection493689[i].style.display = "none";
+      };
+      for(let i = 0; i < treatCollection5726529.length; i++) {
+        treatCollection5726529[i].style.display = "block";
+      };
+
+
+
+      
+      return;
+    }
+  });
+  
+  bar.addEventListener("change", function(e) {
+    treatment.value = '0';
+    treatment.disabled = true;
+    dateSelect.disabled = true;
+    bookBtn.disabled = true;
+    
+    for(let i = 0; i < treatCollection493689.length; i++) {
+      treatCollection493689[i].style.display = "none";
+    };
+    for(let i = 0; i < treatCollection5726529.length; i++) {
+      treatCollection5726529[i].style.display = "none";
+    };
+    
+    if (e.target.value === '0') {
+      return;
+    }
+
+    if (where.value === '493689') {
+      treatment.disabled = false;
+      for(let i = 0; i < treatCollection493689.length; i++) {
+        treatCollection493689[i].style.display = "block";
+      };
+      return;
+    }
+    if (where.value === '5726529') {
+      treatment.disabled = false;
+      for(let i = 0; i < treatCollection5726529.length; i++) {
+        treatCollection5726529[i].style.display = "block";
+      };
+      return;
+    }
+  });
+  
+  treatment.addEventListener("change", function(e) {
+    bookBtn.disabled = true;
+    dateSelect.disabled = true;
+        
+    if (e.target.value !== '0') {
+      dateSelect.disabled = false;
+      bookBtn.disabled = false;
+    }
+  });
+
+  addEventListener("load", (event) => {
+    const today = new Date();    
+    dateSelect.setAttribute('data-id', moment().startOf('day').toISOString());   
+    var picker = new Lightpick({
+      field: dateSelect,
+      minDate: today,
+      startDate: today,
+      lang: 'en',
+      format: "DD MMM YYYY",
+      onSelect: function(date){
+        console.log(date.toISOString());
+        dateSelect.setAttribute('data-id', date.toISOString());
+        bookBtn.disabled = false;
+      }
+    });
+  });
+  function quickbarBookAppointment() {
+    const visitType = treatment.value.split('-')[1];
+    const siteId  = where.value;
+    const locationId = bar.value.split('-')[1];
+    const startDate = dateSelect.getAttribute('data-id').split('T')[0];
+    
+    console.log({visitType, siteId, locationId, startDate});
+    document.getElementById("loadMe").style.visibility = "visible";
+
+    const urlParams = new URLSearchParams({
+      startDate,
+      siteId,
+      locationId,
+    });
+    fetch(`${urlBase}/user/appointments/${visitType}?${urlParams}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        "authorization": `Bearer ${accessToken}`
+      },
+    }).then((res) => res.json()).then((appointments) => {
+      console.log({appointments})
+      if (Object.keys(appointments).length === 0) {
+        bookingContents.style.display = 'none';
+        bookingNotAvailable.style.display = 'flex';
+        document.getElementById("loadMe").style.visibility = "hidden";
+        return;
+      }
+      bookingNotAvailable.style.display = 'none';
+      bookingContents.style.display = 'flex';
+      bookingContents.innerHTML = '';
+      bookingContents.style.opacity = 1;
+      
+      apptDates = {};
+      Object.keys(appointments).map((appointmentDate) => {
+        const dateDiv = document.createElement('div');
+        dateDiv.style.marginBottom = '29px';
+        dateDiv.style.className = 'flex-col';
+        dateDiv.style.maxWidth = '812px';
+        
+        const dateTitle = document.createElement('div');
+        dateTitle.innerHTML = formatAppointmentDate(new Date(appointmentDate));
+        dateTitle.style.textAlign = "left";
+        dateTitle.className = "";
+        dateTitle.style.color = "var(--unnamed-color-adb5bd)";
+        dateTitle.style.marginBottom = '29px';
+        dateTitle.style.fontSize = '12px';
+        dateDiv.appendChild(dateTitle);
+        
+        const dateContainer = document.createElement('div');
+        dateContainer.className = "comm-table-col";
+        dateContainer.style.gap = "10px";
+        
+        Object.keys(appointments[appointmentDate]).map((staffId) => {
+          const podContainer = document.createElement('div');
+          podContainer.className = "comm-table-col";
+          
+          const podTitle = document.createElement('div');
+          podTitle.className = "SF";
+          podTitle.innerHTML = appointments[appointmentDate][staffId].displayName;
+          podContainer.appendChild(podTitle);
+          
+          const podAppts = document.createElement('div');
+          podAppts.className = "comm-table-row";
+          podAppts.style.justifyContent = 'flex-start';
+          podAppts.style.alignItems = 'center';
+          podAppts.style.flexWrap = 'wrap';
+          podAppts.style.maxWidth = '812px';
+          
+          appointments[appointmentDate][staffId].times.map((time) => {
+            const apptDiv = document.createElement('div');
+            apptDiv.className = "comm-table-col";
+            apptDiv.style.backgroundColor = "#fff";
+            apptDiv.style.border = "1px solid #CFD4D9";
+            apptDiv.style.padding = "26px 94px";
+            apptDiv.style.textTransform = "uppercase";
+            apptDiv.style.alignItems = "center";
+            apptDiv.style.cursor = "pointer";
+            apptDiv.onclick = () => console.log(siteId, staffId, time.startDateTime, locationId);
+            
+            const timeDiv = document.createElement('div');
+            timeDiv.innerHTML = time.timeSlot;
+            timeDiv.style.color = "var(--unnamed-color-212529)";
+            timeDiv.style.fontSize = "16px";
+  
+            const name = document.createElement('div');
+            name.innerHTML = appointments[appointmentDate][staffId].appointmentName;
+            name.className = "SF";
+            name.style.textTransform = "none";
+            name.style.color = "var(--unnamed-color-495057)";
+            name.style.fontSize = '14px';
+
+            apptDiv.appendChild(timeDiv);
+            apptDiv.appendChild(name);
+        
+            podAppts.appendChild(apptDiv);
+          })
+          podContainer.appendChild(podAppts);
+          dateContainer.appendChild(podContainer);
+        });
+        dateDiv.appendChild(dateContainer);
+        bookingContents.appendChild(dateDiv);
+        
+      });
+      document.getElementById("loadMe").style.visibility = "hidden";
+    });
+  
+   
+  }
+</script>

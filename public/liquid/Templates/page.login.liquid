@@ -10,6 +10,7 @@
         color: #ADB5BD;
         border: 0;
         border-bottom: 1px solid #E9ECEF;
+        font-size: 14px;
     }
 
     .sub-btn {
@@ -18,7 +19,9 @@
         margin-top: 18px;
         margin-bottom: 23px;
         border: 0;
-
+        width: 100%;
+        padding: 12px;
+        font-size: 14px;
     }
 
     .inv-btn {
@@ -26,19 +29,48 @@
         color: #212529;
         font-weight: 500;
         border: 1px solid #CED4DA;
-        margin-bottom: 68px;
+        margin-bottom: 48px;
         width: 300px;
         height: 40px;
         opacity: 1;
         cursor: pointer;
+        text-decoration: none;
+        justify-content: center;
     }
 
     span.psw {
         float: right;
-        padding-top: 16px;
+        padding-top: 20px;
     }
+  .login-form {
+    padding:87px 122px;
+    width:300px;
+    box-sizing:content-box !important;
+    background-color: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  .main-login {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    background-color: #F8F9FA;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 122px;
+  }
+  .login-form-text {
+    font-size:16px;
+    margin-bottom:39px;
+    margin-top:19px;
+    max-width:300px;
+    text-align: center;
+  }
 </style>
 <script type="text/javascript">
+  console.log({urlBase})
     const return_to = window.location.origin + "/pages/account";
     function validateForm(event) {
         event.preventDefault();
@@ -69,23 +101,23 @@
     }
 </script>
 
-<div class="main">
-    <form style="padding:87px 122px;width:300px;" name="myForm" class="modal-content animate flex-col"
+<div class="main-login">
+    <form class="login-form" name="myForm" class="modal-content animate flex-col"
         onSubmit="return validateForm(event)">
-        <div style="font-size: 22px;">Book your appointment</div>
-        <div style="font-size:16px;margin-bottom:39px;margin-top:19px;max-width:300px;text-align: center;">Please
-            sign in or create
-            an account to
-            secure your booking.
+        <div class="SF" style="font-size: 22px;">Book your appointment</div>
+        <div class="login-form-text SF">
+          Please sign in or create an account to secure your booking.
         </div>
-        <input type="text" placeholder="Email" name="uname" required>
-        <input type="password" placeholder="Password" name="psw" required>
+        <input class="SF" type="text" placeholder="Email" name="uname" required>
+        <input class="SF" type="password" placeholder="Password" name="psw" required>
 
-        <button type="submit" class="sub-btn">SIGN IN</button>
-        <span class="psw"><a href="#">Need a new password??</a></span>
+        <button type="submit" class="sub-btn SF medium">SIGN IN</button>
+        <span class="psw SF"><a href="#">Need a new password??</a></span>
         <hr>
-        <a href="signup.html" class="inv-btn flex-row">CREATE
+        <a href="/pages/register" class="inv-btn SF medium flex-row">CREATE
             PROFILE
         </a>
+      <img src="{{ '_ff-single.svg' | asset_url }}" class="signin-logo" alt="company-logo">
+    
     </form>
 </div>

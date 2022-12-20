@@ -1,6 +1,5 @@
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@400;500&display=swap');
-  @import url('https://fonts.cdnfonts.com/css/sf-pro-display');
+
 :root {
   --header-height: 64px;
   --announcemnt-height: 25px;
@@ -14,8 +13,28 @@
   --unnamed-color-ced4da: #CED4DA; /* 206 212 218 -> grey20 */
   --unnamed-color-e9ecef: #E9ECEF; /* 233 236 239 -> grey10 */
   --unnamed-color-ffffff: #FFFFFF; /* 255 255 255 -> grey00 */
+  --unnamed-color-f54140: #f54140; /* red100 */
 }
-
+ 
+  html * {
+    font-family: 'Founders', sans-serif !important;
+  }
+  .light {
+    font-weight: 300;
+  }
+  .medium {
+    font-weight: 500;
+  }
+  .semi-bold {
+    font-weight: 600;
+  }
+  .bold {
+    font-weight: 700;
+  }
+  .SF {
+    font-family: 'SF Pro' !important;
+  }
+  
   body {
     font-size: 14px;
     height: 100%;
@@ -23,20 +42,7 @@
     margin: 0px;
     background-color: #F2F4F5;
     color: var(--unnamed-color-343a40);
-    font-weight: 400;
-  }
-  .SF {
-    font-family: 'SF Pro Display', sans-serif !important;
-  }
-  .medium {
-    font-weight: 700;
-  }
-  .SF.medium {
-    font-weight: 500 !important; /* Missing 500 file for Grotesk */
-  }
-
-  .bold {
-    font-weight: 700;
+    font-weight: normal;
   }
 
   .main-content {
@@ -67,16 +73,17 @@
   }
   
   .modal {
-    height: 100%;
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    position: absolute;
-    background-color: black;
-    opacity: .9;
+    background-color: rgba(0, 0, 0, 0.9);
     top: 0;
-    z-index: 50;
+    z-index: 10000;
+    height: 100vh;
+    overflow-y: hidden;
+    padding: 30px;
+    position: fixed;
   }
 
   .modal-content {
@@ -96,5 +103,22 @@
     justify-content: space-between;
     align-items: flex-start;
   }
-
+  
+  .book-now-btn {
+    color: var(--unnamed-color-ffffff);
+    letter-spacing: 0.42px;
+    opacity: 1;
+    width: 158px;
+    height: 35px;
+    background: var(--unnamed-color-343a40) 0% 0% no-repeat padding-box;
+    opacity: 1;
+    text-align: center;
+    letter-spacing: 0.42px;
+    text-decoration: none;
+    padding-top: 4px;
+  }
+  .book-now-btn:hover {
+    color: var(--unnamed-color-ffffff);
+    background: var(--unnamed-color-343a40) 0% 0% no-repeat padding-box;
+  }
 </style>

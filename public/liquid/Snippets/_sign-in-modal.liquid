@@ -38,7 +38,7 @@
         margin-bottom: 48px;
     }
 
-    signin-modal-new-psw {
+    .signin-modal-new-psw {
         float: right;
         padding-top: 16px;
         text-decoration: underline;
@@ -137,6 +137,15 @@
     .signin-modal-close-button:after {
       transform: rotate(-45deg);
     }
+  .sign-in-error {
+    color: var(--unnamed-color-f54140);
+    font-size: 12px;
+  }
+  .sign-in-helper{
+    color: var(--unnamed-color-f54140);
+    font-size: 12px;
+    width: 100%;
+  }
 </style>
 
 <script type="text/javascript">
@@ -156,8 +165,26 @@
   }
   function headerValidateForm() {
       event.preventDefault();
+      document.getElementById("signin-modal-uname-helper").innerHTML = "";
+      document.getElementById("signin-modal-psw-helper").innerHTML = "";
+      document.getElementById("sign-in-error").innerHTML = "";
       var uname = document.forms["signin-myForm"]["uname"].value;
       var psw = document.forms["signin-myForm"]["psw"].value;
+      if (!uname) {
+        document.getElementById("signin-modal-uname-helper").innerHTML = "This field is required.";
+      }
+      if (!ValidateEmail(uname)) {
+        document.getElementById("signin-modal-uname-helper").innerHTML = "Invalid email format.";
+      }
+      if (!psw) {
+        document.getElementById("signin-modal-psw-helper").innerHTML = "This field is required.";
+      }
+      if(!uname || !psw || !ValidateEmail(uname)) {
+        return;
+      }
+    
+      document.getElementById("button-loading").disabled = true;
+      document.getElementById("button-loading").classList.add("button--loading");
       if (uname == "") {
           alert("Name must be filled out");
           return false;
@@ -166,13 +193,20 @@
           alert("Password must be filled out");
           return false;
       }
+      document.getElementById("signin-loading").style.display = "block";
+      document.getElementById('signin-nav').style.display='none';
       fetch(`${headerUrlBase}/auth/login`, {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json'
           },
           body: JSON.stringify({ email: uname, password: psw, return_to: window.location.href })
-      }).then(res => res.json()).then(res => {
+      }).then((response) => {
+        if (response.status >= 400 && response.status < 600) {
+          throw new Error("Bad response from server");
+        }
+        return response.json();
+      }).then(res => {
           localStorage.setItem("accessToken", res.accessToken);
           accessToken = res.accessToken;
           const shopifyUrl = res.url;
@@ -186,7 +220,7 @@
               if (res.Membership.length === 0) {
                   localStorage.setItem('user', JSON.stringify({
                       name: `${res.FirstName} ${res.LastName}`,
-                      membership: "No Membership Purchased",
+                      membership: "Non-Member",
                   }));
               } else {
                   localStorage.setItem('user', JSON.stringify({
@@ -199,8 +233,21 @@
               loggedIn = true;
               setHeader();
               window.location.replace(shopifyUrl);
+              document.getElementById("button-loading").classList.remove("button--loading");
+              document.getElementById("button-loading").disabled = false;
           })
       })
+      .catch(() => {
+        document.getElementById("signin-loading").style.display = "none";
+        document.getElementById('signin-nav').style.display='block';
+        document.getElementById("sign-in-error").innerHTML = "INVALID CREDENTIALS";
+        document.getElementById("button-loading").classList.remove("button--loading");
+        document.getElementById("button-loading").disabled = false;
+      })
+  }
+  function createProfile() {
+    document.getElementById('signin-modal').style.display='none';
+    window.location.href = "/pages/register";
   }
 </script>
 
@@ -214,24 +261,26 @@
   >
     <div id="signin-modal-title-booking" class="signin-modal-title SF">Book your appointment</div>
     <div id="signin-modal-title-user" class="signin-modal-title SF">Sign In</div>
-    <div id="signin-modal-text-booking regular" class="signin-modal-text">
+    <div id="signin-modal-text-booking" class="signin-modal-text">
       Please sign in or create an account to secure your booking.
     </div>
-    <div id="signin-modal-text-user regular" class="signin-modal-text">WELCOME BACK</div>
-    <input class="signin-modal-input SF" type="text" placeholder="Email" name="uname" required>
-    <input class="signin-modal-input SF" type="password" placeholder="Password" name="psw" required>
-
-    <button type="submit" class="signin-modal-sub-btn SF medium">SIGN IN</button>
+    <div id="signin-modal-text-user" class="signin-modal-text">WELCOME BACK</div>
+    <input class="signin-modal-input SF" type="text" placeholder="Email" name="uname">
+    <p id="signin-modal-uname-helper" class="sign-in-helper SF"></p>
+    <input class="signin-modal-input SF" type="password" placeholder="Password" name="psw">
+    <p id="signin-modal-psw-helper" class="sign-in-helper SF"></p>
+    <div id="sign-in-error" class="sign-in-error SF"></div>
+    {% render '_loading-button', id:"button-loading", text: "SIGN IN", class:"signin-modal-sub-btn SF medium" %}
     <span class="signin-modal-new-psw SF">Need a new password?</span>
     <hr class="signin-modal-hr">
     <button
       type="button"
-      onclick="document.getElementById('signin-modal').style.display='none'"
+      onclick="createProfile()"
       class="signin-modal-inv-btn SF"
     >
       CREATE PROFILE
     </button>
-    <img src="https://via.placeholder.com/16x20" class="signin-logo" alt="company-logo">
+    <img src="{{ '_ff-single.svg' | asset_url }}" class="signin-logo" alt="company-logo">
     </div>
   </form>
 </div>

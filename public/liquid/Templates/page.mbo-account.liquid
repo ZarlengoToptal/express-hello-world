@@ -8,6 +8,7 @@
     /* Style the tab */
     .tab {
         overflow: hidden;
+      justify-content: flex-start;
     }
 
     /* Style the buttons that are used to open the tab content */
@@ -28,7 +29,6 @@
 
     /* Create an active/current tablink class */
     .tab button.active {
-        border-bottom: 2px solid black;
         color: #343A40;
         font-weight: 500;
     }
@@ -59,78 +59,45 @@
         font-size: 22px;
     }
 
-
+  .tab-active {
+    height: 4px;
+    width: 100%;
+    background: transparent radial-gradient(closest-side at 50% 50%, #3A4F64 0%, #596B7DD3 49%, #F0F2F400 100%) 0% 0% no-repeat padding-box;
+    mix-blend-mode: multiply;
+    opacity: 1;
+    visibility: hidden;
+    position:relative;
+    top: 2px;
+  }
+  .tab-active.active {
+    visibility: visible;
+  }
+  .tab-group {
+    width: 130px;
+  }
+  #membership {
+     margin-top: 8px;
+    color:var(--unnamed-color-6c757d);
+    letter-spacing: 0.56px;
+    text-transform: uppercase;
+  }
 </style>
-<div class="account-body">
-    <div class="panel" style="padding-bottom: 0; margin-top: 91px;">
-        <div class="flex-row" style="justify-content:space-between">
-            <div style="color:var(--unnamed-color-adb5bd)" class="medium">YOUR ACCOUNT</div>
-            <img src="https://via.placeholder.com/18x23" alt="company-logo">
-        </div>
-        <hr class="account-hr">
-        <div class="comm-table-row">
-            <div class="comm-table-col">
-                <span id="userName" class="SF">User</span>
-                <span id="membership" style="margin-top: 8px;color:var(--unnamed-color-6c757d)" ;">No Membership
-                    Purchased</span>
-            </div>
-            <div style="cursor: pointer;color:var(--unnamed-color-6C757D);text-decoration: underline;" class="medium SF"
-                onclick="headerLogout(event)">Log out</div>
-        </div>
-        <hr class="account-hr">
-        <div class="tab">
-            <button id="appointments-btn" class="tab-links active SF"
-                onclick="openTab(event, 'appointments')">Appointments</button>
-            <button id="history-btn" class="tab-links SF" onclick="openTab(event, 'history')">History</button>
-            <button id="passes-btn" class="tab-links SF" onclick="openTab(event, 'passes')">Passes</button>
-            <button id="purchases-btn" class="tab-links SF" onclick="openTab(event, 'purchases')">Purchases</button>
-            <button id="orders-btn" class="tab-links SF" onclick="openTab(event, 'orders')">Order
-                History</button>
-            <button id="account-tab-btn" class="tab-links SF" onclick="openTab(event, 'account-tab')">Account
-                Info</button>
-        </div>
-    </div>
-    {% render '_account-visits' %}
-    <div id="passes" class="tabcontent">
-        <div class="panel" id="passesPanel" style="display:none;"></div>
-        <div class="panel" id="noPassesPanel">
-            <p class="panel-title">Time to buy a pass or autopay?</p>
-            <p style="color:var(--unnamed-color-495057)">Your passes and autopays will show up here, ready for use.</p>
-            <hr class="account-hr">
-        </div>
-    </div>
-    <div id="purchases" class="tabcontent">
-        <div class="panel" id="purchasesPanel" style="display:none;"></div>
-        <div class="panel" id="noPurchasesPanel">
-            <p class="panel-title">Looks like you haven't purchased anything yet.</p>
-            <p style="color:var(--unnamed-color-495057)">Your past purchases will be saved here for easy reference.</p>
-            <hr class="account-hr">
-        </div>
-    </div>
-    {% render '_account-orders' %}
-    {% render '_account-info' %}
     <script type="text/javascript">
         if (!accessToken) {
             window.location.href = `/pages/login`;
         }
-        const queryString = window.location.search;
-        const urlParams = new URLSearchParams(queryString);
-        const tab = urlParams.get('tab')
-        if (tab) {
-            openTab(null, tab);
-        }
 
-        addEventListener("load", (event) => {
-            document.getElementById("loadMe").style.visibility = "visible";
-        });
         function openTab(evt, tabName) {
-            // Declare all variables
-            var i, tabcontent, tabLinks;
-
             // Get all elements with class="tabcontent" and hide them
-            tabcontent = document.getElementsByClassName("tabcontent");
-            for (i = 0; i < tabcontent.length; i++) {
+            const tabcontent = document.getElementsByClassName("tabcontent");
+            for (let i = 0; i < tabcontent.length; i++) {
                 tabcontent[i].style.display = "none";
+            }
+
+            // Get all elements with class="tab-active" and hide them
+            const activeTabs = document.getElementsByClassName("tab-active");
+            for (let i = 0; i < activeTabs.length; i++) {
+                activeTabs[i].className = activeTabs[i].className.replace(" active", "");
             }
 
             // Get all elements with class="tab-links" and remove the class "active"
@@ -138,9 +105,10 @@
             for (i = 0; i < tabLinks.length; i++) {
                 tabLinks[i].className = tabLinks[i].className.replace(" active", "");
             }
-
+          
             // Show the current tab, and add an "active" class to the button that opened the tab
             document.getElementById(tabName).style.display = "block";
+            document.getElementById(`${tabName}-active`).className += " active";
             if (evt) {
                 evt.currentTarget.className += " active";
             } else {
@@ -148,3 +116,76 @@
             }
         }
     </script>
+<div class="account-body">
+  <div class="panel" style="padding-bottom: 0; margin-top: 91px;">
+    <div class="flex-row" style="justify-content:space-between">
+      <div style="color:var(--unnamed-color-adb5bd)" class="medium">YOUR ACCOUNT</div>
+      <img src="{{ '_ff-single.svg' | asset_url }}" alt="some alt" />
+    </div>
+    <hr class="account-hr">
+    <div class="comm-table-row">
+      <div class="comm-table-col">
+        <div id="userName-loading" class="signin-loading account-header-username SF point">
+          {% render '_loading-button', id:"uname-load-btn", text:"", class:"signin-loading button--loading dark" %}
+        </div>
+        <span id="userName" style="display:none" class="SF">User</span>
+        <span id="membership" style="display:none;">Non-Member</span>
+      </div>
+      <div style="cursor: pointer;color:var(--unnamed-color-6C757D);text-decoration: underline;" class="medium SF"
+        onclick="headerLogout(event)">Log out</div>
+    </div>
+    <hr style="border: 1px dashed #EAECEF;margin: 17px 0;">
+    <div class="tab flex-row">
+      <div class="tab-group flex-col">
+        <button id="appointments-btn" class="tab-links active SF"
+          onclick="openTab(event, 'appointments')">Appointments</button>
+        <div id="appointments-active" class="tab-active active"></div>
+      </div>
+      <div class="tab-group flex-col">
+        <button id="history-btn" class="tab-links SF" onclick="openTab(event, 'history')">History</button>
+        <div id="history-active" class="tab-active"></div>
+      </div>
+      <div class="tab-group flex-col">
+        <button id="passes-btn" class="tab-links SF" onclick="openTab(event, 'passes')">Passes</button>
+        <div id="passes-active" class="tab-active"></div>
+      </div>
+      <div class="tab-group flex-col">
+        <button id="purchases-btn" class="tab-links SF" onclick="openTab(event, 'purchases')">Purchases</button>
+        <div id="purchases-active" class="tab-active"></div>
+      </div>
+      <div class="tab-group flex-col">
+        <button id="orders-btn" class="tab-links SF" onclick="openTab(event, 'orders')">Order
+          History</button>
+        <div id="orders-active" class="tab-active"></div>
+      </div>
+      <div class="tab-group flex-col">
+        <button id="account-tab-btn" class="tab-links SF" onclick="openTab(event, 'account-tab')">Account
+          Info</button>
+        <div id="account-tab-active" class="tab-active"></div>
+      </div>
+    </div>
+  </div>
+  {% render '_account-visits' %}
+  <div id="passes" class="tabcontent">
+    <div class="panel flex-row" style="justify-content:center;" id="passesPanelLoading">
+      {% render '_loading-button', id:"visits-load-btn", text:"", class:"button--loading dark" %}
+    </div>
+    <div class="panel" id="passesPanel" style="display:none;"></div>
+    <div class="panel" id="noPassesPanel" style="display:none;">
+      <p class="SF panel-title">Time to buy a pass or autopay?</p>
+      <p class="SF" style="color:var(--unnamed-color-495057)">Your passes and autopays will show up here, ready for use.</p>
+      <hr class="account-hr">
+    </div>
+  </div>
+  {% render '_account-purchases' %}
+  {% render '_account-orders' %}
+  {% render '_account-info' %}
+</div>
+    <script type="text/javascript">
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const tab = urlParams.get('tab')
+        if (tab) {
+            openTab(null, tab);
+        }
+    </script>  

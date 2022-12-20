@@ -1,0 +1,86 @@
+<style>
+  .cancel-modal {
+    visibility: hidden;
+    z-index: 10000;
+    overflow: hidden;
+    height: 100vh;
+    overflow-y: hidden;
+    padding: 37px;
+    position: fixed;
+    background: rgba(34, 37, 41, .4);
+  }
+  .cancel-cancel-btn, .cancel-continue-btn {
+    padding: 12px;
+    width: 100%;
+    cursor: pointer;
+  }
+  .cancel-continue-btn {
+      background-color: var(--unnamed-color-343a40);
+      color: white;
+      border: none;
+      letter-spacing: 0.42px;
+  }
+
+  .cancel-cancel-btn {
+    background-color: #fff;
+    border: none;
+    text-decoration: underline;
+    margin: 0 -5px 0 5px;
+  }
+  .cancel-container {
+    opacity: 1;
+    padding: 30px 50px;
+    background-color: #fff;
+    width: 536px;
+  }
+</style>
+<!-- CC Modal -->
+<div class="modal fade cancel-modal" id="cancelMe" tabindex="-1" role="dialog" aria-labelledby="cancelMeLabel">
+  <div class="cancel-container">
+    <div class="flex-col" style="gap: 11px;">
+      <div style="color:var(unnamed-color-495057)">ALERT ICON</div>
+      <div id="cancel-modal-title" style="color:var(--unnamed-color-212529);font-size:16px;margin-top:22px;">CANCEL RESERVATION?</div>
+      <div id="cancel-modal-text" class="SF" style="padding:0 45px;color:var(--unnamed-color-6c757d);margin-bottom:17px;text-align:center;font-size:14px;">Are you sure you want to cancel your reservation? This cannot be undone.</div>
+      <button id="cancel-modal-btn" type="submit" class="SF medium cancel-continue-btn" onclick="confirmCancel()">YES, CANCEL</button>
+      <button type="cancel" class="SF cancel-cancel-btn" onclick="returnToPrevious()">No, let’s keep it</button>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  let nextFunction = () => {};
+  const cancelMe = document.getElementById("cancelMe");
+  const cancelModalTitle = document.getElementById("cancel-modal-title");
+  const cancelModalText = document.getElementById("cancel-modal-text");
+  const cancelModalBtn = document.getElementById("cancel-modal-btn");
+  function loadCancelMe(next) {
+    cancelModalTitle.innerHTML = "CANCEL RESERVATION?";
+    cancelModalText.innerHTML = "Are you sure you want to cancel your reservation? This cannot be undone.";
+    cancelModalBtn.innerHTML = "YES, CANCEL";
+    cancelMe.style.visibility = 'visible';
+    nextFunction = next;
+  }
+  function loadRescheduleMe(next) {
+    cancelModalTitle.innerHTML = "RESCHEDULE RESERVATION?";
+    cancelModalText.innerHTML = "Are you sure you want to reschedule your reservation? This cannot be undone.";
+    cancelModalBtn.innerHTML = "YES, RESCHEDULE";
+    cancelMe.style.visibility = 'visible';
+    nextFunction = next;
+  }
+  function loadDeleteMe(next) {
+    cancelModalTitle.innerHTML = "DELETE CREDIT CARD?";
+    cancelModalText.innerHTML = "Are you sure you want to delete your credit card?";
+    cancelModalBtn.innerHTML = "YES, DELETE";
+    cancelMe.style.visibility = 'visible';
+    nextFunction = next;
+  }
+  function confirmCancel() {
+    cancelMe.style.visibility = 'hidden';
+    if (nextFunction) {
+      nextFunction();
+    }
+  }
+  function returnToPrevious() {
+    cancelMe.style.visibility = 'hidden';
+    nextFunction = () => {};
+  }
+</script>

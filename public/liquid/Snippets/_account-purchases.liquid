@@ -1,0 +1,204 @@
+<script>
+  function getPurchaseData() {
+    fetch(`${urlBase}/user/purchases`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        "authorization": `Bearer ${accessToken}`
+      },
+    }).then(res => res.json()).then(purchases => {
+      if (purchases.length === 0) {
+        document.getElementById("purchasePanelLoading").style.display = "none";
+        document.getElementById("noPurchasePanel").style.display = "block";
+        return;
+      }
+
+
+      purchases.forEach((purchase) => {
+        const purchaseContainer = document.createElement("div");
+        purchaseContainer.className = "panel";
+        const purchaseTitle = document.createElement("div");
+        purchaseTitle.className = "comm-table-row";
+  
+        const purchaseNumber = document.createElement("div");
+        purchaseNumber.className = "flex-row";
+  
+        const purchaseIcon = document.createElement("img");
+        purchaseIcon.src = "{{ '_ff-single.svg' | asset_url }}";
+        purchaseIcon.alt = "company-logo";
+        purchaseIcon.style.marginRight = "12px";
+        purchaseNumber.appendChild(purchaseIcon);
+  
+        const purchaseNumberText = document.createElement("div");
+        purchaseNumberText.innerHTML = `<span class="medium" style="color:var(--unnamed-color-495057);">SALE ID:</span>&nbsp;&nbsp;${purchase.SaleId}`;
+        purchaseNumber.appendChild(purchaseNumberText);
+        purchaseTitle.appendChild(purchaseNumber);
+  
+        const purchaseDate = document.createElement("div");
+        purchaseDate.style.color = "var(--unnamed-color-6c757d)";
+        purchaseDate.innerHTML = `<span class="medium">SALE DATE:</span>&nbsp;&nbsp;${formatOrderDate(new Date(purchase.SaleDate))}`;
+        purchaseTitle.appendChild(purchaseDate);
+  
+        purchaseContainer.appendChild(purchaseTitle);
+        purchaseContainer.appendChild(document.createElement("hr"));
+
+        purchase.PurchasedItems.forEach((item) => {
+          const itemContainer = document.createElement("div");
+          itemContainer.className = "comm-table-row";
+          itemContainer.style.justifyContent = "flex-start";
+
+          const itemDetails = document.createElement("div");
+          itemDetails.style.marginLeft = "30px";
+          itemDetails.style.gap = "9px";
+          itemDetails.className = "comm-table-col";
+          const itemTitle = document.createElement("div");
+          itemTitle.innerHTML = item.Description;
+          itemTitle.style.color = "var(--unnamed-color-495057)";
+          itemTitle.className = "SF";
+          itemDetails.appendChild(itemTitle);
+
+          const itemQuantity = document.createElement("div");
+          itemQuantity.innerHTML = `QTY: ${item.Quantity}`;
+          itemQuantity.style.color = "var(--unnamed-color-495057)";
+          itemQuantity.className = "SF";
+          itemDetails.appendChild(itemQuantity);
+
+          const itemPrice = document.createElement("div");
+          itemPrice.innerHTML = `Unit Price: $${item.TotalAmount}`;
+          itemPrice.style.color = "var(--unnamed-color-495057)";
+          itemPrice.className = "SF";
+          itemDetails.appendChild(itemPrice);
+
+          itemContainer.appendChild(itemDetails);
+          purchaseContainer.appendChild(itemContainer);
+          purchaseContainer.appendChild(document.createElement("hr"));
+        });
+        
+        const summaryContainer = document.createElement("div");
+        summaryContainer.className = "flex-row";
+        summaryContainer.style.justifyContent = "flex-start";
+        summaryContainer.style.alignItems = "flex-start";
+        summaryContainer.style.gap = "97px";
+        const purchaseSummary = document.createElement("div");
+        purchaseSummary.className = "comm-table-col";
+        purchaseSummary.justifyContent = "flex-start";
+        purchaseSummary.style.width = "200px";
+        const summaryTitle = document.createElement("div");
+        summaryTitle.innerHTML = "PURCHASE SUMMARY:";
+        summaryTitle.className = "medium";
+        summaryTitle.style.marginBottom = '24px';
+        summaryTitle.style.color = "var(--unnamed-color-495057)";
+        purchaseSummary.appendChild(summaryTitle);
+  
+        const cartTotal = document.createElement("div");
+        cartTotal.className = "comm-table-row";
+        cartTotal.style.width = "100%";
+  
+        const cartTotalLabel = document.createElement("div");
+        cartTotalLabel.innerHTML = "Cart Total:";
+        cartTotalLabel.className = "SF";
+        const cartTotalValue = document.createElement("div");
+        cartTotalValue.innerHTML = `$${purchase.Price}`;
+        cartTotal.appendChild(cartTotalLabel);
+        cartTotal.appendChild(cartTotalValue);
+        purchaseSummary.appendChild(cartTotal);
+  
+        const discount = document.createElement("div");
+        discount.className = "comm-table-row SF";
+        discount.style.width = "100%";
+        discount.style.marginBottom = '14px';
+  
+        const discountLabel = document.createElement("div");
+        discountLabel.innerHTML = "Discount:";
+        discountLabel.className = "SF";
+        const discountTotal = document.createElement("div");
+        discountTotal.innerHTML = `$${purchase.Discount}`;
+        discount.appendChild(discountLabel);
+        discount.appendChild(discountTotal);
+        purchaseSummary.appendChild(discount);
+  
+        const subTotal = document.createElement("div");
+        subTotal.className = "comm-table-row SF";
+        subTotal.style.width = "100%";
+        const subTotalLabel = document.createElement("div");
+        subTotalLabel.innerHTML = "Sub Total:";
+        subTotalLabel.className = "SF";
+        const subTotalValue = document.createElement("div");
+        subTotalValue.innerHTML = `$${purchase.AmountPaid}`;
+        subTotal.appendChild(subTotalLabel);
+        subTotal.appendChild(subTotalValue);
+        purchaseSummary.appendChild(subTotal);
+  
+        const purchaseTotal = document.createElement("div");
+        purchaseTotal.className = "comm-table-row SF";
+        purchaseTotal.style.width = "100%";
+        const purchaseTotalLabel = document.createElement("div");
+        purchaseTotalLabel.innerHTML = "Order Total:";
+        purchaseTotalLabel.className = "bold SF";
+        const purchaseTotalValue = document.createElement("div");
+        purchaseTotalValue.innerHTML = `$${purchase.AmountPaid}`;
+        purchaseTotalValue.className = "bold";
+        purchaseTotal.appendChild(purchaseTotalLabel);
+        purchaseTotal.appendChild(purchaseTotalValue);
+        purchaseSummary.appendChild(purchaseTotal);
+        summaryContainer.appendChild(purchaseSummary);
+  /*
+        const deliveryContainer = document.createElement("div");
+        deliveryContainer.className = "comm-table-col SF";
+        deliveryContainer.justifyContent = "flex-start";
+        const deliveryTitle = document.createElement("div");
+        deliveryTitle.innerHTML = "DELIVERING TO:";
+        deliveryTitle.style.marginBottom = '24px';
+        deliveryTitle.style.color = "var(--unnamed-color-495057)";
+        deliveryTitle.className = "medium";
+        deliveryContainer.appendChild(deliveryTitle);
+  
+        const deliveryName = document.createElement("div");
+        deliveryName.innerHTML = order.shipping_address.name ? order.shipping_address.name : "No name provided";
+        deliveryName.style.color = "var(--unnamed-color-6c757d)";
+        deliveryName.style.marginBottom = '24px';
+        deliveryName.className = "SF";
+        deliveryContainer.appendChild(deliveryName);
+  
+        const deliveryAddress = document.createElement("div");
+        deliveryAddress.innerHTML = order.shipping_address.address1 ? order.shipping_address.address1 : "No address provided";
+        deliveryAddress.style.color = "var(--unnamed-color-6c757d)";
+        deliveryAddress.style.marginBottom = '4px';
+        deliveryAddress.className = "SF";
+        deliveryContainer.appendChild(deliveryAddress);
+  
+        const deliveryCityState = document.createElement("div");
+        deliveryCityState.innerHTML = order.shipping_address.city ? `${order.shipping_address.city}, ${order.shipping_address.state} ` : "No city provided";
+        deliveryCityState.style.color = "var(--unnamed-color-6c757d)";
+        deliveryCityState.style.marginBottom = '4px';
+        deliveryCityState.className = "SF";
+        deliveryContainer.appendChild(deliveryCityState);
+  
+        const deliveryZip = document.createElement("div");
+        deliveryZip.innerHTML = order.shipping_address.zip ? order.shipping_address.zip : "No zip provided";
+        deliveryZip.style.color = "var(--unnamed-color-6c757d)";
+        deliveryZip.className = "SF";
+        deliveryContainer.appendChild(deliveryZip);
+  
+        summaryContainer.appendChild(deliveryContainer);
+  
+  */
+        purchaseContainer.appendChild(summaryContainer);
+        document.getElementById("purchases").append(purchaseContainer);
+      });
+      document.getElementById("noPurchasePanel").style.display = "none";
+      document.getElementById("purchasePanelLoading").style.display = "none";
+    })
+  }
+  getPurchaseData();
+</script>
+<div id="purchases" class="tabcontent">
+    <div class="panel flex-row" style="justify-content:center;" id="purchasePanelLoading">
+      {% render '_loading-button', id:"purchases-load-btn", text:"", class:"button--loading dark" %}
+    </div>
+  <div class="panel" id="noPurchasePanel" style="display:none;">
+    <p class="SF panel-title">Looks like you haven't purchased anything yet.</p>
+    <p class="SF" style="color:var(--unnamed-color-495057)">Your past purchases will be saved here for easy reference.</p>
+    <hr class="account-hr">
+  </div>
+</div>

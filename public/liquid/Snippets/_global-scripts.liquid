@@ -1,5 +1,13 @@
 <script type="text/javascript">
-  const urlBase = "https://formula-fig-staging.cyclic.app";
+    let urlBase = "https://sincere-amulet-371121.nn.r.appspot.com/api";
+    let headerUrlBase = "https://sincere-amulet-371121.nn.r.appspot.com/api";
+  if (window.location.href.includes("testMode=true")) {
+    console.log('testMode');
+    urlBase = "https://formula-fig-staging.cyclic.app";
+    headerUrlBase = "https://formula-fig-staging.cyclic.app";
+  }
+  let accessToken = localStorage.getItem('accessToken');
+  let loggedIn = accessToken !== null;
   function convertDate(date) {
     var event = new Date(date).toISOString();
     event = event.split("T")[0];
@@ -29,7 +37,7 @@
   function formatOrderDate(date) {
     const monthName = date.toLocaleString('en-us', { month: 'short' });
     return [
-      padTo2Digits(date.getMonth() + 1),
+      padTo2Digits(date.getDate()),
       monthName.toUpperCase(),
       date.getFullYear(),
     ].join(' ');
@@ -60,5 +68,19 @@
         date.getFullYear(),
       ].join('/'),
     ].join(' ');
+  }
+  
+  function validatePassword (password) {
+    const re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,123}$/;
+    return re.test(password);
+  }
+  function ValidateEmail(email) {
+    const re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    return re.test(email);
+  }
+  
+  function validatePhone (phone) {
+    const re = /^[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
+    return re.test(phone);
   }
 </script>

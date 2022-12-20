@@ -64,14 +64,17 @@
   }
 </style>
 <div id="membership-user-icon" class="flex-row" style="height:100%">
-  <div id="signin-nav" onclick="document.getElementById('signin-modal').style.display='flex'" class="account-header-username SF point">
+  <div id="signin-loading" class="account-header-username SF point">
+    {% render '_loading-button', id:"signin-load-btn", text:"", class:"button--loading dark" %}
+  </div>
+  <div id="signin-nav" style="display:none;" onclick="document.getElementById('signin-modal').style.display='flex'" class="account-header-username SF point">
     SIGN IN
   </div>
   <div id="user-nav" class="flex-col" style="display:none;">
       <div id="name-nav" class="account-header-username SF">
           USER
       </div>
-      <div id="membership-nav" style="font-size:12px; width: 100%;text-align: end;">
+      <div id="membership-nav" style="font-size:12px; width: 100%;text-align: end;display: none">
           Membership
       </div>
   </div>
@@ -108,6 +111,7 @@
 
 <script type="text/javascript">
     const setHeader = () => {
+        document.getElementById("signin-loading").style.display = "none";
         if (!loggedIn) {
             document.getElementById("user-nav").style.display = "none";
             document.getElementById("signin-nav").style.display = "block";
@@ -118,7 +122,12 @@
             document.getElementById("logged-in-drop-dwn").style.display = "block";
             const { name, membership } = JSON.parse(localStorage.getItem('user'));
             document.getElementById("name-nav").innerHTML = `<u>${name}</u>`;
-            document.getElementById("membership-nav").innerHTML = membership;
+            if (membership === "Non-Member") {
+              document.getElementById("membership-nav").style.display = "none";
+            } else {
+              document.getElementById("membership-nav").innerHTML = membership;
+              document.getElementById("membership-nav").style.display = "block";
+            }
             document.getElementById("user-nav").style.display = "flex";
             document.getElementById("signin-nav").style.display = "none";
         }
@@ -135,6 +144,9 @@
       setHeader();
     })
     function headerLogout(e) {
+        document.getElementById("user-nav").style.display = "none";
+        document.getElementById("membership-nav").style.display = "none";
+        document.getElementById("signin-loading").style.display = "block";
         e.preventDefault();
         fetch(`${headerUrlBase}/auth/logout`, {
             method: 'POST',
@@ -143,6 +155,14 @@
                 "authorization": `Bearer ${accessToken}`
             },
         }).then(res => {
+            loggedIn = false;
+            localStorage.removeItem('accessToken');
+            localStorage.removeItem('user');
+            setHeader();
+            if (window.location.pathname.includes("account")) {
+              window.location.href = '/';
+            }
+        }).catch(err => {
             loggedIn = false;
             localStorage.removeItem('accessToken');
             localStorage.removeItem('user');

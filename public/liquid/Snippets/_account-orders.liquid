@@ -10,6 +10,7 @@
     }).then(res => res.json()).then(orders => {
       if (orders.length === 0) {
         document.getElementById("orderPanel").style.display = "none";
+        document.getElementById("orderPanelLoading").style.display = "none";
         document.getElementById("noOrderPanel").style.display = "block";
         return;
       }
@@ -25,7 +26,7 @@
         orderNumber.className = "flex-row";
   
         const orderIcon = document.createElement("img");
-        orderIcon.src = "https://via.placeholder.com/18x23";
+        orderIcon.src = "{{ '_ff-single.svg' | asset_url }}";
         orderIcon.alt = "company-logo";
         orderIcon.style.marginRight = "12px";
         orderNumber.appendChild(orderIcon);
@@ -53,7 +54,7 @@
           imageContainer.className = "comm-table-row";
           imageContainer.style.justifyContent = "center";
           const itemImage = document.createElement("img");
-          itemImage.src = item.image.src === '' ? 'https://via.placeholder.com/74' : item.image.src;
+          itemImage.src = item.image.src === '' ? "{{ '_image-placeholder.svg' | asset_url }}" : item.image.src;
           itemImage.alt = item.image.alt;
           itemImage.style.width = "74px";
           itemImage.style.height = "74px";
@@ -206,15 +207,20 @@
         document.getElementById("orders").append(orderContainer);
       });
       document.getElementById("noOrderPanel").style.display = "none";
+      document.getElementById("orderPanelLoading").style.display = "none";
+      document.getElementById("orderPanel").style.display = "block";
     })
   }
   getOrderData();
 </script>
 <div id="orders" class="tabcontent">
+    <div class="panel flex-row" style="justify-content:center;" id="orderPanelLoading">
+      {% render '_loading-button', id:"orders-load-btn", text:"", class:"button--loading dark" %}
+    </div>
   <div class="panel" id="orderPanel" style="display:none;"></div>
-  <div class="panel" id="noOrderPanel">
-    <p class="panel-title">Looks like you haven't ordered anything yet.</p>
-    <p style="color:var(--unnamed-color-495057)">Your past orders will be saved here for easy reference.</p>
+  <div class="panel" id="noOrderPanel" style="display:none;">
+    <p class="SF panel-title">Looks like you haven't ordered anything yet.</p>
+    <p class="SF" style="color:var(--unnamed-color-495057)">Your past orders will be saved here for easy reference.</p>
     <hr class="account-hr">
   </div>
 </div>

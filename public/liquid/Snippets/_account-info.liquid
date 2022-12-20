@@ -35,6 +35,7 @@
         addEventListener("load", (event) => {
             const SaveListener = document.getElementById("account-save-btn");
             let passwordChanged = false;
+            let phoneChanged = false;
 
             const updatedInputs = [
                 "FirstName",
@@ -52,17 +53,17 @@
                 "MobilePhone"];
             const updatedCheckboxes = [
                 "SendAccountEmails",
-                "SendAccountTexts",
                 "SendScheduleEmails",
-                "SendScheduleTexts",
-                "SendPromotionalEmails",
-                "SendPromotionalTexts"];
+                "SendPromotionalEmails"];
             ["Password", ...updatedInputs, ...updatedCheckboxes].forEach((input) => {
                 const listener = document.getElementById(input);
                 listener.addEventListener('input', () => {
                     SaveListener.disabled = false;
                     if (input === "Password") {
                         passwordChanged = true;
+                    }
+                    if (input === "MobilePhone" || input === "Country") {
+                        phoneChanged = true;
                     }
                 });
             });
@@ -84,7 +85,10 @@
                     }
                 });
                 if (passwordChanged) {
-                    valuesToUpdate.password = document.getElementById("Password").value;
+                    valuesToUpdate.Password = document.getElementById("Password").value;
+                }
+                if (phoneChanged) {
+                    valuesToUpdate.MobilePhone = `${document.getElementById("CountryMobilePhone").value}${document.getElementById("MobilePhone").value}`;
                 }
                 console.log(valuesToUpdate)
                 if (Object.keys(valuesToUpdate) === 0) {
@@ -105,6 +109,7 @@
                 }).then(res => res.json()).then(res => {
                     getAccountData(false);
                     passwordChanged = false;
+                    phoneChanged = false;
                     SaveListener.disabled = true;
                     document.getElementById("loadMe").style.visibility = "hidden";
                 });
@@ -145,13 +150,15 @@
                     "authorization": `Bearer ${accessToken}`
                 },
 
-            }).then((res) => res.json()).then((classes) => {
-                getAccountData();
+            }).then((res) => res.json()).then(async (classes) => {
+                await getAccountData();
                 document.getElementById("loadMe").style.visibility = "hidden";
             });
         }
         function getAccountData(shouldUpdateAppointments = true) {
-            fetch(`${urlBase}/user/account`, {
+          document.getElementById("account-container").style.display = "none";
+          document.getElementById("account-loading").style.display = "block";
+            return fetch(`${urlBase}/user/account`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -163,20 +170,35 @@
                 if (shouldUpdateAppointments) updateAppointments();
             });
         }
+        function addNewCC() {
+          scroll(0, 0);
+          document.getElementById("adr").value = "";
+          document.getElementById("cname").value = "";
+          document.getElementById("city").value = "";
+          document.getElementById("expmonth").value = "";
+          document.getElementById("expyear").value = "";
+          document.getElementById("ccnum").value = "";
+          document.getElementById("zip").value = "";
+          document.getElementById("state").value = "";
+          document.getElementById('ccMe').style.visibility = 'visible';
+        }
         function updateAccountData(res) {
             document.getElementById("Location").setAttribute("data-value", res.HomeLocationId || 0)
             document.getElementById("userName").innerHTML = `${res.FirstName} ${res.LastName}`;
+            document.getElementById("userName-loading").style.display = 'none';
+            document.getElementById("userName").style.display = 'block';
             if (res.Membership.length === 0) {
-                document.getElementById("membership").innerHTML = "No Membership Purchased";
+                document.getElementById("membership").style.display="none";
                 document.getElementById("passesPanel").style.display = "none";
+                document.getElementById("passesPanelLoading").style.display = "none";
                 document.getElementById("noPassesPanel").style.display = "block";
                 localStorage.setItem('user', JSON.stringify({
                     name: `${res.FirstName} ${res.LastName}`,
-                    membership: "No Membership Purchased",
+                    membership: "Non-Member",
                 }));
             } else {
+                document.getElementById("membership").style.display="block";
                 document.getElementById("membership").innerHTML = res.Membership[0].Name;
-                document.getElementById("SendPromotionalTexts").disabled = true;
                 localStorage.setItem('user', JSON.stringify({
                     name: `${res.FirstName} ${res.LastName}`,
                     membership: res.Membership[0].Name,
@@ -241,6 +263,7 @@
                     document.getElementById("passesPanel").appendChild(document.createElement("hr"));
 
                 });
+                document.getElementById("passesPanelLoading").style.display = "none";
                 document.getElementById("passesPanel").style.display = "block";
                 document.getElementById("noPassesPanel").style.display = "none";
             }
@@ -275,7 +298,7 @@
                 ccDelete.className = "comm-table-col";
                 ccDelete.innerHTML = "DELETE";
                 ccDelete.style.cursor = "pointer";
-                ccDelete.onclick = () => deleteCC();
+                ccDelete.onclick = () => loadDeleteMe(() => deleteCC());
 
                 const ccSpacer = document.createElement("div");
                 ccSpacer.innerHTML = "&nbsp;&nbsp;|&nbsp;&nbsp;";
@@ -284,26 +307,12 @@
                 ccActions.appendChild(ccSpacer);
                 ccActions.appendChild(ccDelete);
                 ccContainer.appendChild(ccActions);
-                /*
-                ClientCreditCard": {
-                            "Address": null,
-                            "CardHolder": null,
-                            "CardNumber": "************7655",
-                            "CardType": "Visa",
-                            "City": null,
-                            "ExpMonth": "01",
-                            "ExpYear": "2027",
-                            "LastFour": "7655",
-                            "PostalCode": null,
-                            "State": "0"
-                        },
-                */
             } else {
                 const ccAddNew = document.createElement("div");
                 ccAddNew.className = "comm-table-col";
                 ccAddNew.innerHTML = "ADD CC";
                 ccAddNew.style.cursor = "pointer";
-                // ccAddNew.onclick = () => addNew();
+                ccAddNew.onclick = () => addNewCC();
                 ccContainer.appendChild(ccAddNew);
             }
             document.getElementById("payment-info").appendChild(ccContainer);
@@ -366,173 +375,183 @@
             document.getElementById("Country").value = res.Country;
             document.getElementById("Country").setAttribute("data-value", res.Country);
 
+            if (countries) {
+              const selectedCountry = countries.filter((country) => country.countryCode == res.Country);
+              if (selectedCountry.length > 0) {
+                const countryCode = selectedCountry[0].countryCallingCode;
+                document.getElementById("CountryMobilePhone").value = countryCode;
+                if (res.MobilePhone.startsWith(countryCode)) {
+                  document.getElementById("MobilePhone").value = res.MobilePhone.slice(countryCode.length);
+                  document.getElementById("MobilePhone").setAttribute("data-value", res.MobilePhone.slice(countryCode.length));
+                } else {
+                  document.getElementById("MobilePhone").value = res.MobilePhone;
+                  document.getElementById("MobilePhone").setAttribute("data-value", res.MobilePhone);
+                }
+              } else {
+                document.getElementById("MobilePhone").value = res.MobilePhone;
+                document.getElementById("MobilePhone").setAttribute("data-value", res.MobilePhone);
+              }
+              console.log({selectedCountry})
+            }
+
             document.getElementById("Email").value = res.Email;
             document.getElementById("Email").setAttribute("data-value", res.Email);
-            document.getElementById("MobilePhone").value = res.MobilePhone;
-            document.getElementById("MobilePhone").setAttribute("data-value", res.MobilePhone);
             document.getElementById("SendAccountEmails").checked = !!res.SendAccountEmails;
             document.getElementById("SendAccountEmails").setAttribute("data-value", res.SendAccountEmails);
-            document.getElementById("SendAccountTexts").checked = !!res.SendAccountTexts;
-            document.getElementById("SendAccountTexts").setAttribute("data-value", res.SendAccountTexts);
             document.getElementById("SendPromotionalEmails").checked = !!res.SendPromotionalEmails;
             document.getElementById("SendPromotionalEmails").setAttribute("data-value", res.SendPromotionalEmails);
-            document.getElementById("SendPromotionalTexts").checked = !!res.SendPromotionalTexts;
-            document.getElementById("SendPromotionalTexts").setAttribute("data-value", res.SendPromotionalTexts);
             document.getElementById("SendScheduleEmails").checked = !!res.SendScheduleEmails;
             document.getElementById("SendScheduleEmails").setAttribute("data-value", res.SendScheduleEmails);
-            document.getElementById("SendScheduleTexts").checked = !!res.SendScheduleTexts;
-            document.getElementById("SendScheduleTexts").setAttribute("data-value", res.SendScheduleTexts);
-        }
 
-  getAccountData();
+          
+            document.getElementById("account-container").style.display = "block";
+            document.getElementById("account-loading").style.display = "none";
+        }
 </script>
 <div id="account-tab" class="tabcontent">
-  <div class="panel">
-    <div class="info-title medium">BASIC INFO</div>
-    <hr class="account-hr">
-    <div class="flex-col start">
-      <label class="account-input-label SF" for="FirstName">First Name</label>
-      <input class="account-input SF" type="text" id="FirstName" name="FirstName" placeholder="First Name">
-    </div>
-    <hr class="account-hr">
-    <div class="flex-col start">
-      <label class="account-input-label SF" for="LastName">Last Name</label>
-      <input class="account-input SF" type="text" id="LastName" name="LastName" placeholder="Last Name">
-    </div>
-    <hr class="account-hr">
-    <div class="flex-col start">
-      <label class="account-input-label SF" for="Email">Email</label>
-      <input class="account-input SF" type="text" id="Email" name="Email" placeholder="Email">
-    </div>
-    <hr class="account-hr">
-    <div class="flex-col start">
-      <label class="account-input-label SF" for="Password">Password</label>
-      <input class="account-input SF" type="password" id="Password" name="Password" placeholder="********">
+  <div class="panel flex-row" style="justify-content:center;" id="account-loading">
+    {% render '_loading-button', id:"account-load-btn", text:"", class:"button--loading dark" %}
   </div>
-    <hr class="account-hr">
-    <div class="flex-col start">
-      <label class="account-input-label SF" for="Location">Preferred Location</label>
-      <select class="account-input SF" name="Location" id="Location">
-      </select>
+  <div id="account-container" style="display:none;">
+    <div class="panel">
+      <div class="info-title medium">BASIC INFO</div>
+      <hr class="account-hr">
+      <div class="flex-col start">
+        <label class="account-input-label SF" for="FirstName">First Name</label>
+        <input class="account-input SF" type="text" id="FirstName" name="FirstName" placeholder="First Name">
+      </div>
+      <hr class="account-hr">
+      <div class="flex-col start">
+        <label class="account-input-label SF" for="LastName">Last Name</label>
+        <input class="account-input SF" type="text" id="LastName" name="LastName" placeholder="Last Name">
+      </div>
+      <hr class="account-hr">
+      <div class="flex-col start">
+        <label class="account-input-label SF" for="Email">Email</label>
+        <input class="account-input SF" type="text" id="Email" name="Email" placeholder="Email">
+      </div>
+      <hr class="account-hr">
+      <div class="flex-col start">
+        <label class="account-input-label SF" for="Password">Password</label>
+        <input class="account-input SF" type="password" id="Password" name="Password" placeholder="********">
     </div>
-    <hr class="account-hr">
-    <div class="comm-table-col">
-      <div class="account-input-label SF">Birthday</div>
+      <hr class="account-hr">
+      <div class="flex-col start">
+        <label class="account-input-label SF" for="Location">Preferred Location</label>
+        <select class="account-input SF" name="Location" id="Location">
+        </select>
+      </div>
+      <hr class="account-hr">
+      <div class="comm-table-col">
+        <div class="account-input-label SF">Birthday</div>
+        <div class="comm-table-row">
+          <select style="padding-right: 13px;width: 60px;" class="account-input SF" id="BirthMonth">
+            <option value="1">1</option>
+          </select>
+          <select style="padding-right: 13px;width: 60px;" class="account-input SF" id="BirthDay">
+            <option value="1">1</option>
+          </select>
+          <select style="padding-right: 13px;width: 60px;" class="account-input SF" id="BirthYear">
+            <option value="1900">1900</option>
+          </select>
+        </div>
+      </div>
+      <hr class="account-hr">
+    </div>
+  
+    <div class="panel">
+      <div class="info-title medium">PAYMENT INFO</div>
+      <hr class="account-hr">
+      <div id="payment-info"></div>
+      <hr class="account-hr">
+    </div>
+  
+    <div class="panel">
+      <div class="info-title medium">CONTACT INFO</div>
+      <hr class="account-hr">
+      <div class="flex-col start">
+        <label class="account-input-label SF" for="AddressLine1">Address</label>
+        <input class="account-input SF" type="text" id="AddressLine1" name="AddressLine1" placeholder="Address">
+      </div>
+      <hr class="account-hr">
+      <div class="flex-col start">
+        <label class="account-input-label SF" for="City">City</label>
+        <input class="account-input SF" type="text" id="City" name="City" placeholder="City">
+      </div>
+      <hr class="account-hr">
+      <div class="flex-col start">
+        <label class="account-input-label SF" for="State">State</label>
+        <input class="account-input SF" type="text" id="State" name="State" placeholder="State">
+      </div>
+      <hr class="account-hr">
+      <div class="flex-col start">
+        <label class="account-input-label SF" for="Country">Country</label>
+        {% render "_country-code" %}
+      </div>
+      <hr class="account-hr">
+      <div class="flex-col start">
+        <label class="account-input-label SF" for="PostalCode">Postal Code</label>
+        <input class="account-input SF" type="text" id="PostalCode" name="PostalCode" placeholder="PostalCode">
+      </div>
+      <hr class="account-hr">
+      <div class="flex-col start">
+        <label class="account-input-label SF" for="MobilePhone">Mobile Phone</label>
+        <div class="flex-row" style="justify-content:flex-start;gap:5px;">
+          <input class="account-input SF" type="text" id="CountryMobilePhone" name="CountryMobilePhone"
+            placeholder="+1" style="width:45px;background-color: transparent;" disabled>
+          <input class="account-input SF" type="text" id="MobilePhone" name="MobilePhone"
+            placeholder="MobilePhone">
+        </div>
+      </div>
+      <hr class="account-hr">
+    </div>
+  
+    <div class="panel">
+      <div class="info-title medium">WHAT DO YOU WANT TO HEAR ABOUT?</div>
+      <hr class="account-hr">
       <div class="comm-table-row">
-        <select style="padding-right: 13px;width: 60px;" class="account-input SF" id="BirthMonth">
-          <option value="1">1</option>
-        </select>
-        <select style="padding-right: 13px;width: 60px;" class="account-input SF" id="BirthDay">
-          <option value="1">1</option>
-        </select>
-        <select style="padding-right: 13px;width: 60px;" class="account-input SF" id="BirthYear">
-          <option value="1900">1900</option>
-        </select>
+        <div class="comm-table-col">
+          <div class="SF" style="font-size:12px;color:var(--unnamed-color-6c757d)">ACCOUNT MANAGEMENT</div>
+          <div class="SF" style="font-size:12px;color:var(--unnamed-color-495057)">Subscribe to reminders &
+            notifications</div>
+        </div>
+        <div class="comm-table-row" style="gap:14px;">
+          <label class="comm-check-label" for="SendAccountEmails"
+            style="font-size:12px;color:var(--unnamed-color-6c757d)">EMAIL</label>
+          {% render "_round-checkbox", id:"SendAccountEmails" %}
+        </div>
+      </div>
+      <hr class="account-hr">
+      <div class="comm-table-row">
+        <div class="comm-table-col">
+          <div class="SF" style="font-size:12px;color:var(--unnamed-color-6c757d)">SCHEDULE UPDATES</div>
+          <div class="SF" style="font-size:12px;color:var(--unnamed-color-495057)">A heads-up before bookings
+            or when you schedule changes</div>
+        </div>
+        <div class="comm-table-row" style="gap:14px;">
+          <div style="font-size:12px;color:var(--unnamed-color-6c757d)">EMAIL</div>
+          {% render "_round-checkbox", id:"SendScheduleEmails" %}
+        </div>
+      </div>
+      <hr class="account-hr">
+      <div class="comm-table-row">
+        <div class="comm-table-col">
+          <div class="SF" style="font-size:12px;color:var(--unnamed-color-6c757d)">NEWS & PROMOS</div>
+          <div class="SF" style="font-size:12px;color:var(--unnamed-color-495057)">Subscribe to reminders &
+            notifications</div>
+        </div>
+        <div class="comm-table-row" style="gap:14px;">
+          <div style="font-size:12px;color:var(--unnamed-color-6c757d)">EMAIL</div>
+          {% render "_round-checkbox", id:"SendPromotionalEmails" %}
+        </div>
       </div>
     </div>
-    <hr class="account-hr">
-  </div>
-
-  <div class="panel">
-    <div class="info-title medium">PAYMENT INFO</div>
-    <hr class="account-hr">
-    <div id="payment-info"></div>
-    <hr class="account-hr">
-  </div>
-
-  <div class="panel">
-    <div class="info-title medium">CONTACT INFO</div>
-    <hr class="account-hr">
-    <div class="flex-col start">
-      <label class="account-input-label SF" for="AddressLine1">Address</label>
-      <input class="account-input SF" type="text" id="AddressLine1" name="AddressLine1" placeholder="Address">
+  
+    <div class="panel" style="padding:0;">
+      <button id="account-save-btn" class="account-save-btn" disabled>SAVE CHANGES</button>
     </div>
-    <hr class="account-hr">
-    <div class="flex-col start">
-      <label class="account-input-label SF" for="City">City</label>
-      <input class="account-input SF" type="text" id="City" name="City" placeholder="City">
-    </div>
-    <hr class="account-hr">
-    <div class="flex-col start">
-      <label class="account-input-label SF" for="State">State</label>
-      <input class="account-input SF" type="text" id="State" name="State" placeholder="State">
-    </div>
-    <hr class="account-hr">
-    <div class="flex-col start">
-      <label class="account-input-label SF" for="Country">Country</label>
-      <input class="account-input SF" type="text" id="Country" name="Country" placeholder="Country">
-    </div>
-    <hr class="account-hr">
-    <div class="flex-col start">
-      <label class="account-input-label SF" for="PostalCode">Postal Code</label>
-      <input class="account-input SF" type="text" id="PostalCode" name="PostalCode" placeholder="PostalCode">
-    </div>
-    <hr class="account-hr">
-    <div class="flex-col start">
-      <label class="account-input-label SF" for="MobilePhone">Mobile Phone</label>
-      <input class="account-input SF" type="text" id="MobilePhone" name="MobilePhone"
-        placeholder="MobilePhone">
-    </div>
-    <hr class="account-hr">
-  </div>
-
-  <div class="panel">
-    <div class="info-title medium">WHAT DO YOU WANT TO HEAR ABOUT?</div>
-    <hr class="account-hr">
-
-    <hr class="account-hr">
-    <div class="comm-table-row">
-      <div class="comm-table-col">
-        <div class="SF" style="font-size:12px;color:var(--unnamed-color-6c757d)">ACCOUNT MANAGEMENT</div>
-        <div class="SF" style="font-size:12px;color:var(--unnamed-color-495057)">Subscribe to reminders &
-          notifications</div>
-      </div>
-      <div class="comm-table-row" style="gap:14px;">
-        <label class="comm-check-label" for="SendAccountEmails"
-          style="font-size:12px;color:var(--unnamed-color-6c757d)">EMAIL</label>
-        {% render "_round-checkbox", id:"SendAccountEmails" %}
-        <div>&nbsp;</div>
-        <div style="font-size:12px;color:var(--unnamed-color-6c757d)">SMS</div>
-        {% render "_round-checkbox", id:"SendAccountTexts" %}
-        <div style="width:13px;height:13px;">&nbsp;</div>
-      </div>
-    </div>
-    <hr class="account-hr">
-    <div class="comm-table-row">
-      <div class="comm-table-col">
-        <div class="SF" style="font-size:12px;color:var(--unnamed-color-6c757d)">SCHEDULE UPDATES</div>
-        <div class="SF" style="font-size:12px;color:var(--unnamed-color-495057)">A heads-up before bookings
-          or when you schedule changes</div>
-      </div>
-      <div class="comm-table-row" style="gap:14px;">
-        <div style="font-size:12px;color:var(--unnamed-color-6c757d)">EMAIL</div>
-        {% render "_round-checkbox", id:"SendScheduleEmails" %}
-        <div>&nbsp;</div>
-        <div style="font-size:12px;color:var(--unnamed-color-6c757d)">SMS</div>
-        {% render "_round-checkbox", id:"SendScheduleTexts" %}
-        <div style="width:13px;height:13px;">&nbsp;</div>
-      </div>
-    </div>
-    <hr class="account-hr">
-    <div class="comm-table-row">
-      <div class="comm-table-col">
-        <div class="SF" style="font-size:12px;color:var(--unnamed-color-6c757d)">NEWS & PROMOS</div>
-        <div class="SF" style="font-size:12px;color:var(--unnamed-color-495057)">Subscribe to reminders &
-          notifications</div>
-      </div>
-      <div class="comm-table-row" style="gap:14px;">
-        <div style="font-size:12px;color:var(--unnamed-color-6c757d)">EMAIL</div>
-        {% render "_round-checkbox", id:"SendPromotionalEmails" %}
-        <div>&nbsp;</div>
-        <div style="font-size:12px;color:var(--unnamed-color-6c757d)">SMS</div>
-        {% render "_round-checkbox", id:"SendPromotionalTexts" %}
-        <img src="https://static.mindbodyonline.com/a/asp/adm/images/info-icon-dark.svg" alt=""
-          title="For privacy reasons, you have to opt in to promotional messages directly through mindbody.">
-      </div>
-    </div>
-  </div>
-
-  <div class="panel" style="padding:0;">
-    <button id="account-save-btn" class="account-save-btn" disabled>SAVE CHANGES</button>
   </div>
 </div>
+<script>
+  getAccountData();
+</script>

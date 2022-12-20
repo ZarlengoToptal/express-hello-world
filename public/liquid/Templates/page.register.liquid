@@ -1,0 +1,345 @@
+<style>
+  
+
+    .panel {
+        width: auto;
+        left: 0px;
+        right: 0px;
+        max-width: 100%;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 0px;
+        padding: 30px 39px;
+        margin: 18px 100px 0;
+    }
+
+    .panel-title {
+        font-size: 22px;
+    }
+
+    .account-save-btn {
+        background-color: var(--unnamed-color-212529);
+        width: 100%;
+        height: 40px;
+        color: white;
+        font-size: 14px;
+    }
+
+    .account-save-btn:disabled {
+        background-color: var(--unnamed-color-ced4da);
+    }
+    .info-title {
+        color: var(--unnamed-color-495057);
+    }
+
+    .account-input-label {
+        color: var(--unnamed-color-ced4da);
+        font-size: 12px;
+        text-transform: uppercase;
+    }
+
+    .account-input-helper {
+      margin-bottom: 0;
+      color: var(--unnamed-color-f54140);
+      font-size: 12px;
+      margin-top: 10px;
+    }
+
+    .account-input {
+        color: var(--unnamed-color-adb5bd) !important;
+        padding: 0 2px;
+        border: none !important;
+        margin-bottom: 0 !important;
+        font-size: 14px !important;
+        height: 31px;
+        border-bottom: 1px solid var(--unnamed-color-e9ecef) !important;
+    }
+    .account-input:focus {
+      outline: none;
+    }
+    .register-content {
+      background-color: #F8F9FA;
+      padding: 30px 0;
+    }
+    .account-input.error {
+      border-bottom: 1px solid var(--unnamed-color-f54140) !important;
+      color: var(--unnamed-color-f54140) !important;
+      background-color: #fff !important;
+    }
+  .date-select {
+    padding-right: 24px;
+    width: 80px;
+    border: none !important;
+    text-align: right;
+  }
+  span.login {
+      float: right;
+      padding-top: 20px;
+      font-size: 14px;
+      width: 100%;
+      text-align:center;
+  }
+</style>
+<script type="text/javascript">
+        addEventListener("load", (event) => {
+            const SaveListener = document.getElementById("account-save-btn");
+
+            const updatedInputs = [
+                "FirstName",
+                "LastName",
+                "Email",
+                "BirthMonth",
+                "BirthDay",
+                "BirthYear",
+                "AddressLine1",
+                "City",
+                "State",
+                "MobilePhone",
+                "Password"
+            ]
+              ;
+          updatedInputs.forEach((input) => {
+                const listener = document.getElementById(input);
+                listener.addEventListener('input', () => {
+                    inputCheck();
+                });
+            });
+            function inputCheck() {
+                missingField = false;
+                updatedInputs.forEach((inputKey) => {
+                    const input = document.getElementById(inputKey);
+                    if (input.value == "") {
+                        missingField = true;
+                    }
+                });
+                if (!missingField) {
+                  SaveListener.disabled = false;
+                } else {
+                  SaveListener.disabled = true;
+                }
+            }
+            function registerAccount() {
+              let validationError = false;
+              
+              document.getElementById("Email").classList.remove("error");
+              document.getElementById("Email-helper").innerHTML = "&nbsp;";
+              if(!ValidateEmail(document.getElementById("Email").value)) {
+                document.getElementById("Email-helper").innerHTML = "Invalid format";
+                document.getElementById("Email").classList.add("error");
+                validationError = true;
+              }
+              
+              document.getElementById("Password").classList.remove("error");
+              document.getElementById("Password-helper").innerHTML = "&nbsp;";
+              if (!validatePassword(document.getElementById("Password").value)) {
+                document.getElementById("Password-helper").innerHTML = "Invalid format";
+                document.getElementById("Password").classList.add("error");
+                validationError = true;
+              }
+              
+              document.getElementById("ConfirmPassword").classList.remove("error");
+              document.getElementById("Confirm-Password-helper").innerHTML = "&nbsp;";
+              if (document.getElementById("Password").value !== document.getElementById("ConfirmPassword").value) {
+                document.getElementById("Confirm-Password-helper").innerHTML = "Passwords do not match";
+                document.getElementById("ConfirmPassword").classList.add("error");
+                validationError = true;
+              }
+              
+              document.getElementById("MobilePhone").classList.remove("error");
+              document.getElementById("MobilePhone-helper").innerHTML = "&nbsp;";
+              if (!validatePhone(document.getElementById("MobilePhone").value)) {
+                document.getElementById("MobilePhone-helper").innerHTML = "Invalid format";
+                document.getElementById("MobilePhone").classList.add("error");
+                validationError = true;
+                console.log('invalid phone');
+              } else {
+                console.log('valid phone'); 
+              }
+                console.log(document.getElementById("MobilePhone").value,
+                  validatePhone(document.getElementById("MobilePhone").value))
+              
+              document.getElementById("BirthMonth").classList.remove("error");
+              document.getElementById("BirthDay").classList.remove("error");
+              document.getElementById("BirthYear").classList.remove("error");
+              document.getElementById("BirthDate-helper").innerHTML = "&nbsp;";
+              if (document.getElementById("BirthMonth").value == 0 ||
+                  document.getElementById("BirthDay").value == 0 ||
+                  document.getElementById("BirthYear").value == 0) {
+                document.getElementById("BirthDate-helper").innerHTML = "Invalid format";
+                document.getElementById("BirthMonth").classList.add("error");
+                document.getElementById("BirthDay").classList.add("error");
+                document.getElementById("BirthYear").classList.add("error");
+                validationError = true;
+                console.log('invalid birth');
+              }
+              
+              if (validationError) {
+                return;
+              }
+              
+              let phone = `${document.getElementById("CountryMobilePhone").value}${document.getElementById("MobilePhone").value}`;
+
+                const data = {
+                  "first_name": document.getElementById("FirstName").value,
+                  "last_name": document.getElementById("LastName").value,
+                  "email": document.getElementById("Email").value,
+                  "birth_date": `${
+                      document.getElementById("BirthMonth").value
+                    }/${
+                      document.getElementById("BirthDay").value
+                  }/${
+                      document.getElementById("BirthYear").value
+                  }`,
+                  "address_line_1": document.getElementById("AddressLine1").value,
+                  "city": document.getElementById("City").value,
+                  "state": document.getElementById("State").value,
+                  "country": document.getElementById("Country").value,
+                  "postal_code":  document.getElementById("PostalCode").value,
+                  "mobile_phone": phone,
+                  "password": document.getElementById("Password").value,
+                  "referred_by": "ReferredBy",
+                  "return_to": window.location.origin,
+                }
+              
+                document.getElementById("button-loading").classList.add("button--loading");
+                fetch(`${urlBase}/auth/register`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data),
+                }).then(res => res.json()).then(res => {
+                    if (res.accessToken) {
+                        localStorage.setItem("accessToken", res.accessToken);
+                        accessToken = res.accessToken;
+                        const redirectUrl = res.url;
+                      
+                      fetch(`${headerUrlBase}/user/account`, {
+                          method: 'GET',
+                          headers: {
+                              'Content-Type': 'application/json',
+                              "authorization": `Bearer ${res.accessToken}`
+                          },
+                      }).then(res => res.json()).then(res => {
+                          if (res.Membership.length === 0) {
+                              localStorage.setItem('user', JSON.stringify({
+                                  name: `${res.FirstName} ${res.LastName}`,
+                                  membership: "No Membership Purchased",
+                              }));
+                          } else {
+                              localStorage.setItem('user', JSON.stringify({
+                                  name: `${res.FirstName} ${res.LastName}`,
+                                  membership: res.Membership[0].Name,
+                              }));
+                          }
+                          document.getElementById("button-loading").classList.remove("button--loading");
+                          loggedIn = true;
+                          setHeader();
+                          window.location.replace(redirectUrl);
+                      });
+                    }
+                }).catch(()=> {
+                  scroll(0,0);
+                  document.getElementById("Email-helper").innerHTML = "Email already in use";
+                  document.getElementById("Email").classList.add("error");
+                  document.getElementById("button-loading").classList.remove("button--loading");
+                });
+            }
+          
+            const birthMonth = document.getElementById("BirthMonth");
+            for (i = 1; i <= 12; i++) {
+                const option = document.createElement("option");
+                option.value = i;
+                option.text = i;
+                birthMonth.appendChild(option);
+            }
+            const birthDay = document.getElementById("BirthDay");
+            let maxDays = 31;
+            // if ([4, 6, 9, 11].includes(arrayBirthDate[2])) {
+            //     maxDays = 30;
+            // } else if (arrayBirthDate[2] == 2) {
+            //     maxDays = 28;
+            // }
+            for (i = 1; i <= maxDays; i++) {
+                const option = document.createElement("option");
+                option.value = i;
+                option.text = i;
+                birthDay.appendChild(option);
+            }
+            const birthYear = document.getElementById("BirthYear");
+            const currentYear = new Date().getFullYear();
+            for (i = currentYear; i >= 1900; i--) {
+                const option = document.createElement("option");
+                option.value = i;
+                option.text = i;
+                birthYear.appendChild(option);
+            }
+            SaveListener.addEventListener('click', registerAccount);
+        });
+    </script>
+
+<div class="register-content">
+  <div class="panel">
+    <div class="info-title medium">CREATE YOUR LOGIN</div>
+    <hr class="account-hr">
+    <input class="account-input SF" type="text" id="Email" name="Email" placeholder="Email address">
+    <p id='Email-helper' class="account-input-helper SF">&nbsp;</p>
+    <input class="account-input SF" type="password" id="Password" name="Password" placeholder="Password">
+    <p id='Password-helper' class="account-input-helper SF">&nbsp;</p>
+    <input class="account-input SF" type="password" id="ConfirmPassword" name="Confirm-Password" placeholder="Confirm Password">
+    <p id='Confirm-Password-helper' class="account-input-helper SF">&nbsp;</p>
+    <p class="SF" style="font-size:14px;color:var(--unnamed-color-adb5bd);">Your password needs to be 8 characters or more, including an uppercase letter, a lowercase letter, a number, and a symbol.</p>
+  </div>
+    
+  <div class="panel">
+    <div class="info-title medium">PERSONAL INFO</div>
+    <hr class="account-hr">
+    <input class="account-input SF" type="text" id="FirstName" name="FirstName" placeholder="First name">
+    <p id='FirstName-helper' class="account-input-helper SF">&nbsp;</p>
+    <input class="account-input SF" type="text" id="LastName" name="LastName" placeholder="Last name">
+    <p id='LastName-helper' class="account-input-helper SF">&nbsp;</p>
+    <div class="comm-table-row" style="border-bottom: 1px solid var(--unnamed-color-e9ecef) !important;">
+      <div class="account-input-label SF" style="color:var(--unnamed-color-6c757d);">Birthday</div>
+      <div class="comm-table-row">
+        <select class="account-input date-select SF" id="BirthMonth">
+          <option value="0" selected>Month</option>
+        </select>
+        <select class="account-input date-select SF" id="BirthDay">
+          <option value="0" selected>Day</option>
+        </select>
+        <select class="account-input date-select SF" id="BirthYear">
+          <option value="0" selected>Year</option>
+        </select>
+      </div>
+    </div>
+    <p id='BirthDate-helper' class="account-input-helper SF">&nbsp;</p>
+  </div>
+
+  <div class="panel">
+    <div class="info-title medium">CONTACT INFO</div>
+    <hr class="account-hr">
+    <input class="account-input SF" type="text" id="AddressLine1" name="AddressLine1" placeholder="Address">
+    <p id='AddressLine1-helper' class="account-input-helper SF">&nbsp;</p>
+    <input class="account-input SF" type="text" id="City" name="City" placeholder="City">
+    <p id='City-helper' class="account-input-helper SF">&nbsp;</p>
+    <input class="account-input SF" type="text" id="State" name="State" placeholder="State">
+    <p id='State-helper' class="account-input-helper SF">&nbsp;</p>
+    {% render "_country-code" %}
+    <p id='Country-helper' class="account-input-helper SF">&nbsp;</p>
+    <input class="account-input SF" type="text" id="PostalCode" name="PostalCode" placeholder="Postal code (optional)">
+    <p id='PostalCode-helper' class="account-input-helper SF">&nbsp;</p>
+    <div class="flex-row" style="justify-content:flex-start;gap:5px;">
+      <input class="account-input SF" type="text" id="CountryMobilePhone" name="CountryMobilePhone"
+        placeholder="1" value="1" style="width:45px;background-color: transparent;" disabled>
+      <input class="account-input SF" type="text" id="MobilePhone" name="MobilePhone"
+        placeholder="Mobile phone">
+    </div>
+    <p id='MobilePhone-helper' class="account-input-helper SF">&nbsp;</p>
+  </div>
+  <div class="panel" style="padding:0;" id="account-save-btn">
+    {% render '_loading-button', text: "CREATE ACCOUNT", class:"account-save-btn SF medium" %}
+  </div>
+  <div class="panel" style="padding:0;border:none;">
+    <span class="login SF">Already have an account?&nbsp;<a class="SF" href="/pages/login">Sign in</a></span>
+  </div>
+</div>
