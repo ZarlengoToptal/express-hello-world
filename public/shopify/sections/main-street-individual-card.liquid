@@ -1,0 +1,169 @@
+<div>
+  {% include 'main-street-individual-cards-details' %}
+</div>
+
+{% schema %}
+  {
+    "name": "Location Cards",
+    "settings": [
+      {
+      "type": "textarea",
+      "id": "description-location-header",
+      "label": "Subheading",
+	  "default": "Banner slogan if you want."
+      },
+      {
+        "type": "select",
+        "id": "height",
+        "label": "Section height",
+        "default": "use_screen_one_half",
+        "options": [
+        { "value": "use_screen_full", "label": "Full screen height"},
+        { "value": "use_screen_two_thirds", "label": "Tall"},
+        { "value": "use_screen_one_half", "label": "Medium"},
+        { "value": "use_screen_one_third", "label": "Short"},
+        { "value": "use_image", "label": "Image height"}
+        ]
+        },
+        {
+        "type": "checkbox",
+        "id": "parallax",
+        "default": false,
+        "label": "Enable parallax scroll"
+      },
+	  {
+          "type": "image_picker",
+          "id": "main-street-banner-image",
+          "label": "Banner Image"
+        }
+	],
+  "blocks": [
+        {
+        "type": "individual-location",
+        "name": "Location Details",
+        "settings": [
+		{
+        "type": "html",
+        "id": "main-street-video",
+        "label": "Video for the Location"
+        },
+        {
+        "type": "text",
+        "id": "country-main-street-individual",
+        "label": "Country",
+        "default": "Canada"
+        },
+        {
+        "type": "text",
+        "id": "title-main-street-individual",
+        "label": "Fig Bar Location",
+        "default": "Fig Bar Location"
+        },
+        {
+        "type": "text",
+        "id": "tagline-main-street-individual",
+        "label": "Tagline",
+        "default": "Pop in for the full Fig experieince"
+        },
+		{
+        "type": "text",
+        "id": "address-main-street-individual",
+        "label": "Address",
+        "default": "2050 W 4ht Ave, Vancouver"
+        },
+		{
+        "type": "text",
+        "id": "telephone-main-street-individual",
+        "label": "Telephone Number",
+		"default": "604-423-3881"
+        }, 
+		{
+        "type": "textarea",
+        "id": "hours-main-street-individual",
+        "label": "Hours of Operation",
+		"default": "MON-SUN 7am-7pm"
+        },
+		{
+        "type": "url",
+        "id": "book-now-main-street-individual",
+        "label": "Book Now link"
+        },
+		{
+        "type": "html",
+        "id": "google-main-street-individual",
+        "label": "Google Map for the Location"
+        }, 
+
+		{
+        "type": "textarea",
+        "id": "address-main-street-full-description",
+        "label": "Directions",
+        "default": "Directions"
+        },
+		{
+        "type": "textarea",
+        "id": "parking-main-street-individual",
+        "label": "Parking Availability",
+		"default": "None"
+        }, 
+		{
+        "type": "textarea",
+        "id": "cancelation-main-street-individual",
+        "label": "Cancelation Policy",
+		"default": "None"
+        }, 
+		{
+        "type": "textarea",
+        "id": "accessability-main-street-individual",
+        "label": "Accessability",
+		"default": "None"
+        },
+		{
+          "type": "image_picker",
+          "id": "main-street-shop-now-image",
+          "label": "Shop Now Image"
+        },
+		{
+        "type": "textarea",
+        "id": "main-street-shop-now-cta",
+        "label": "Shop Now CTA",
+		"default": "Clean skin for all skin types"
+        },
+		{
+          "type": "image_picker",
+          "id": "main-street-services-available-treatments",
+          "label": "Treatments Image"
+        },
+		{
+        "type": "textarea",
+        "id": "treatments-main-street-text",
+        "label": "Available Treatments",
+		"default": "Technology driven; guided by resaults."
+        },
+		{
+          "type": "image_picker",
+          "id": "main-street-services-available-skin-care",
+          "label": "Skin Care Image"
+        },
+		{
+        "type": "textarea",
+        "id": "main-street-skin-care-location-text",
+        "label": "Available Skin Care",
+		"default": "Clean skin care for all skin types."
+        },
+		{
+          "type": "image_picker",
+          "id": "main-street-services-available-membership",
+          "label": "Membership Image"
+        },
+		{
+        "type": "textarea",
+        "id": "membership-main-street-text",
+        "label": "Memberships",
+		"default": "Love us? Sign up for more."
+        }
+       ]
+	  }
+	]
+  }
+{% endschema %}

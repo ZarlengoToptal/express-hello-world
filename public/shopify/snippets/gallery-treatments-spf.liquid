@@ -1,0 +1,41 @@
+<div
+     class="mobile4-slider-wrapper"
+     data-section-type="mobile4-slider"
+     data-section-id="{{ section.id }}"
+     data-slider-dots="true">
+  <ul id="Mobile4Slider-{{ section.id }}" class="mobile4-slider">
+    {% for product in collections.treatments-spf.products %}
+    <li class="essential-mobile4">
+      {% include 'product-essential' %}
+    </li>
+    {% endfor %}
+  </ul>
+  <script>
+  $( document ).ready(function() {
+  	$('.mobile4-slider').slick({
+      dots: true,
+      infinite: true,
+      slidesToShow: 3,
+      slidesToScroll: 1,
+      responsive: [
+        {
+          breakpoint: 770,
+          settings: {
+            slidesToShow: 3,
+            slidesToScroll: 1,
+            centerMode: true,
+          }
+        },
+        {
+          breakpoint: 600,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            centerMode: true,
+          }
+        }
+      ]
+    });
+  });
+  </script>
+</div>

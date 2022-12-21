@@ -1,0 +1,81 @@
+<!-- /templates/virtual-facial.liquid -->
+<style>
+  .virtual-facial-container {
+  width:50%;
+  display:flex;
+  margin:0 auto;
+  align-items:center;
+  margin-top:50px;}
+
+  
+  .virtual-facial-video {
+    position:relative;   
+    border:1px solid black;
+    line-height:0;
+}
+  
+  
+ 
+  .virtual-facial-form {
+  border-top:1px solid black;
+  border-right:1px solid black;
+  border-bottom:1px solid black;}
+  
+  .mobile {display:none;}
+  
+   @media only screen and (max-width: 1400px) {
+  
+    .virtual-facial-container {margin-left:200px;}
+  }
+  
+  @media only screen and (max-width: 1200px) {
+  
+    .virtual-facial-container {margin-left:70px;}
+  }
+  
+  @media only screen and (max-width: 768px) {
+    
+     .virtual-facial-container {
+  width:100%;
+  display:block;
+  margin:0;
+  align-items:center;}
+    
+     .virtual-facial-video {
+    position:relative;   
+       border-top:0;
+  border-left:1px solid black;
+  border-right:1px solid black;
+  border-bottom:0;
+    line-height:0;
+}
+  
+  
+    .desktop {display:none;}
+    
+    .mobile {display:block;}
+    
+  .virtual-facial-form {
+  border-left:1px solid black;
+  border-right:1px solid black;
+  border-bottom:1px solid black;}
+
+  }
+</style>
+
+
+<div class="virtual-facial-container">
+
+  <div class="virtual-facial-video desktop">
+    <video autoplay muted loop width="462">
+    <source src="https://cdn.shopify.com/s/files/1/0050/3932/5297/files/VirtualEvent_Form_compressed.mp4?v=1650569441" type="video/mp4"></video>
+  </div>
+  
+    <div class="virtual-facial-video mobile">
+    <video autoplay muted playsinline loop width="375">
+    <source src="https://cdn.shopify.com/s/files/1/0050/3932/5297/files/VirtualEvent_Form_compressed.mp4?v=1650569441" type="video/mp4"></video>
+  </div>
+  
+  <div class="virtual-facial-form klaviyo-form-WnJdsJ"></div>
+  
+<div>

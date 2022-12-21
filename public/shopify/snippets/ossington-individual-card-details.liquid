@@ -1,0 +1,256 @@
+<!-- /snippets/ossington-individual-card-details.liquid -->
+
+
+<div
+   class="location-ossington-card-wrapper"
+   data-section-type="location-individual-card"
+   data-section-id="{{ section.id }}">
+
+  <div class="locations-individual">
+    {% for block in section.blocks %}
+    	{%- assign description-ossington-header = block.settings.description-ossington-header -%}
+        {%- assign title-ossington-individual = block.settings.title-ossington-individual -%}
+    	{%- assign tagline-ossington-individual = block.settings.tagline-ossington-individual -%}
+    	{%- assign country-ossington-individual = block.settings.country-ossington-individual -%}
+    	{%- assign address-ossington-individual = block.settings.address-ossington-individual -%}
+    	{%- assign telephone-ossington-individual = block.settings.telephone-ossington-individual -%}
+    	{%- assign hours-ossington-individual = block.settings.hours-ossington-individual -%}
+    	{%- assign cancelation-ossington-individual = block.settings.cancelation-ossington-individual -%}
+    	{%- assign ossington-banner-image = block.settings.ossington-banner-image -%}
+    	{%- assign book-now-ossington-individual = block.settings.book-now-ossington-individual -%}
+    	{%- assign google-ossington-individual = block.settings.google-ossington-individual -%}
+    	{%- assign address-ossington-full-description = block.settings.address-ossington-full-description -%}
+    	{%- assign parking-ossington-individual = block.settings.parking-ossington-individual -%}
+    	{%- assign accessability-ossington-individual = block.settings.accessability-ossington-individual -%}
+    	{%- assign ossington-shop-now-image = block.settings.ossington-shop-now-image -%}
+    	{%- assign ossington-shop-now-cta = block.settings.ossington-shop-now-cta -%}
+    	{%- assign ossington-skin-care-location-text = block.settings.ossington-skin-care-location-text -%}
+    	{%- assign ossington-services-available-treatments = block.settings.ossington-services-available-treatments -%}
+    	{%- assign treatments-ossington-text = block.settings.treatments-ossington-text -%}
+    	{%- assign ossington-services-available-memberships = block.settings.ossington-services-available-memberships -%}
+    	{%- assign skin-care-ossington-text = block.settings.skin-care-ossington-text -%}
+    	{%- assign membership-ossington-text = block.settings.membership-ossington-text -%}
+    	{%- assign ossington-video = block.settings.ossington-video -%}
+
+    
+    	{%- assign img_object = section.settings.ossington-banner-image -%}
+  		{%- assign img_small = section.settings.ossington-banner-image | img_url: '18x' -%}
+  		{%- assign img_api = section.settings.ossington-banner-image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+
+  		{%- assign mobile_img_object = section.settings.ossington-banner-image -%}
+  		{%- assign mobile_img_small = section.settings.ossington-banner-image | img_url: '18x' -%}
+  		{%- assign mobile_img_api = section.settings.ossington-banner-image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+    
+    <div class="locations-individual-home-banner homepage-image fade-in-child preventOverflow {{ section.settings.height }} {{ section.settings.color }}" data-section-id="{{ section.id }}" data-section-type="parallax" id="FeaturedImage-{{ section.id }}"
+      {% if section.settings.parallax %}
+        data-parallax-src="{{ img_small }}"
+        data-src="{{ img_api }}"
+        data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048, 2450, 2700, 3000, 3350, 3750, 4100, 4480]"
+        data-aspectratio="{{  section.settings.image.aspect_ratio }}"
+        data-sizes="auto"
+        style="background-image: url('{{ section.settings.image | img_url: '1x1' }}');"
+      {% endif %}>
+
+      {% if section.settings.height == 'use_image' %}
+        <div class="lazy-image desktop-only" style="padding-top:{{ 1 | divided_by: section.settings.image.aspect_ratio | times: 100}}%; background-image: url('{{ section.settings.image | img_url: '1x1' }}');">
+          <img class="lazyload fade-in" {% if section.settings.parallax %} style="opacity: 0;"{% endif %}
+            alt="{{ section.settings.image.alt | default: shop.name }}"
+            data-src="{{ img_api }}"
+            data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048, 2450, 2700, 3000, 3350, 3750, 4100, 4480]"
+            data-aspectratio="{{  section.settings.image.aspect_ratio }}"
+            data-parent-fit="cover"
+            data-sizes="auto"/>
+        </div>
+        <div class="lazy-image mobile-only" style="padding-top:{{ 1 | divided_by: section.settings.image.aspect_ratio | times: 100}}%; background-image: url('{{ section.settings.image | mobile_img_url: '1x1' }}');">
+          <img class="lazyload fade-in" {% if section.settings.parallax %} style="opacity: 0;"{% endif %}
+            alt="{{ section.settings.image.alt | default: shop.name }}"
+            data-src="{{ mobile_img_api }}"
+            data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048, 2450, 2700, 3000, 3350, 3750, 4100, 4480]"
+            data-aspectratio="{{  section.settings.image.aspect_ratio }}"
+            data-parent-fit="cover"
+            data-sizes="auto"/>
+        </div>
+      {% endif %}
+
+      {% if section.settings.parallax == false and section.settings.height != 'use_image' %}
+        <div class="background-size-cover lazyload desktop-only" data-bgset="{% include 'bgset', image: img_object %}"></div>
+        <div class="background-size-cover lazyload mobile-only" data-bgset="{% include 'bgset', image: mobile_img_object %}"></div>
+      {% endif %}
+
+      {% if section.settings.height == 'use_screen_full' %}
+        <div class="scroll_icon_wrap">
+          <a role="button" href="#scroll-{{ section.id }}" class="scroll_link bloop">
+            <span class="scroll_icon">{% include 'svg-down' %}</span>
+          </a>
+        </div>
+        <div class="scroll__link" id="scroll-{{ section.id }}"></div>
+      {% endif %}
+
+      <noscript>
+        <img src="{{ img_object | img_url: '1440x' }}" alt="{{ img_object.alt | default: section.settings.title }}" class="responsive-wide-image"/>
+      </noscript>
+    </div>
+    
+    
+    <div id="show-video-tour" class="video-tour-wrapper">
+      	<a id="hide-video-tour" href="javascript:void(0)">CLOSE</a>
+        <div class="video-tour-file">
+          {{ ossington-video }}
+        </div>
+    </div>
+      
+    <div class="wrapper">
+      <div class="location-individual-details location-desktop-grid location-horizontal-padding">
+        <div class="section-padding">
+          <div class="title_mono">{{ country-ossington-individual }}</div>
+          <h1>{{ title-ossington-individual }}</h1>
+          <div class="section-padding-bottom hero__description"><p>{{ tagline-ossington-individual }}</p></div>
+          <div>{{ address-ossington-individual }}</div>
+          <div>T. {{ telephone-ossington-individual }}</div>
+<!--           <div class="play-location-video">
+            <a id="video-tour-button" href="javascript:void(0)">PLAY VIDEO</a>
+          </div> -->
+          <div class="location-individual-card-button section-padding">
+            <a role="button" href="{{ book-now-ossington-individual }}">
+              <div class="book-now-locations-individual">BOOK NOW</div>
+            </a>
+          </div>
+        </div>
+        
+      </div> 
+      
+	<div class="location-desktop-grid location-horizontal-padding">
+      <div class="location-individual-details">
+        <div class="section-padding">
+          	<div>
+            <div class="title_mono">Opening HOURS</div>
+              <div class="hours-grid">
+              <div>MON<br>TUE<br>WED<br>THU<br>FRI<br>SAT<br>SUN</div>
+                <div>{{ hours-ossington-individual }}</div>
+              </div>
+          </div>
+        </div>
+        <div>
+            <div class="title_mono">CANCELLATIONS</div>
+            {{ cancelation-ossington-individual }}
+          </div>
+        <div style="padding-top:1rem;">
+        	<div class="title_mono">PARKING</div>
+        	{{ parking-ossington-individual }}
+        </div>
+        <div class="section-padding">
+        	<div class="title_mono">ACCESSIBILITY</div>
+        	{{ accessability-ossington-individual }}
+        </div>
+      </div>
+      
+      <div class="google-individual-location-wrapper">
+        <div class="title_mono">DIRECTIONS</div>
+          {{ google-ossington-individual }}
+        <div>{{ address-ossington-full-description }}</div>
+      </div>
+      
+    </div><!-- end of grid -->
+
+    <div class="services-available-location-wrapper">
+      <div class="shop-now-wrapper">
+      	<h2>Services Available</h2>
+      </div>
+      <div class="locations-home-grid location-horizontal-padding">
+        <div class="services-individual-location section-margin">
+          <div class="services-image-location">
+            {%- assign ossington-services-available-treatments = block.settings.ossington-services-available-treatments | img_url: 'large' -%}
+            <div class="services-image">
+              <img class="lazyload" alt="{{ block.settings.ossington-services-available-treatments.alt | default: section.settings.link_text }}" src="{{ block.settings.ossington-services-available-treatments | img_url: 'large' }}" data-src="{{ ossington-services-available-treatments }}" data-aspectratio="{{ section.settings.ossington-services-available-treatments.aspect_ratio }}" data-sizes="auto" style="width:100%"/>
+            </div>
+            <div class="services-specific">
+              <div class="title_mono">Treatments</div>
+              <div class="services-individual-padding">{{ treatments-ossington-text }}</div>
+            </div>
+          </div>
+          <div class="static-services"><a href="https://formulafig.com/pages/treatments">Learn More</a></div>
+        </div>
+        <div class="services-individual-location section-margin">
+          <div class="services-image-location">
+            {%- assign ossington-services-available-skin-care = block.settings.ossington-services-available-skin-care | img_url: 'large' -%}
+            <div class="services-image">
+              <img class="lazyload" alt="{{ block.settings.ossington-services-available-skin-care.alt | default: section.settings.link_text }}" src="{{ block.settings.ossington-services-available-skin-care | img_url: 'large' }}" data-src="{{ ossington-services-available-skin-care }}" data-aspectratio="{{ section.settings.ossington-services-available-skin-care.aspect_ratio }}" data-sizes="auto" style="width:100%"/>
+            </div>
+            <div class="services-specific">
+              <div class="title_mono">Skincare</div>
+              <div class="services-individual-padding">{{ ossington-skin-care-location-text }}</div>
+            </div>
+          </div>
+          <div class="static-services"><a href="https://formulafig.com/collections/shop-all">Shop Now</a></div>
+        </div>
+        <div class="services-individual-location section-margin">
+          <div class="services-image-location">
+            {%- assign ossington-services-available-membership = block.settings.ossington-services-available-membership | img_url: 'large' -%}
+            <div class="services-image">
+              <img class="lazyload" alt="{{ block.settings.ossington-services-available-membership.alt | default: section.settings.link_text }}" src="{{ block.settings.ossington-services-available-membership | img_url: 'large' }}" data-src="{{ ossington-services-available-membership }}" data-aspectratio="{{ section.settings.ossington-services-available-membership.aspect_ratio }}" data-sizes="auto" style="width:100%"/>
+            </div>
+            <div class="services-specific">
+              <div class="title_mono">Membership</div>
+              <div class="services-individual-padding">{{ membership-ossington-text }}</div>
+            </div>
+          </div>
+          <div class="static-services"><a href="https://formulafig.com/pages/membership">Become A Member</a></div>
+        </div>
+      
+      </div>
+    </div><!-- end of services -->
+      
+    <div class="shop-now-wrapper">
+      <h2>Shop Skincare</h2>
+      <div class="location-desktop-grid location-horizontal-padding">
+        <div class="locations-individual-home-banner" style="padding:1rem 0;">
+          <div class="shop-now-banner locations-individual-inner">
+            {% if block.settings.ossington-shop-now-image %}
+            {%- assign ossington-shop-now-image = block.settings.ossington-shop-now-image | img_url: 'master' -%}
+            <img class="lazyload" alt="{{ block.settings.ossington-shop-now-image.alt | default: section.settings.link_text }}" src="{{ block.settings.ossington-shop-now-image | img_url: 'master' }}" data-src="{{ shop-now-image }}" data-aspectratio="{{ section.settings.ossington-shop-now-image.aspect_ratio }}" data-sizes="auto" style="width:100%"/>
+            {% endif %}
+          </div>
+        </div>
+        <div class="section-padding locations-individual-inner">   
+          <div class="services-static-wrapper hero__description">
+            <p style="padding-bottom:2rem;">{{ ossington-shop-now-cta }}</p>
+           <a href="https://formulafig.com/collections/shop-all" style="text-decoration:none"> <div class="static-services">Shop Now</div></a>
+          </div>
+        </div>
+      </div>
+    </div>
+      
+    <div class="services-available-location-wrapper">
+      <div class="shop-now-wrapper">
+      	<h2>Concierge</h2>
+        <div class="location-horizontal-padding"><p>Questions? Our concierge team is here to help.<br>
+         <span style="text-decoration:underline;"><a onclick="GorgiasChat.open();">Chat with us</a></span> or email us at <a href="mailto:hello@formulafig.com" title="mailto:hello@formulafig.com">hello@formulafig.com</p>
+        </div>
+        </div>
+    </div>
+      
+    <!-- <div class="services-available-location-wrapper">
+      <div class="shop-now-wrapper">
+      	<h2>Reviews</h2>
+      </div>
+    </div> -->
+    
+   </div><!-- end of containing wrapper -->
+    
+
+    {% endfor %}
+</div>
+  
+  
+<script>
+  var videoTour = document.getElementById("video-tour-button");
+  var videoPlay = document.getElementById("show-video-tour");
+  var videoHide = document.getElementById("hide-video-tour");
+  videoTour.addEventListener("click", function(){
+    videoPlay.classList.add("openAndPlay");
+  });
+  videoHide.addEventListener("click", function(){
+    videoPlay.classList.remove("openAndPlay");
+  });
+
+</script>

@@ -1,0 +1,55 @@
+<!-- /snippets/location-card-coming-soon.liquid -->
+
+<div
+   class="location-card-wrapper"
+   data-section-type="location-card"
+   data-section-id="{{ section.id }}">
+
+  <div class="">
+    {% for block in section.blocks %}
+    	{%- assign title-location = block.settings.title-location -%}
+        {%- assign address-location = block.settings.address-location -%}
+    	{%- assign telephone-location = block.settings.telephone-location -%}
+    	{%- assign hours-location = block.settings.hours-location -%}
+    	{%- assign location-tour-image = block.settings.location-tour-image -%}
+    	{%- assign cta-link = block.settings.cta-link -%}
+
+    <div class="locations-home-card">
+        <div class="title--secondary--new">
+          <div class="coming-soon-badge">
+            <a href="{{ cta-link }}">
+              {% if block.settings.location-tour-image %}
+                {%- assign locationphoto = block.settings.location-tour-image | img_url: 'large' -%}
+                
+              	<div class="coming-soon-location mono">Coming Soon</div>
+              	<img class="lazyload" alt="{{ block.settings.location-tour-image.alt | default: section.settings.link_text }}" src="{{ block.settings.locationphoto | img_url: 'large' }}" data-src="{{ locationphoto }}" data-aspectratio="{{ section.settings.locationphoto.aspect_ratio }}" data-sizes="auto" style="width:100%"/>
+        
+                {% endif %}
+            </a>
+          </div>
+          <div class="location-details">
+          	<h2>{{ title-location }}</h2>
+            <div>{{ address-location }}</div>
+            <div>T. {{ telephone-location }}</div>
+            <div>
+              <div class="tiny_mono">HOURS</div>
+              {{ hours-location }}
+            </div>
+          </div>
+        </div>
+
+
+        <div class="location-buttons-wrapper">
+          <div class="location-card-buttons-cs">
+            <a role="button" href="{{ cta-link }}">
+              <div class="book-now-locations"><p>Sign Up To Win A Year's Facial</p></div>
+            </a>
+          </div>
+       </div>
+
+    </div>    
+
+    {% endfor %}
+  </div>
+
+</div>

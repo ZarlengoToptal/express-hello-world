@@ -1,0 +1,17 @@
+<!-- /snippets/treatments-section-title.liquid -->
+
+{%- assign title = section.settings.title -%}
+{%- assign content = section.settings.content -%}
+
+<div class="grid">
+  <div class="grid__item">
+    <div class='treatments__top__new-header'>
+      {%- unless title == blank -%}
+        <h2>{{ title | escape }}</h2>
+      {%- endunless -%}
+      <div class="category-body">
+        {{ content }}
+      </div>
+    </div>
+  </div>
+</div>

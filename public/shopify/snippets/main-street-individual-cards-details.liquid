@@ -1,0 +1,258 @@
+<!-- /snippets/main-street-individual-card-details.liquid -->
+
+
+<div
+   class="location-main-street-card-wrapper"
+   data-section-type="location-individual-card"
+   data-section-id="{{ section.id }}">
+
+  <div class="locations-individual">
+    {% for block in section.blocks %}
+    	{%- assign description-main-street-header = block.settings.description-main-street-header -%}
+        {%- assign title-main-street-individual = block.settings.title-main-street-individual -%}
+    	{%- assign tagline-main-street-individual = block.settings.tagline-main-street-individual -%}
+    	{%- assign country-main-street-individual = block.settings.country-main-street-individual -%}
+    	{%- assign address-main-street-individual = block.settings.address-main-street-individual -%}
+    	{%- assign telephone-main-street-individual = block.settings.telephone-main-street-individual -%}
+    	{%- assign hours-main-street-individual = block.settings.hours-main-street-individual -%}
+    	{%- assign cancelation-main-street-individual = block.settings.cancelation-main-street-individual -%}
+    	{%- assign main-street-banner-image = block.settings.main-street-banner-image -%}
+    	{%- assign book-now-main-street-individual = block.settings.book-now-main-street-individual -%}
+    	{%- assign google-main-street-individual = block.settings.google-main-street-individual -%}
+    	{%- assign parking-main-street-individual = block.settings.parking-main-street-individual -%}
+    	{%- assign accessability-main-street-individual = block.settings.accessability-main-street-individual -%}
+    	{%- assign main-street-shop-now-image = block.settings.main-street-shop-now-image -%}
+    	{%- assign main-street-shop-now-cta = block.settings.main-street-shop-now-cta -%}
+    	{%- assign main-street-services-available-treatments = block.settings.main-street-services-available-treatments -%}
+    	{%- assign treatments-main-street-text = block.settings.treatments-main-street-text -%}
+    	{%- assign main-street-services-available-memberships = block.settings.main-street-services-available-memberships -%}
+    	{%- assign main-street-skin-care-location-text = block.settings.main-street-skin-care-location-text -%}
+    	{%- assign skin-care-main-street-text = block.settings.skin-care-main-street-text -%}
+    	{%- assign membership-main-street-text = block.settings.membership-main-street-text -%}
+    	{%- assign main-street-video = block.settings.main-street-video -%}
+    	{%- assign address-main-street-full-description = block.settings.address-main-street-full-description -%}
+
+            	{%- assign img_object = section.settings.main-street-banner-image -%}
+  		{%- assign img_small = section.settings.main-street-banner-image | img_url: '18x' -%}
+  		{%- assign img_api = section.settings.main-street-banner-image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+
+  		{%- assign mobile_img_object = section.settings.main-street-banner-image -%}
+  		{%- assign mobile_img_small = section.settings.main-street-banner-image | img_url: '18x' -%}
+  		{%- assign mobile_img_api = section.settings.main-street-banner-image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+    
+    <div class="locations-individual-home-banner homepage-image fade-in-child preventOverflow {{ section.settings.height }} {{ section.settings.color }}" data-section-id="{{ section.id }}" data-section-type="parallax" id="FeaturedImage-{{ section.id }}"
+      {% if section.settings.parallax %}
+        data-parallax-src="{{ img_small }}"
+        data-src="{{ img_api }}"
+        data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048, 2450, 2700, 3000, 3350, 3750, 4100, 4480]"
+        data-aspectratio="{{  section.settings.image.aspect_ratio }}"
+        data-sizes="auto"
+        style="background-image: url('{{ section.settings.image | img_url: '1x1' }}');"
+      {% endif %}>
+
+      {% if section.settings.height == 'use_image' %}
+        <div class="lazy-image desktop-only" style="padding-top:{{ 1 | divided_by: section.settings.image.aspect_ratio | times: 100}}%; background-image: url('{{ section.settings.image | img_url: '1x1' }}');">
+          <img class="lazyload fade-in" {% if section.settings.parallax %} style="opacity: 0;"{% endif %}
+            alt="{{ section.settings.image.alt | default: shop.name }}"
+            data-src="{{ img_api }}"
+            data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048, 2450, 2700, 3000, 3350, 3750, 4100, 4480]"
+            data-aspectratio="{{  section.settings.image.aspect_ratio }}"
+            data-parent-fit="cover"
+            data-sizes="auto"/>
+        </div>
+        <div class="lazy-image mobile-only" style="padding-top:{{ 1 | divided_by: section.settings.image.aspect_ratio | times: 100}}%; background-image: url('{{ section.settings.image | mobile_img_url: '1x1' }}');">
+          <img class="lazyload fade-in" {% if section.settings.parallax %} style="opacity: 0;"{% endif %}
+            alt="{{ section.settings.image.alt | default: shop.name }}"
+            data-src="{{ mobile_img_api }}"
+            data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048, 2450, 2700, 3000, 3350, 3750, 4100, 4480]"
+            data-aspectratio="{{  section.settings.image.aspect_ratio }}"
+            data-parent-fit="cover"
+            data-sizes="auto"/>
+        </div>
+      {% endif %}
+
+      {% if section.settings.parallax == false and section.settings.height != 'use_image' %}
+        <div class="background-size-cover lazyload desktop-only" data-bgset="{% include 'bgset', image: img_object %}"></div>
+        <div class="background-size-cover lazyload mobile-only" data-bgset="{% include 'bgset', image: mobile_img_object %}"></div>
+      {% endif %}
+
+      {% if section.settings.height == 'use_screen_full' %}
+        <div class="scroll_icon_wrap">
+          <a role="button" href="#scroll-{{ section.id }}" class="scroll_link bloop">
+            <span class="scroll_icon">{% include 'svg-down' %}</span>
+          </a>
+        </div>
+        <div class="scroll__link" id="scroll-{{ section.id }}"></div>
+      {% endif %}
+
+      <noscript>
+        <img src="{{ img_object | img_url: '1440x' }}" alt="{{ img_object.alt | default: section.settings.title }}" class="responsive-wide-image"/>
+      </noscript>
+    </div>
+    
+    <div id="show-video-tour" class="video-tour-wrapper">
+      	<a id="hide-video-tour" href="javascript:void(0)">CLOSE</a>
+        <div class="video-tour-file">
+          {{ main-street-video }}
+        </div>
+    </div>
+      
+    <div class="wrapper">
+      <div class="location-individual-details location-desktop-grid location-horizontal-padding">
+        <div class="section-padding">
+          <div class="title_mono">{{ country-main-street-individual }}</div>
+          <h1>{{ title-main-street-individual }}</h1>
+          <div class="section-padding-bottom hero__description"><p>{{ tagline-main-street-individual }}</p></div>
+          <div>{{ address-main-street-individual }}</div>
+          <div><a href="tel:{{ telephone-main-street-individual }}" style="text-decoration: none;">T. {{ telephone-main-street-individual }}</a></div>
+          <!-- <div class="play-location-video">
+            <a id="video-tour-button" href="javascript:void(0)">PLAY VIDEO</a>
+          </div> -->
+          <div class="location-individual-card-button section-padding">
+            <a role="button" href="{{ book-now-main-street-individual }}">
+              <div class="book-now-locations-individual">BOOK NOW</div>
+            </a>
+          </div>
+        </div>
+        
+      </div> 
+      
+	<div class="location-desktop-grid location-horizontal-padding">
+      <div class="location-individual-details">
+        <div class="padding-top:1rem;">
+          	<div>
+            <div class="title_mono">Opening HOURS</div>
+              <div class="hours-grid">
+              <div>MON<br>TUE<br>WED<br>THU<br>FRI<br>SAT<br>SUN</div>
+                <div>{{ hours-main-street-individual }}</div>
+              </div>
+          </div>
+        </div>
+        <div>
+            <div class="title_mono" style="padding-top:2rem;">CANCELLATIONS</div>
+            {{ cancelation-main-street-individual }}
+          </div>
+        <div style="padding-top:1rem;">
+        	<div class="title_mono">PARKING</div>
+        	{{ parking-main-street-individual }}
+        </div>
+        <div style="padding-top:1rem;padding-bottom:1rem;">
+        	<div class="title_mono">ACCESSIBILITY</div>
+        	{{ accessability-main-street-individual }}
+        </div>
+      </div>
+      
+      <div class="google-individual-location-wrapper">
+        <div class="title_mono">DIRECTIONS</div>
+          {{ google-main-street-individual }}
+        <div>{{ address-main-street-full-description }}</div>
+      </div>
+      
+    </div><!-- end of grid -->
+
+
+<div class="services-available-location-wrapper" style="padding-top:2rem;">
+      <div class="shop-now-wrapper">
+        <h2>Services Available</h2>
+      </div>
+      <div class="locations-home-grid location-horizontal-padding">
+        <div class="services-individual-location section-margin">
+          <div class="services-image-location">
+            {%- assign main-street-services-available-treatments = block.settings.main-street-services-available-treatments | img_url: 'large' -%}
+            <div class="services-image">
+              <img class="lazyload" alt="{{ block.settings.main-street-services-available-treatments.alt | default: section.settings.link_text }}" src="{{ block.settings.main-street-services-available-treatments | img_url: 'large' }}" data-src="{{ main-street-services-available-treatments }}" data-aspectratio="{{ section.settings.main-street-services-available-treatments.aspect_ratio }}" data-sizes="auto" style="width:100%"/>
+            </div>
+            <div class="services-specific">
+              <div class="title_mono">Treatments</div>
+              <div class="services-individual-padding">{{ treatments-main-street-text }}</div>
+            </div>
+          </div>
+          <a href="https://formulafig.com/pages/treatments" style="text-decoration:none"><div class="static-services">Learn More</div></a>
+        </div>
+        <div class="services-individual-location section-margin">
+          <div class="services-image-location">
+            {%- assign main-street-services-available-skin-care = block.settings.main-street-services-available-skin-care | img_url: 'large' -%}
+            <div class="services-image">
+              <img class="lazyload" alt="{{ block.settings.main-street-services-available-skin-care.alt | default: section.settings.link_text }}" src="{{ block.settings.main-street-services-available-skin-care | img_url: 'large' }}" data-src="{{ main-street-services-available-skin-care }}" data-aspectratio="{{ section.settings.main-street-services-available-skin-care.aspect_ratio }}" data-sizes="auto" style="width:100%"/>
+            </div>
+            <div class="services-specific">
+              <div class="title_mono">Skincare</div>
+              <div class="services-individual-padding">{{ main-street-skin-care-location-text }}</div>
+            </div>
+          </div>
+          <a href="https://formulafig.com/collections/shop-all" style="text-decoration:none"><div class="static-services">Shop Now</div></a>
+        </div>
+        <div class="services-individual-location section-margin">
+          <div class="services-image-location">
+            {%- assign main-street-services-available-membership = block.settings.main-street-services-available-membership | img_url: 'large' -%}
+            <div class="services-image">
+              <img class="lazyload" alt="{{ block.settings.main-street-services-available-membership.alt | default: section.settings.link_text }}" src="{{ block.settings.main-street-services-available-membership | img_url: 'large' }}" data-src="{{ main-street-services-available-membership }}" data-aspectratio="{{ section.settings.main-street-services-available-membership.aspect_ratio }}" data-sizes="auto" style="width:100%"/>
+            </div>
+            <div class="services-specific">
+              <div class="title_mono">Membership</div>
+              <div class="services-individual-padding">{{ membership-main-street-text }}</div>
+            </div>
+          </div>
+         <a href="https://formulafig.com/pages/membership" style="text-decoration:none"> <div class="static-services">Become A Member</div></a>
+        </div>
+      
+      </div>
+    </div><!-- end of services -->
+
+
+    <div class="shop-now-wrapper">
+      <h2>Shop Skincare</h2>
+      <div class="location-desktop-grid location-horizontal-padding">
+        <div class="locations-individual-home-banner" style="padding:1rem 0;">
+          <div class="shop-now-banner locations-individual-inner">
+            {% if block.settings.main-street-shop-now-image %}
+            {%- assign main-street-shop-now-image = block.settings.main-street-shop-now-image | img_url: 'master' -%}
+            <img class="lazyload" alt="{{ block.settings.main-street-shop-now-image.alt | default: section.settings.link_text }}" src="{{ block.settings.main-street-shop-now-image | img_url: 'master' }}" data-src="{{ shop-now-image }}" data-aspectratio="{{ section.settings.main-street-shop-now-image.aspect_ratio }}" data-sizes="auto" style="width:100%"/>
+            {% endif %}
+          </div>
+        </div>
+        <div class="section-padding locations-individual-inner">   
+          <div class="services-static-wrapper hero__description">
+            <p style="padding-bottom:2rem;">{{ main-street-shop-now-cta }}</p>
+              <a href="https://formulafig.com/collections/shop-all" style="text-decoration:none"> <div class="shop-now-locations-individual">Shop Now</div></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    </div>
+      
+    <div class="services-available-location-wrapper">
+      <div class="shop-now-wrapper" style="padding-top:2rem;">
+      	<h2>Concierge</h2>
+        <div class="location-horizontal-padding">Questions? Our Guest Concierge team is here to help.<br>
+         <span style="text-decoration:underline;"><a onclick="GorgiasChat.open();">Chat with us</a></span> or email us at <a href="mailto:hello@formulafig.com" title="mailto:hello@formulafig.com">hello@formulafig.com
+        </div>
+      </div>
+    </div>
+      
+<!--     <div class="services-available-location-wrapper">
+      <div class="shop-now-wrapper">
+      	<h2>Reviews</h2>
+      </div>
+    </div>
+     -->
+   </div><!-- end of containing wrapper -->
+    
+
+    {% endfor %}
+</div>
+  
+  
+<script>
+  var videoTour = document.getElementById("video-tour-button");
+  var videoPlay = document.getElementById("show-video-tour");
+  var videoHide = document.getElementById("hide-video-tour");
+  videoTour.addEventListener("click", function(){
+    videoPlay.classList.add("openAndPlay");
+  });
+  videoHide.addEventListener("click", function(){
+    videoPlay.classList.remove("openAndPlay");
+  });
+
+</script>

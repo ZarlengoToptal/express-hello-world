@@ -1,0 +1,63 @@
+<!-- /sections/section-second-collection.liquid-->
+
+<section>
+ <div class="double-section desktop-show"> 
+  <div class="collection-image-double">
+  	{% if section.settings.double-image-left-collection-section %}
+      {%- assign double-image-left-collection-section = section.settings.double-image-left-collection-section | img_url: '2400x2400' -%}
+      <img class="lazyload" alt="{{ section.settings.double-image-left-collection-section.alt | default: section.settings.double-image-left-collection-section }}" src="{{ block.settings.double-image-left-collection-section | img_url: 'large' }}" data-src="{{ double-image-left-collection-section }}" data-aspectratio="{{ section.settings.double-image-left-collection-section.aspect_ratio }}" data-sizes="auto" style="width:100%;" />
+    {% endif %}
+  </div>
+  <div class="collection-content-double">
+  	<div>{{ section.settings.double-html-left-collection-section }}</div>
+    <div class="section-collection-card-link"><a href="{{ section.settings.section-double-collection-url }}">{{ section.settings.section-double-collection-url-lable }}</a></div>
+  </div>
+ </div>
+
+<div class="double-section mobile-show"> 
+  <div class="collection-image-double-mobile">
+  	{% if section.settings.double-image-left-collection-section %}
+      {%- assign double-image-left-collection-section = section.settings.double-image-left-collection-section | img_url: '2400x2400' -%}
+      <img class="lazyload" alt="{{ section.settings.double-image-left-collection-section.alt | default: section.settings.settings.double-image-left-collection-section }}" src="{{ block.settings.double-image-left-collection-section | img_url: 'large' }}" data-src="{{ double-image-left-collection-section }}" data-aspectratio="{{ section.settings.double-image-left-collection-section.aspect_ratio }}" data-sizes="auto" style="width:100%;" />
+    {% endif %}
+    <div class="collection-content-double-mobile">
+    	<div>{{ section.settings.double-html-left-collection-section }}</div>
+    <div class="section-collection-card-link"><a href="{{ section.settings.section-double-collection-url }}">{{ section.settings.section-double-collection-url-lable }}</a></div>
+  </div>
+  </div>
+ </div>
+</section>
+
+{% schema %}
+  {
+    "name": "Static Advertisment Card",
+    "settings": [
+		{
+          "type": "image_picker",
+          "id": "double-image-left-collection-section",
+          "label": "Left Image"
+        },
+		{
+        "type": "html",
+        "id": "double-html-left-collection-section",
+        "label": "Content"
+        },
+		{
+        "type": "text",
+        "id": "section-double-collection-url-lable",
+        "label": "Link Lable"
+        },
+		{
+        "type": "url",
+        "id": "section-double-collection-url",
+        "label": "Link"
+        }
+	],
+  "presets": [
+    {
+    "name": "Static Advertisment Card",
+    "category": "collections"
+    }
+   ]
+  }
+{% endschema %}

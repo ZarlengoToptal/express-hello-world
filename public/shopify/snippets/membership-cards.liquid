@@ -1,0 +1,508 @@
+<!-- /snippets/membership-cards.liquid -->
+
+<div
+   class="membership-slider-wrapper"
+   data-section-type="membership-slider"
+   data-section-id="{{ section.id }}"
+   data-slider-dots="false">
+
+  <div id="MembershipSlider-locations">
+    {% for block in section.blocks %}
+        {%- assign banner-title = block.settings.banner-title -%}
+    	{%- assign title = block.settings.title -%}
+        {%- assign price = block.settings.price -%}
+    	{%- assign header = block.settings.header -%}
+    	{%- assign header1 = block.settings.header1 -%}
+        {%- assign description1 = block.settings.description -%}
+    	{%- assign header2 = block.settings.header2 -%}
+        {%- assign description2 = block.settings.description2 -%}
+    	{%- assign header3 = block.settings.header3 -%}
+        {%- assign description3 = block.settings.description3 -%}
+        {%- assign quickview_link = block.settings.quickview_link -%}
+        {%- assign membershipphoto = block.settings.membershipphoto -%}
+        {%- assign header_price = block.settings.header_price -%}
+        {%- assign popup_description = block.settings.popup_description -%}
+        {%- assign short_code = block.settings.short_code -%}
+        {%- assign html_1 = block.settings.html_1 -%}
+
+    <div class="location">
+      <div class="membership-card-wrapper">
+        <div class="membership-cards-header title--secondary--new">
+          <h3>{{ title }}</h3>
+          <div class="membership__price__new title mono">{{ price }}</div>
+        </div>
+
+
+        <div class="membership-cards-body">
+          {%- unless description1 == blank -%}
+          	<h4 class="membership__header">{{ header }}</h4>
+          	<div class="membership__description">{{ description1 }}</div>
+          {%- endunless -%}
+        </div>
+
+        <div class="membership-buttons-wrapper">
+          <div class="membership-buttons">
+          {%- unless quickview_link == blank -%}
+          <a role="button" class="treatments__quickview__btn" data-drawer-trigger aria-controls="drawer-name-{{ title }}" aria-expanded="false" href="{{ title }}">
+            <div>LEARN MORE</div>
+          </a>
+          {%- endunless -%}
+
+
+          {% if block.settings.html_1 != blank %}
+          {% assign code_1 = block.settings.html_1 %}
+          {% endif %}
+          {% if block.settings.html_2 != blank %}
+          {% assign code_2 = block.settings.html_2 %}
+          {% endif %}
+          {% if block.settings.html_3 != blank %}
+          {% assign code_3 = block.settings.html_3 %}
+          {% endif %}
+          {% if block.settings.html_4 != blank %}
+          {% assign code_4 = block.settings.html_4 %}
+          {% endif %}
+
+          <div class="sign-up-membership">
+            {% if block.settings.short_code != blank %}
+
+            {% assign items = block.settings.short_code | newline_to_br | split: "<br />" %}
+            <ul>
+              {% for item in items %}
+              {% if item contains '[code_' %}
+              {{ item | replace: '[code_1]', code_1 | replace: '[code_2]', code_2 | replace: '[code_3]', code_3 | replace: '[code_4]', code_4 }}
+              {% else %}
+              <li>{{item}}</li>
+              {% endif %}
+              {% endfor %}
+            </ul>
+
+          </div>
+       {% endif  %} 
+                  
+                  
+        </div>
+       </div>
+
+      </div>
+    </div>    
+
+    {% endfor %}
+  </div>
+
+</div>
+
+	<div class="membership-cards">
+    {% for block in section.blocks %}
+      {%- assign title = block.settings.title -%}
+      {%- assign price = block.settings.price -%}
+      {%- assign description = block.settings.description -%}
+      {%- assign quickview_link = block.settings.quickview_link -%}
+      {%- assign membershipphoto = block.settings.membershipphoto -%}
+      {%- assign header_price = block.settings.header_price -%}
+      {%- assign header1 = block.settings.header1 -%}
+      {%- assign description1 = block.settings.description1 -%}
+      {%- assign header2 = block.settings.header2 -%}
+      {%- assign description2 = block.settings.description2 -%}
+      {%- assign header3 = block.settings.header3 -%}
+      {%- assign description3 = block.settings.description3 -%}
+      {%- assign short_code = block.settings.short_code -%}
+      {%- assign html_1 = block.settings.html_1 -%}
+        {%- unless quickview_link == blank -%}
+        <section class="drawer drawer--left" data-drawer-target id="drawer-name-{{ title }}">
+          <div class="drawer__overlay" data-drawer-close tabindex="-1"></div>
+          <div class="drawer__wrapper">
+            <div class="drawer__header">
+              <div class="drawer__title">
+                <div class="popup-image-wrapper">
+                  <div class="popup-title">
+                    <div class="popup-facial">{{ facial }}</div>
+                    {{ title }}
+                    <div class="popup-facial">{{ header_price }}</div>
+                  </div>
+                  {% if block.settings.membershipphoto %}
+                  {%- assign treatmentphoto = block.settings.membershipphoto | img_url: 'large' -%}
+                  <img class="lazyload" alt="{{ block.settings.membershipphoto.alt | default: section.settings.link_text }}" src="{{ block.settings.treatmentphoto | img_url: 'large' }}" data-src="{{ treatmentphoto }}" data-aspectratio="{{ section.settings.treatmentphoto.aspect_ratio }}" data-sizes="auto" style="width:100%"/>
+                  <noscript>
+                    <img src="{{ section.settings.membershipphoto | img_url: 'large' }}" alt="{{ section.settings.membershipphoto.alt | default: section.settings.link_text }}" class="image--flex"/>
+                  </noscript>
+                  {% endif %}
+                  <button aria-label="Close Drawer" class="drawer__close" data-drawer-close></button>
+                </div>
+              </div>
+            </div>
+            <div class="drawer__inner">
+              	
+                  <div role=”heading” class="popup_subheader">{{ header1 }}</div>
+                  <div class="membership__description">{{ description1 }}</div>
+              
+              
+              	{% if block.settings.header2 != blank %}
+              	  <div role=”heading” class="popup_subheader">{{ header2 }}</div>
+                  <div class="membership__description">{{ description2 }}</div>
+                {% endif %}
+              
+              	{% if block.settings.header3 != blank %}
+                  <div role=”heading” class="popup_subheader">{{ header3 }}</div>
+                  <div class="membership__description">{{ description3 }}</div>
+                {% endif %}
+              	<br>
+            	<div class="sign-up-membership-inner">
+                  {% if block.settings.short_code != blank %}
+
+                  {% assign items = block.settings.short_code | newline_to_br | split: "<br />" %}
+                  <ul>
+                    {% for item in items %}
+                    {% if item contains '[code_' %}
+                    {{ item | replace: '[code_1]', code_1 | replace: '[code_2]', code_2 | replace: '[code_3]', code_3 | replace: '[code_4]', code_4 }}
+                    {% else %}
+                    <li>{{item}}</li>
+                    {% endif %}
+                    {% endfor %}
+                  </ul>
+
+                </div>
+              <br><br>
+             {% endif  %} 
+            </div>
+          </div>
+        </section>
+      {%- endunless -%}
+    {% endfor %}
+</div>
+
+
+
+<script>
+
+    /*!
+    * Based on articles on
+    * https://gomakethings.com
+    */
+
+    var drawer = function () {
+
+      /**
+      * Element.closest() polyfill
+      * https://developer.mozilla.org/en-US/docs/Web/API/Element/closest#Polyfill
+      */
+      if (!Element.prototype.closest) {
+        if (!Element.prototype.matches) {
+          Element.prototype.matches = Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector;
+        }
+        Element.prototype.closest = function (s) {
+          var el = this;
+          var ancestor = this;
+          if (!document.documentElement.contains(el)) return null;
+          do {
+            if (ancestor.matches(s)) return ancestor;
+            ancestor = ancestor.parentElement;
+          } while (ancestor !== null);
+          return null;
+        };
+      }
+
+
+      // Trap Focus 
+      // https://hiddedevries.nl/en/blog/2017-01-29-using-javascript-to-trap-focus-in-an-element
+      //
+      function trapFocus(element) {
+        var focusableEls = element.querySelectorAll('a[href]:not([disabled]), button:not([disabled]), textarea:not([disabled]), input[type="text"]:not([disabled]), input[type="radio"]:not([disabled]), input[type="checkbox"]:not([disabled]), select:not([disabled])');
+        var firstFocusableEl = focusableEls[0];  
+        var lastFocusableEl = focusableEls[focusableEls.length - 1];
+        var KEYCODE_TAB = 9;
+
+        element.addEventListener('keydown', function(e) {
+          var isTabPressed = (e.key === 'Tab' || e.keyCode === KEYCODE_TAB);
+
+          if (!isTabPressed) { 
+            return; 
+          }
+
+          if ( e.shiftKey ) /* shift + tab */ {
+            if (document.activeElement === firstFocusableEl) {
+              lastFocusableEl.focus();
+                e.preventDefault();
+              }
+            } else /* tab */ {
+            if (document.activeElement === lastFocusableEl) {
+              firstFocusableEl.focus();
+                e.preventDefault();
+              }
+            }
+        });
+      }       
+
+
+      //
+      // Settings
+      //
+      var settings = {
+        speedOpen: 50,
+        speedClose: 350,
+        activeClass: 'is-active',
+        visibleClass: 'is-visible',
+        selectorTarget: '[data-drawer-target]',
+        selectorTrigger: '[data-drawer-trigger]',
+        selectorClose: '[data-drawer-close]',
+
+      };
+
+
+      //
+      // Methods
+      //
+
+      // Toggle accessibility
+      var toggleAccessibility = function (event) {
+        if (event.getAttribute('aria-expanded') === 'true') {
+          event.setAttribute('aria-expanded', false);
+        } else {
+          event.setAttribute('aria-expanded', true);
+        }   
+      };
+
+      // Open Drawer
+      var openDrawer = function (trigger) {
+
+        // Find target
+        var target = document.getElementById(trigger.getAttribute('aria-controls'));
+
+        // Make it active
+        target.classList.add(settings.activeClass);
+
+        // Make body overflow hidden so it's not scrollable
+        document.documentElement.style.overflow = 'hidden';
+
+        // Toggle accessibility
+        toggleAccessibility(trigger);
+
+        // Make it visible
+        setTimeout(function () {
+          target.classList.add(settings.visibleClass);
+          trapFocus(target);
+        }, settings.speedOpen); 
+
+      };
+
+      // Close Drawer
+      var closeDrawer = function (event) {
+
+        // Find target
+        var closestParent = event.closest(settings.selectorTarget),
+          childrenTrigger = document.querySelector('[aria-controls="' + closestParent.id + '"');
+
+        // Make it not visible
+        closestParent.classList.remove(settings.visibleClass);
+
+        // Remove body overflow hidden
+        document.documentElement.style.overflow = '';
+
+        // Toggle accessibility
+        toggleAccessibility(childrenTrigger);
+
+        // Make it not active
+        setTimeout(function () {
+          closestParent.classList.remove(settings.activeClass);
+        }, settings.speedClose);             
+
+      };
+
+      // Click Handler
+      var clickHandler = function (event) {
+
+        // Find elements
+        var toggle = event.target,
+          open = toggle.closest(settings.selectorTrigger),
+          close = toggle.closest(settings.selectorClose);
+
+        // Open drawer when the open button is clicked
+        if (open) {
+          openDrawer(open);
+        }
+
+        // Close drawer when the close button (or overlay area) is clicked
+        if (close) {
+          closeDrawer(close);
+        }
+
+        // Prevent default link behavior
+        if (open || close) {
+          event.preventDefault();
+        }
+
+      };
+
+      // Keydown Handler, handle Escape button
+      var keydownHandler = function (event) {
+
+        if (event.key === 'Escape' || event.keyCode === 27) {
+
+          // Find all possible drawers
+          var drawers = document.querySelectorAll(settings.selectorTarget),
+            i;
+
+          // Find active drawers and close them when escape is clicked
+          for (i = 0; i < drawers.length; ++i) {
+            if (drawers[i].classList.contains(settings.activeClass)) {
+              closeDrawer(drawers[i]);
+            }
+          }
+
+        }
+
+      };
+
+
+      //
+      // Inits & Event Listeners
+      //
+      document.addEventListener('click', clickHandler, false);
+      document.addEventListener('keydown', keydownHandler, false);
+
+
+    };
+
+    drawer();
+
+  </script>
+<style>
+    .memberships{
+      display:flex;
+      flex-wrap: wrap;
+    }
+  	.membership-cards{
+      flex: 1 0 25%;
+    }
+    .membership-cards-header{
+      background-color:#000;
+      color:#fff;
+    }
+  	.membership-cards-header h3{
+      margin-bottom:0;
+    }
+    .membership-cards .drawer {
+      display: none;
+    }
+    
+  	.membership-cards .drawer__overlay {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      z-index: 200;
+      opacity: 0;
+      
+      transition: opacity 0.3s;
+      will-change: opacity;
+      background-color: #000;
+
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;      
+    }
+
+    .membership-cards .drawer__header {
+      /* Optional */
+      padding: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  
+  .membership-cards .drawer__title {
+  	width:100%}
+
+    .membership-cards .drawer__close {
+      /* Optional */
+      margin: 0;
+      padding: 0;
+      border: none;
+      background-color: transparent;
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%0A%3Csvg width='15px' height='16px' viewBox='0 0 15 16' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Cg id='Page-1' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'%3E%3Cg id='2.-Menu' transform='translate(-15.000000, -13.000000)' stroke='%23000000'%3E%3Cg id='Group' transform='translate(15.000000, 13.521000)'%3E%3Cpath d='M0,0.479000129 L15,14.2971819' id='Path-3'%3E%3C/path%3E%3Cpath d='M0,14.7761821 L15,-1.24344979e-14' id='Path-3'%3E%3C/path%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      width: 15px;
+      height: 15px;
+      flex-shrink: 0;
+      margin-left: 1rem;
+      position:absolute;
+	  top:15px;
+	  right:15px;
+      filter: invert(1);
+    }
+
+    .membership-cards .drawer__wrapper {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      height: 100vh;
+      width: 100%;
+      max-width: 450px;
+      z-index: 99999;
+      overflow: auto;
+      border:1px solid black;
+      
+      transition: transform 0.3s;
+      will-change: transform;
+      background-color: #fff;
+     
+      display: flex;
+      flex-direction: column; 
+
+      -webkit-transform: translate3d(103%, 0, 0);
+      transform: translate3d(103%, 0, 0); /* extra 3% because of box-shadow */ 
+      
+      -webkit-overflow-scrolling: touch; /* enables momentum scrolling in iOS overflow elements */
+
+      /* Optional */
+      box-shadow: 0 2px 6px #777;
+    }
+
+    .membership-cards .drawer__content {
+      position: relative;
+      overflow-x: hidden;
+      overflow-y: auto;
+      height: 100%;
+      flex-grow: 1;
+      /* Optional */
+      padding: 15px 30px;
+    }
+
+    .membership-cards .drawer--left .drawer__wrapper {
+      left: 0;
+      right: auto;
+      -webkit-transform: translate3d(-100%, 0, 0);
+      transform: translate3d(-100%, 0, 0);
+    }
+
+    .membership-cards .drawer.is-active {
+      display: block;
+    }
+
+    .membership-cards .drawer.is-visible .drawer__wrapper {
+      -webkit-transform: translate3d(0, 0, 0);
+      transform: translate3d(0, 0, 0);
+    }
+
+    .membership-cards .drawer.is-visible .drawer__overlay {
+      opacity:1;
+	  background: rgba(255, 255, 255, 0.1); 
+      backdrop-filter: blur(5px); 
+    }
+  
+  @media screen and (max-width: 768px) {
+    .membership-cards .drawer__content {
+      padding:15px 20px;
+   
+    }}
+      
+    @media screen and (max-width: 500px) {
+   .membership-cards .drawer__wrapper {
+      max-width:400px;
+   
+    }}
+      
+  </style>

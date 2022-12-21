@@ -1,0 +1,39 @@
+<div
+     class="mobile5-slider-wrapper"
+     data-section-type="mobile5-slider"
+     data-section-id="{{ section.id }}"
+     data-slider-dots="true">
+  <ul id="Mobile5Slider-{{ section.id }}" class="mobile5-slider">
+    {% for product in collections.treatments-retinoids.products %}
+    <li class="essential-mobile5">
+      {% include 'product-essential' %}
+    </li>
+    {% endfor %}
+  </ul>
+  <script>
+  $( document ).ready(function() {
+  	$('.mobile5-slider').slick({
+      dots: true,
+      infinite: true,
+      slidesToShow: 3,
+      slidesToScroll: 1,
+      responsive: [
+        {
+          breakpoint: 600,
+          settings: {
+            slidesToShow: 3,
+            slidesToScroll: 1
+          }
+        },
+        {
+          breakpoint: 480,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1
+          }
+        }
+      ]
+    });
+  });
+  </script>
+</div>

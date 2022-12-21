@@ -1,0 +1,264 @@
+<!-- /sections/section-lead-in.liquid -->
+
+<!-- {%- if section.settings.image -%}
+  {%- assign img_object = section.settings.image -%}
+{%- else -%}
+  {%- assign img_object = 'blank.svg' | asset_url -%}
+{%- endif -%}
+{%- if section.settings.mobile_image -%}
+  {%- assign mobile_img_object = section.settings.mobile_image -%}
+{%- else -%}
+  {%- assign mobile_img_object = img_object -%}
+{%- endif -%}
+{%- assign title = section.settings.title -%}
+
+<div class="lead-in">
+  <div class="lead-in__content{% if section.settings.reverse_direction %} reverse{% endif %}{% if section.settings.prevent_overlap %} prevent-overlap{% endif %}">
+    {%- unless section.settings.subtitle1 == blank -%}
+      <p class="capitalized__header">{{ section.settings.subtitle1 | newline_to_br }}</p>
+    {%- endunless -%}
+    {%- unless title == blank -%}
+    	<h2 class="title--primary">{{ title }}</h2>
+    {%- endunless -%}
+    {%- unless section.settings.subtitle2 == blank -%}
+      <p class="capitalized__header">{{ section.settings.subtitle2 | newline_to_br }}</p>
+    {%- endunless -%}
+  </div>
+  <div class="lead-in__image lazyload desktop-only{% if section.settings.small %} small{% endif %}{% if section.settings.reverse_direction %} reverse{% endif %}" data-bgset="{% include 'bgset', image: img_object %}">
+    <div class="layover" style="opacity:{{ section.settings.opacity | divided_by: 100.0 }}"></div>
+  </div>
+  <div class="lead-in__image lazyload mobile-only{% if section.settings.small %} small{% endif %}{% if section.settings.reverse_direction %} reverse{% endif %}" data-bgset="{% include 'bgset', image: mobile_img_object %}">
+    <div class="layover" style="opacity:{{ section.settings.opacity | divided_by: 100.0 }}"></div>
+  </div>
+  <noscript>
+    <div class="lead-in__image desktop-only{% if section.settings.small %} small{% endif %}{% if section.settings.reverse_direction %} reverse{% endif %}" style="background-image: url('{{ img_object | img_url: '800x' }}');">
+      <div class="layover" style="opacity:{{ section.settings.opacity | divided_by: 100.0 }}"></div>
+    </div>
+    <div class="lead-in__image mobile-only{% if section.settings.small %} small{% endif %}{% if section.settings.reverse_direction %} reverse{% endif %}" style="background-image: url('{{ img_object | img_url: '800x' }}');">
+      <div class="layover" style="opacity:{{ section.settings.opacity | divided_by: 100.0 }}"></div>
+    </div>
+  </noscript>
+</div>
+
+{% if section.blocks.size > 0 %}
+  <div class="lead-in__body{% if section.settings.reverse_direction %} reverse{% endif %}">
+    {% for block in section.blocks %}
+      <div class="lead-in__body__block">
+        {%- unless block.settings.title == blank -%}<div class="capitalized__header">{{block.settings.title}}</div>{%- endunless -%}
+        {%- unless block.settings.body == blank -%}<p>{{block.settings.body }}</p>{%- endunless -%}
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+
+
+{% schema %}
+  {
+    "name": "Lead In",
+    "class": "section-lead-in",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image"
+      },
+      {
+        "type": "image_picker",
+        "id": "mobile_image",
+        "label": "Mobile Image"
+      },
+	  {
+		"type": "range",
+		"id": "opacity",
+		"label": "Opacity",
+		"min": 0,
+		"max": 100,
+		"step": 5,
+		"default": 0
+	  },
+	  {
+        "type": "textarea",
+        "id": "title",
+        "label": "Text",
+        "default": "Welcome to Fig, the world's first doctor-led clean skincare bar."
+      },
+      {
+        "type": "richtext",
+        "id": "subtitle1",
+        "label": "Subtitle 1"
+      },
+      {
+        "type": "richtext",
+        "id": "subtitle2",
+        "label": "Subtitle 2"
+      },
+      {
+		"type": "checkbox",
+		"id": "reverse_direction",
+		"label": "Reverse direction"
+	  },
+      {
+		"type": "checkbox",
+		"id": "prevent_overlap",
+		"label": "Prevent Overlap"
+	  },
+      {
+		"type": "checkbox",
+		"id": "small",
+		"label": "Small Image"
+	  }
+    ],
+	"blocks": [
+	  {
+		"type": "content",
+		"name": "Content",
+		"settings": [
+		  {
+			"type": "text",
+			"id": "title",
+			"label": "Title"
+		  },
+		  {
+			"type": "richtext",
+			"id": "body",
+			"label": "Body"
+		  }
+		]
+	  }
+	],
+    "presets": [{
+      "name": "Lead In"
+    }]
+  }
+{% endschema %}
+
+{% stylesheet %}
+.lead-in {
+    position: relative;
+    padding: 0 0 30px 0
+}
+
+.lead-in__body,
+.lead-in__image {
+    width: 100%;
+    padding-bottom: 60%;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    text-align: left
+}
+
+.lead-in__body .layover,
+.lead-in__image .layover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #fff
+}
+
+@media screen and (min-width:769px) {
+
+    .lead-in__body,
+    .lead-in__image {
+        width: 60%;
+        padding-bottom: 45%;
+        text-align: right
+    }
+
+    .lead-in__body.small,
+    .lead-in__image.small {
+        padding-bottom: 30%
+    }
+
+    .lead-in__body.reverse,
+    .lead-in__image.reverse {
+        width: 75%;
+        left: 25%;
+        text-align: left
+    }
+}
+
+.lead-in__body .lead-in__body__block,
+.lead-in__image .lead-in__body__block {
+    margin-bottom: 50px
+}
+
+.lead-in__body {
+    padding: 30px;
+    padding-bottom: 30px
+}
+
+@media screen and (min-width:769px) {
+    .lead-in__body {
+        padding: 0;
+        padding-bottom: 30px
+    }
+}
+
+.lead-in__content {
+    margin: 0 30px;
+    margin-bottom: -.5em;
+    position: relative;
+    z-index: 1
+}
+
+.lead-in__content .h1,
+.lead-in__content h1 {
+    line-height: normal;
+    font-size: 3.75em;
+    margin-bottom: 20px
+}
+
+.lead-in__content .capitalized__header {
+    margin-right: 30%
+}
+
+@media screen and (min-width:769px) {
+    .lead-in__content {
+        position: absolute;
+        width: 30%;
+        width: auto;
+        top: 50%;
+        right: auto;
+        bottom: auto;
+        left: 55%;
+        margin: 0;
+        -webkit-transform: translateY(-50%);
+        -moz-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        -o-transform: translateY(-50%);
+        transform: translateY(-50%)
+    }
+
+    .lead-in__content.reverse {
+        left: 0;
+        right: 55%
+    }
+
+    .lead-in__content.reverse.prevent-overlap {
+        right: 77%
+    }
+
+    .lead-in__content .h1,
+    .lead-in__content h1 {
+        font-size: 3.125em
+    }
+}
+
+@media screen and (min-width:1200px) {
+    .lead-in__content {
+        max-width: 800px
+    }
+
+    .lead-in__content .h1,
+    .lead-in__content h1 {
+        font-size: 3.75em
+    }
+}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}
+ -->

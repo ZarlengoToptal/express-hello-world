@@ -1,0 +1,131 @@
+<!-- /sections/section-index-treatments-slider.liquid-->
+
+<section>
+  <div class="fixed-mobile">
+    <div aria-roledescription="carousel" class="mobile-slider-wrapper" data-section-type="mobile-slider" data-section-id="{{ section.id }}" data-slider-dots="true">
+        <ul id="MobileSlider-{{ section.id }}" class="index-treatment-slider">
+          {% for block in section.blocks %}
+            {%- assign treatment-card-image = block.settings.treatment-card-image -%}
+            {%- assign lable-of-treatment = block.settings.lable-of-treatment -%}
+            {%- assign type-of-treatment = block.settings.type-of-treatment -%}
+            {%- assign price-treatment = block.settings.price-treatment -%}
+          <li aria-roledescription="slide" aria-atomic="false" class="index-product-mobile">
+            <div class="treatment-index-card-individual">
+              <a href="{{ block.settings.link-of-treatment }}">
+                {%- assign treatment-card-image = block.settings.treatment-card-image | img_url: 'large' -%}
+                <img class="lazyload" alt="{{ block.settings.treatment-card-image.alt | default: section.settings.link_text }}" src="{{ block.settings.treatment-card-image | img_url: 'large' }}" data-src="{{ treatment-card-image }}" data-aspectratio="{{ section.settings.treatment-card-image.aspect_ratio }}" data-sizes="auto" style="width:100%"/>
+                <div class="hp-treatment-details">
+                <div class="mono-font mono hp-treatment">{{ lable-of-treatment }}</div>
+                <h3>{{ type-of-treatment }}</h3>
+                <div class="mono hp-treatment">{{ price-treatment }}</div>
+              </div>
+              </a>
+            </div>
+            <div class="treatment-index-card-button">
+              <a role="button" href="https://formulafig.com/pages/appointments">
+                <div class="hp-book-now-locations">
+                  Book Now</div>
+              </a>
+            </div>
+          </li>
+          {% endfor %}
+        </ul>
+
+    </div>
+  </div>
+  
+  
+</section>
+
+{% schema %}
+  {
+    "name": "Treatment Cards",
+    "settings": [
+      {
+      "type": "textarea",
+      "id": "treatments-index-slider",
+      "label": "Subheading"
+      }
+	],
+  "blocks": [
+        {
+        "type": "treatment-card",
+        "name": "Treatment Card for Slider",
+        "settings": [
+		{
+          "type": "image_picker",
+          "id": "treatment-card-image",
+          "label": "Treatment Card Image"
+        },
+        {
+        "type": "url",
+        "id": "link-of-treatment",
+        "label": "Link to Treatment"
+        },
+        {
+        "type": "text",
+        "id": "lable-of-treatment",
+        "label": "Lable of Treatment",
+        "default": "SELF-SERVE FACIAL"
+        },
+        {
+        "type": "text",
+        "id": "type-of-treatment",
+        "label": "Type of Treatment",
+        "default": "Light Therapy Boost"
+        },
+		{
+        "type": "text",
+        "id": "price-treatment",
+        "label": "Price of Treatment",
+		"default": "$$ MEMBER | $$ DROP-IN"
+        }
+       ]
+	  }
+	],
+	"presets": [
+    {
+    "name": "Treatment Slider",
+    "category": "ADVANCED LAYOUT"
+    }
+   ]
+  }
+{% endschema %}
+
+<script>
+  $( document ).ready(function() {
+	// Slick Slider Inits
+  	$('.index-treatment-slider').slick({
+      dots: false,
+      infinite: true,
+      slidesToShow: 5,
+      centerMode: true,
+      slidesToScroll: 1,
+      arrows:true,
+      initialSlide: 0,
+      rtl: false,
+      ltr:true,
+      responsive: [
+        {
+          breakpoint: 770,
+          settings: {
+            slidesToShow: 3,
+            slidesToScroll: 3,
+            infinite: true,
+            dots: false
+          }
+        },
+        {
+          breakpoint: 600,
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 1,
+            centerMode: true,
+            dots: false,
+          }
+        }
+      ]
+    });
+  });
+</script>
+

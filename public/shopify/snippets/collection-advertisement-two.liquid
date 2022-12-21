@@ -1,0 +1,29 @@
+{%- if section.settings.double-image-left-collection-section-two != blank -%}
+<div class="collection-advertisement-one">
+ <div class="double-section desktop-show"> 
+  <div class="collection-image-double">
+  	{% if section.settings.double-image-left-collection-section-two %}
+      {%- assign double-image-left-collection-section-two = section.settings.double-image-left-collection-section-two | img_url: '2400x2400' -%}
+      <img class="lazyload" alt="{{ section.settings.double-image-left-collection-section-two.alt | default: section.settings.double-image-left-collection-section-two }}" src="{{ block.settings.double-image-left-collection-section-two | img_url: 'large' }}" data-src="{{ double-image-left-collection-section-two }}" data-aspectratio="{{ section.settings.double-image-left-collection-section-two.aspect_ratio }}" data-sizes="auto" style="width:100%;" />
+    {% endif %}
+  </div>
+  <div class="collection-content-double">
+  	<div>{{ section.settings.double-html-left-collection-section-two }}</div>
+    <div class="section-collection-card-link"><a href="{{ section.settings.section-double-collection-url-two }}">{{ section.settings.section-double-collection-url-lable-two }}</a></div>
+  </div>
+ </div>
+
+<div class="double-section mobile-show"> 
+  <div class="collection-image-double-mobile">
+  	{% if section.settings.double-image-left-collection-section-two %}
+      {%- assign double-image-left-collection-section = section.settings.double-image-left-collection-section-two | img_url: '2400x2400' -%}
+      <img class="lazyload" alt="{{ section.settings.double-image-left-collection-section-two.alt | default: section.settings.settings.double-image-left-collection-section-two }}" src="{{ block.settings.double-image-left-collection-section-two | img_url: 'large' }}" data-src="{{ double-image-left-collection-section-two }}" data-aspectratio="{{ section.settings.double-image-left-collection-section-two.aspect_ratio }}" data-sizes="auto" style="width:100%;" />
+    {% endif %}
+    <div class="collection-content-double-mobile">
+    	<div>{{ section.settings.double-html-left-collection-section-two }}</div>
+    <div class="section-collection-card-link"><a href="{{ section.settings.section-double-collection-url-two }}">{{ section.settings.section-double-collection-url-lable-two }}</a></div>
+  </div>
+  </div>
+ </div>
+</div>
+{% endif %}

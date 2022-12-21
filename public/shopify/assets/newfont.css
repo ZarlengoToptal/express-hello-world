@@ -1,0 +1,51 @@
+/* 
+
+-----------------
+
+New Brand Fonts 
+
+-----------------
+
+*/
+
+@font-face {
+    font-family: 'FF Sans Italic';
+  	src: 	url(//cdn.shopify.com/s/files/1/0050/3932/5297/t/44/assets/FF_Sans-Regular_Italic_web.eot?v=23306191207133351341656669665);
+    src:    url(//cdn.shopify.com/s/files/1/0050/3932/5297/t/44/assets/FF_Sans-Regular_Italic_web.woff?v=11629299691714735971656669665) format("woff"),
+            url(//cdn.shopify.com/s/files/1/0050/3932/5297/t/44/assets/FF_Sans-Regular_Italic_web.woff2?v=7478644567189321411656669665) format("woff2"),
+            url(//cdn.shopify.com/s/files/1/0050/3932/5297/t/44/assets/FF_Sans-Regular_Italic_web.ttf?v=174927488534826759381656669665) format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'FF Sans Regular';
+    src: 	url(//cdn.shopify.com/s/files/1/0050/3932/5297/t/44/assets/FF_Sans-Regular_web.eot?v=1047771367348231641656669665);
+    src:    url(//cdn.shopify.com/s/files/1/0050/3932/5297/t/44/assets/FF_Sans-Regular_web.woff?v=146926018835662129311656669665) format("woff"),
+            url(//cdn.shopify.com/s/files/1/0050/3932/5297/t/44/assets/FF_Sans-Regular_web.woff2?v=126041687164054316731656669665) format("woff2"),
+            url(//cdn.shopify.com/s/files/1/0050/3932/5297/t/44/assets/FF_Sans-Regular_web.ttf?v=1090763640933253021656669665) format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Founders Grotesk Mono';
+    src: 	url(//cdn.shopify.com/s/files/1/0050/3932/5297/t/44/assets/founders-grotesk-mono-web-regular.woff2?v=48361972689318193911656669665) format("woff2");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Founders Grotesk';
+    src: 	url(//cdn.shopify.com/s/files/1/0050/3932/5297/t/44/assets/founders-grotesk-web-regular.woff2?v=132583503747303951081656669665) format("woff2");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Founders Grotesk Italic';
+    src: 	url(//cdn.shopify.com/s/files/1/0050/3932/5297/t/44/assets/founders-grotesk-web-regular-italic.woff2?v=158396998188936827291656669665) format("woff2");
+    font-weight: normal;
+    font-style: normal;
+}
+

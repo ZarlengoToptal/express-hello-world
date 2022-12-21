@@ -1,0 +1,59 @@
+<div>
+  {% include 'location-card-coming-soon-ca' %}
+</div>
+
+{% schema %}
+  {
+    "name": "Coming Soon CA Location",
+    "settings": [
+      {
+      "type": "textarea",
+      "id": "description-fig-bar-location",
+      "label": "Subheading",
+	  "default": "Pop in for the full Fig experieince. We'd love to see your face."
+      }
+	],
+  "blocks": [
+        {
+        "type": "cs-canada-location",
+        "name": "Coming Soon CA Location",
+        "settings": [
+		{
+          "type": "image_picker",
+          "id": "location-tour-image",
+          "label": "Location Tour Static Image"
+        },
+        {
+        "type": "text",
+        "id": "title-location",
+        "label": "Fig Bar Location",
+        "default": "Fig Bar Location"
+        },
+		{
+        "type": "text",
+        "id": "address-location",
+        "label": "Address",
+        "default": "2050 W 4ht Ave, Vancouver"
+        },
+		{
+        "type": "text",
+        "id": "telephone-location",
+        "label": "Telephone Number",
+		"default": "604-423-3881"
+        }, 
+		{
+        "type": "text",
+        "id": "hours-location",
+        "label": "Hours of Operation",
+		"default": "MON-SUN 7am-7pm"
+        },
+		{
+        "type": "url",
+        "id": "cta-link",
+        "label": "Call To Action Link"
+        }
+       ]
+	  }
+	]
+  }
+{% endschema %}

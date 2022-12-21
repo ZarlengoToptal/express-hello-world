@@ -1,0 +1,11 @@
+<!-- /snippets/essential-spf.liquid -->
+
+<div aria-roledescription="carousel" class="mobile-slider-wrapper" data-section-type="mobile-slider" data-section-id="{{ section.id }}" data-slider-dots="true">
+  <ul id="MobileSlider-{{ section.id }}" class="mobile-slider">
+    {% for product in collections.spf-1.products %}
+    <li aria-roledescription="slide" aria-atomic="false" class="essential-mobile">
+      {% include 'product-essential' %}
+    </li>
+    {% endfor %}
+  </ul>
+</div>

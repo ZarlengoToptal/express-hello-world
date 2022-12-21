@@ -1,0 +1,193 @@
+<!-- /sections/location-title.liquid -->
+
+<div class="treatment-subheaders location-header">
+  <h1 aria-level="2">{{ section.settings.locationtitle }}</h1>
+  <div class="category-body">{{ section.settings.locationsubtext }}</div>
+</div>
+
+{% include 'location-slider' %}
+
+{% schema %}
+  {
+    "name": "Locations",
+    "settings": [
+	 {
+        "type": "text",
+        "id": "locationtitle",
+        "label": "Block Title",
+        "default": "Locations"
+      },
+		{	
+	  "type": "richtext",
+        "id": "locationsubtext",
+        "label": "Location Subtext",
+		"default": "<p>Lorem Ipsum</p>"
+	}
+	],
+	"blocks" :[{ 
+		"type": "location",
+        "name": "Location",
+		"settings" :[
+		{
+			"type": "image_picker",
+        	"id": "locationimage",
+        	"label": "Location Image"
+		},
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Location Name"
+      },
+      {
+        "type": "richtext",
+        "id": "locationbody",
+        "label": "Address"
+      },
+      {
+        "type": "text",
+        "id": "locationlinktext",
+        "label": "Book Now or Coming Soon"
+      },
+      {
+        "type": "url",
+        "id": "locationlink",
+        "label": "Link"
+      }
+		]
+	
+	}]
+  }
+{% endschema %}
+
+{% stylesheet %}
+  .location-cards {
+    width: 25%;
+    height: auto;
+    border: 1px solid black;
+    background-color: #227132;
+    color: white;
+    box-shadow: 2px 2px 5px #444; }
+  
+  .location-body {
+    padding: 15px; }
+  
+  .location-cards p, .location-body h4, .location-body .h4, .location-cards a {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    line-height: 1.5;
+    color: white; }
+
+ .location-header h1{
+   margin:0;
+ }
+
+ .location-image .image--flex{
+   width:100%;
+ }
+  
+ .location{
+   background-color:#227132;
+   border: 1px solid #000;
+   box-shadow: 2px 2px 5px #444;
+   margin:0 1rem;
+ }
+  
+ .location-cards{
+   width:100%;
+   background-color:#fff;
+   border: 0px;
+   box-shadow:0px 0px 0px #fff !important;
+  	margin-top:0;
+  }
+  
+.locations-slider{
+  padding: 0 3rem;
+}
+  
+.location-slider-wrapper{
+  padding: 0 2rem;
+}
+  
+.location-slider-wrapper li{
+  
+}
+  
+  .location-body h2 {
+  margin-bottom:5px;}
+  
+@media only screen and (max-width: 600px) {
+  .location-cards {
+   background-color:#fff;
+   border:0;
+   box-shadow:0px 0px 0px #fff !important;
+  	margin-top:0;
+  }
+  
+  .location{
+    margin:0;
+  }
+  
+  .location-slider-wrapper{
+  padding: 15px;
+}
+  
+  .slick-next, .slick-prev {
+    padding:70px 0px!important;
+	}
+  
+  .locations-slider{
+  padding: 0;
+}
+   
+}
+ @media screen and (max-width: 500px) {
+    .location-cards {
+      width: auto; }
+  
+    .location-body h2, .location-body .h2 {
+      font-size: 2em; }
+  
+    .location-header h1, .location-header .h1 {
+      font-size: 3em; } 
+}
+{% endstylesheet %}
+
+{% javascript %}
+  $( document ).ready(function() {
+  	// Slick Slider Init
+  	$('#LocationSlider-locations').slick({
+      dots: true,
+      infinite: true,
+      slidesToShow: 3,
+      slidesToScroll: 1,
+      responsive: [
+        {
+          breakpoint: 1024,
+          settings: {
+            slidesToShow: 3,
+            slidesToScroll: 3,
+            infinite: true,
+            dots: true
+          }
+        },
+        {
+          breakpoint: 600,
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 2
+          }
+        },
+        {
+          breakpoint: 480,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1
+          }
+        }
+      ]
+    });
+  });
+{% endjavascript %}
+

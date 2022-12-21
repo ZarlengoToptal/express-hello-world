@@ -1,0 +1,28 @@
+<!-- /sections/index-code.liquid -->
+
+    <div class="rte">
+      {% if section.settings.code != blank %}
+        {{ section.settings.code }}
+      {% else %}
+        {{ 'home_page.onboarding.no_content' | t }}
+      {% endif %}
+    </div>
+
+
+{% schema %}
+{
+  "name": "Code section",
+  "settings": [
+    {
+      "id": "code",
+      "type": "html",
+      "label": "Code",
+      "default": "<p>Use HTML code in this section</p>"
+    }
+  ],
+  "presets": [{
+    "name": "Code section",
+    "category": "Text"
+  }]
+}
+{% endschema %}

@@ -1,0 +1,83 @@
+<div class="treatments-banner">
+	{% include 'section-location-banner-image' %}
+
+</div>
+
+{% schema %}
+  {
+    "name": "Location Banners",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "image3",
+        "label": "West Hollywood Image"
+      },
+      {
+        "type": "image_picker",
+        "id": "mobile_image3",
+        "label": "West Hollywood Mobile Image",
+        "info": "If parallax enabled only desktop image will be shown"
+      },
+      {
+        "type": "select",
+        "id": "height",
+        "label": "Section height",
+        "default": "use_screen_one_half",
+        "options": [
+          { "value": "use_screen_full", "label": "Full screen height"},
+          { "value": "use_screen_two_thirds", "label": "Tall"},
+          { "value": "use_screen_one_half", "label": "Medium"},
+          { "value": "use_screen_one_third", "label": "Short"},
+          { "value": "use_image", "label": "Image height"}
+        ]
+      },
+      {
+        "type": "checkbox",
+        "id": "parallax",
+        "default": false,
+        "label": "Enable parallax scroll"
+      },
+	{
+        "type": "image_picker",
+        "id": "image4",
+        "label": "Ossington Image"
+      },
+      {
+        "type": "image_picker",
+        "id": "mobile_image4",
+        "label": "Ossington Mobile Image",
+        "info": "If parallax enabled only desktop image will be shown"
+      },
+      {
+        "type": "select",
+        "id": "height4",
+        "label": "Section height",
+        "default": "use_screen_one_half",
+        "options": [
+          { "value": "use_screen_full", "label": "Full screen height"},
+          { "value": "use_screen_two_thirds", "label": "Tall"},
+          { "value": "use_screen_one_half", "label": "Medium"},
+          { "value": "use_screen_one_third", "label": "Short"},
+          { "value": "use_image", "label": "Image height"}
+        ]
+      },
+      {
+        "type": "checkbox",
+        "id": "parallax4",
+        "default": false,
+        "label": "Enable parallax scroll"
+      },
+	{
+        "type": "image_picker",
+        "id": "image5",
+        "label": "Ambleside Image"
+      },
+      {
+        "type": "image_picker",
+        "id": "mobile_image5",
+        "label": "Ambleside Mobile Image",
+        "info": "If parallax enabled only desktop image will be shown"
+      }
+    ]
+  }
+{% endschema %}

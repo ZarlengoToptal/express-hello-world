@@ -1,0 +1,168 @@
+<div>
+  {% include 'ossington-individual-card-details' %}
+</div>
+
+{% schema %}
+  {
+    "name": "Location Cards",
+    "settings": [
+      {
+      "type": "textarea",
+      "id": "description-location-header",
+      "label": "Subheading",
+    "default": "Banner slogan if you want."
+      },
+      {
+        "type": "select",
+        "id": "height",
+        "label": "Section height",
+        "default": "use_screen_one_half",
+        "options": [
+        { "value": "use_screen_full", "label": "Full screen height"},
+        { "value": "use_screen_two_thirds", "label": "Tall"},
+        { "value": "use_screen_one_half", "label": "Medium"},
+        { "value": "use_screen_one_third", "label": "Short"},
+        { "value": "use_image", "label": "Image height"}
+        ]
+        },
+        {
+        "type": "checkbox",
+        "id": "parallax",
+        "default": false,
+        "label": "Enable parallax scroll"
+      },
+    {
+      "type": "image_picker",
+      "id": "ossington-banner-image",
+      "label": "Banner Image"
+      }
+  ],
+  "blocks": [
+        {
+        "type": "individual-location",
+        "name": "Location Details",
+        "settings": [
+    {
+        "type": "html",
+        "id": "ossington-video",
+        "label": "Video for the Location"
+        },
+        {
+        "type": "text",
+        "id": "country-ossington-individual",
+        "label": "Country",
+        "default": "Canada"
+        },
+        {
+        "type": "text",
+        "id": "title-ossington-individual",
+        "label": "Fig Bar Location",
+        "default": "Fig Bar Location"
+        },
+        {
+        "type": "text",
+        "id": "tagline-ossington-individual",
+        "label": "Tagline",
+        "default": "Visit us in our Fig Bars. We'd love to see your face."
+        },
+    {
+        "type": "text",
+        "id": "address-ossington-individual",
+        "label": "Address",
+        "default": "2050 W 4TH AVE, VANCOUVER"
+        },
+    {
+        "type": "text",
+        "id": "telephone-ossington-individual",
+        "label": "Telephone Number",
+    "default": "604 423 3881"
+        }, 
+    {
+        "type": "textarea",
+        "id": "hours-ossington-individual",
+        "label": "Hours of Operation",
+    "default": "MON-SUN 8AM–8PM"
+        },
+    {
+        "type": "url",
+        "id": "book-now-ossington-individual",
+        "label": "Book Now link"
+        },
+    {
+        "type": "html",
+        "id": "google-ossington-individual",
+        "label": "Google Map for the Location"
+        },
+    {
+        "type": "textarea",
+        "id": "address-ossington-full-description",
+        "label": "Directions",
+        "default": "2050 W 4th Ave, Vancouver"
+        }, 
+    {
+        "type": "textarea",
+        "id": "parking-ossington-individual",
+        "label": "Parking",
+    "default": "None"
+        }, 
+    {
+        "type": "textarea",
+        "id": "cancelation-ossington-individual",
+        "label": "Cancellation",
+    "default": "None"
+        }, 
+    {
+        "type": "textarea",
+        "id": "accessability-ossington-individual",
+        "label": "Accessibility",
+    "default": "None"
+        },
+    {
+          "type": "image_picker",
+          "id": "ossington-shop-now-image",
+          "label": "Shop Now Image"
+        },
+    {
+        "type": "textarea",
+        "id": "ossington-shop-now-cta",
+        "label": "Shop Now CTA",
+    "default": "Clean skin for all skin types"
+        },
+    {
+          "type": "image_picker",
+          "id": "ossington-services-available-treatments",
+          "label": "Treatments Image"
+        },
+    {
+        "type": "textarea",
+        "id": "treatments-ossington-text",
+        "label": "TREATMENTS",
+    "default": "Technology driven; guided by resaults."
+        },
+    {
+          "type": "image_picker",
+          "id": "ossington-services-available-skin-care",
+          "label": "Skin Care Image"
+        },
+    {
+        "type": "textarea",
+        "id": "ossington-skin-care-location-text",
+        "label": "SKINCARE",
+    "default": "Clean skin care for all skin types."
+        },
+    {
+          "type": "image_picker",
+          "id": "ossington-services-available-membership",
+          "label": "Membership Image"
+        },
+    {
+        "type": "textarea",
+        "id": "membership-ossington-text",
+        "label": "MEMBERSHIP",
+    "default": "Love us? Sign up for more."
+        }
+       ]
+    }
+  ]
+  }
+{% endschema %}

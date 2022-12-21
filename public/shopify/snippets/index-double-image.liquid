@@ -1,0 +1,45 @@
+{%- if block.settings.image -%}
+  {%- assign img_object = block.settings.image -%}
+{%- else -%}
+  {%- assign img_object = 'blank.svg' | asset_url -%}
+{%- endif -%}
+{%- if block.settings.mobile_image -%}
+  {%- assign mobile_img_object = block.settings.mobile_image -%}
+{%- else -%}
+  {%- assign mobile_img_object = img_object -%}
+{%- endif -%}
+<div class="grid__item large--one-half medium--one-half double__block homepage-image {{ block.settings.color }} preventOverflow" {{ block.shopify_attributes }}>
+  {% if block.settings.link_text == '' and block.settings.link %}
+    <a href="{{ block.settings.link }}">
+  {% endif %}
+
+  <div class="content--centered">
+    <div class="{{ block.settings.text_align }} preventOverflowContent">
+      {% unless block.settings.title == '' %}
+        <h1 class="home__subtitle">{{ block.settings.title | escape }}</h1>
+      {% endunless %}
+
+      {% unless block.settings.description == '' %}
+        <p class="content--flex h5--body">{{ block.settings.description }}</p>
+      {% endunless %}
+
+      {% unless block.settings.link_text == '' %}
+        <a class="{{ block.settings.button_style }}" href="{{ block.settings.link }}">{{ block.settings.link_text | escape }}</a>
+      {% endunless %}
+    </div>
+  </div>
+
+  <div class="image-overlay image-overlay-{{ block.settings.overlay_opacity }}"></div>
+
+  <div class="background-size-cover lazyload desktop-only" data-bgset="{% include 'bgset', image: img_object %}"></div>
+  <div class="background-size-cover lazyload mobile-only" data-bgset="{% include 'bgset', image: mobile_img_object %}"></div>
+
+  <noscript>
+    <div class="background-size-cover desktop-only" style="background-image: url('{{ img_object | img_url: '540x' }}');"></div>
+    <div class="background-size-cover mobile-only" style="background-image: url('{{ mobile_img_object | img_url: '540x' }}');"></div>
+  </noscript>
+
+  {% if block.settings.link_text == '' and block.settings.link %}
+    </a>
+  {% endif %}
+</div>

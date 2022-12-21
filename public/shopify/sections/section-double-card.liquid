@@ -1,0 +1,158 @@
+<!-- /sections/section-double-card.liquid-->
+
+<section class="double-section">
+  <div class="left-card">
+  	<div class="double-section-left">
+      <div class="double_card_header">
+        <h2>{{ section.settings.single_card_header_left}}</h2>
+      </div>
+      <div class="double_card_body">
+        <div class="desktop-show"><h4>{{ section.settings.single_card_body_left }}</h4></div>
+        <div class="mobile-show"><h4>{{ section.settings.single_card_body_left_mobile }}</h4></div>
+      </div>
+    </div>
+    <div class="left-image">
+      {% if section.settings.double-image-left %}
+      {%- assign double-image-left = section.settings.double-image-left | img_url: 'master' -%}
+      	<img class="lazyload" alt="{{ section.settings.double-image-left.alt | default: section.settings.double-image-left }}" src="{{ block.settings.double-image-left | img_url: 'master' }}" data-src="{{ double-image-left }}" data-aspectratio="{{ section.settings.double-image-left.aspect_ratio }}" data-sizes="auto" />
+      {% endif %}
+    </div>
+    
+    <div class="location-card-buttons">
+      <a role="button" href="https://formulafig.com/pages/treatments">
+        <div class="learn-more-locations">LEARN MORE</div>
+      </a>
+      <a role="button" href="https://formulafig.com/pages/appointments">
+        <div class="book-now-locations">
+          BOOK NOW</div>
+      </a>
+    </div>
+    
+    <div class="single-full-link">
+      <a role="button" href="https://formulafig.com/pages/locations">
+        <div class="learn-more-index">
+			<div>EXPLORE LOCATIONS</div>
+          	<!--<div class="mobile-show" style="line-height:2.25">FIND YOUR FIG BAR</div>-->
+        </div>
+      </a>
+    </div>
+    
+  </div>
+  <div class="right-card desktop-show">
+  	<div class="double-section-right">
+      <div class="double_card_header">
+        <h2>{{ section.settings.single_card_header_right}}</h2>
+      </div>
+      <div class="double_card_body">
+        <h4>{{ section.settings.single_card_body_right }}</h4>
+      </div>
+    </div>
+    
+    <div style="position:relative">
+    	<div class="right-image">
+          {% if section.settings.double-image-right %}
+          {%- assign double-image-right = section.settings.double-image-right | img_url: 'master' -%}
+            <img class="lazyload" alt="{{ section.settings.double-image-right.alt | default: section.settings.double-image-right }}" src="{{ block.settings.double-image-right | img_url: 'master' }}" data-src="{{ double-image-right }}" data-aspectratio="{{ section.settings.double-image-right.aspect_ratio }}" data-sizes="auto" style="width:100%;" />
+          {% endif %}
+        </div>
+        <div class="index-memb-quote">
+            <h1>{{ section.settings.single_card_quote }}</h1>
+            <p>- {{ section.settings.single_card_quote_name }}</p>
+        </div>
+    </div>
+    
+    <div class="location-card-buttons">
+      <a role="button" href="{{ section.settings.section-double-LM2 }}">
+        <div class="learn-more-locations">LEARN MORE</div>
+      </a>
+      <a role="button" href="{{ section.settings.section-double-right-link }} ">
+        <div class="take-the-quiz">
+          TAKE THE QUIZ</div>
+      </a>
+    </div>
+    <div class="single-full-link">
+      <a role="button" href="{{ section.settings.sign-up-right-link }}">
+        <div class="learn-more-index">
+          SIGN UP</div>
+      </a>
+    </div>
+    
+  </div>
+  
+</section>
+
+{% schema %}
+  {
+    "name": "Double Card",
+    "settings": [
+		{
+          "type": "text",
+          "id": "single_card_header_left",
+          "label": "Header Text Left Desktop"
+        },{
+          "type": "text",
+          "id": "single_card_body_left_mobile",
+          "label": "Subtitle Text Left Mobile"
+        },
+		{
+          "type": "textarea",
+          "id": "single_card_body_left",
+          "label": "Subtitle Text Left"
+        },
+		{
+          "type": "image_picker",
+          "id": "double-image-left",
+          "label": "Left Image"
+        },
+		{
+        "type": "url",
+        "id": "section-double-LM1",
+        "label": "Learn More"
+        },
+		{
+          "type": "text",
+          "id": "single_card_header_right",
+          "label": "Header Text Right"
+        },{
+          "type": "textarea",
+          "id": "single_card_body_right",
+          "label": "Subtitle Text Right"
+        },
+		{
+          "type": "image_picker",
+          "id": "double-image-right",
+          "label": "Right Image"
+        },{
+          "type": "textarea",
+          "id": "single_card_quote",
+          "label": "Membership Quote"
+        },
+		{
+          "type": "text",
+          "id": "single_card_quote_name",
+          "label": "Membership Quote Name"
+        },
+		{
+        "type": "url",
+        "id": "section-double-LM2",
+        "label": "Learn More"
+        },
+		{
+        "type": "url",
+        "id": "section-double-right-link",
+        "label": "Take the Quiz"
+        },
+		{
+        "type": "url",
+        "id": "sign-up-right-link",
+        "label": "Sign Up"
+        }
+	],
+  "presets": [
+    {
+    "name": "Double Card",
+    "category": "ADVANCED LAYOUT"
+    }
+   ]
+  }
+{% endschema %}

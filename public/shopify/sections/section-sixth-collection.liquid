@@ -1,0 +1,100 @@
+<!-- /sections/section-sixth-collection.liquid-->
+
+{%- assign collection = collections[section.settings.sixth-collection] -%}
+{% if section.settings.sixth-collection != blank %}
+
+<section>
+  <div class="plpSA-wrapper-collections">
+    <div class="plpSA-wrapper" data-section-id="{{ section.id }}">
+      <div class="collection-header">
+        <h2>{{ collection.title }}</h2>
+        <h2><a href="{{ collection.url }}">Shop All {{ collection.title }}</a></h2>
+      </div>
+      <div>
+        <div role="region">
+          <div dir="ltr" aria-roledescription="carousel" class="" data-section-type="mobile-slider" data-section-id="{{ section.id }}">
+            <ul id="MobileSlider-{{ section.id }}" class="sixth-collection-slider">
+              {% for product in collection.products %}
+              <li aria-roledescription="slide" aria-atomic="false" class="collection-product-plpSA">
+                {% include 'productPLP2022' %}
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Sixth Collection",
+    "settings": [
+      {
+        "type": "collection",
+        "id": "sixth-collection",
+        "label": "Sixth Collection"
+      }
+    ],
+  "presets": [
+    {
+      "name": "Sixth collection",
+      "category": "Collection"
+    }
+  ]
+  }
+{% endschema %}
+
+<script>
+	$( document ).ready(function() {
+	// Slick Slider Inits
+  	$('.sixth-collection-slider').slick({
+      dots: false,
+      infinite: true,
+      slidesToShow: 5,
+      centerMode: true,
+      slidesToScroll: 1,
+      arrows:true,
+      initialSlide: 0,
+      rtl: false,
+      ltr:true,
+      responsive: [
+        {
+          breakpoint: 1800,
+          settings: {
+            dots: false,
+            infinite: true,
+            slidesToShow: 4,
+            centerMode: true,
+            slidesToScroll: 1,
+            arrows:true,
+            initialSlide: 0,
+            rtl: false,
+            ltr:true,
+          }
+        },
+        {
+          breakpoint: 770,
+          settings: {
+            slidesToShow: 4,
+            slidesToScroll: 1,
+            infinite: true,
+            dots: false
+          }
+        },
+        {
+          breakpoint: 600,
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 1,
+            centerMode: true,
+            dots: false,
+          }
+        }
+      ]
+    });
+  });
+</script>

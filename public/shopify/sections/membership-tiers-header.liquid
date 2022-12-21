@@ -1,0 +1,26 @@
+<!-- /section/membership-tiers-header.liquid -->
+
+<section>
+  <div class="membership-tiers-header">
+      <h2>{{ section.settings.title_tiers }}</h2>
+      <p class="text-left">{{ section.settings.description_tiers }}</p>
+  </div>
+</section>
+
+{% schema %}
+  {
+    "name": "Membership Tiers Header",
+    "settings": [
+	{
+      "type": "text",
+      "id": "title_tiers",
+      "label": "Heading"
+      },
+      {
+      "type": "textarea",
+      "id": "description_tiers",
+      "label": "Text"
+      }
+    ]
+    }
+{% endschema %}

@@ -1,0 +1,111 @@
+<!-- /section/membership-cards-toronto.liquid -->
+
+<section class="toronto">{% include 'membership-cards-toronto' %}</section>
+
+{% schema %}
+  {
+    "name": "Membership Tiers To",
+    "settings": [
+	{
+      "type": "text",
+      "id": "title_toronto",
+      "label": "Heading"
+      },
+      {
+      "type": "textarea",
+      "id": "description_toronto",
+      "label": "Text"
+      }
+	],
+  "blocks": [
+        {
+        "type": "membership",
+        "name": "Membership",
+        "settings": [
+        {
+        "type": "text",
+        "id": "title_toronto",
+        "label": "Membership Title",
+        "default": "Membership Type"
+        },{
+        "type": "text",
+        "id": "price_toronto",
+        "label": "Price",
+        "default": "$150 / Month"
+        },{
+        "type": "text",
+        "id": "header_toronto",
+        "label": "Header"
+        }, {
+        "type": "richtext",
+        "id": "description_toronto",
+        "label": "Membership Description"
+        }, {
+        "type": "url",
+        "id": "quickview_link_toronto",
+        "label": "Learn More"
+        }, {
+			"type": "image_picker",
+            "id": "membershipphoto_toronto",
+            "label": "Membership Photo"
+          }, {
+            "type": "text",
+            "id": "header_price_toronto",
+            "label": "PopUp Header Name + Price"
+          },{
+              "type": "text",
+              "id": "header1_toronto",
+              "label": "PopUp Header One"
+            }, {
+            "type": "richtext",
+            "id": "description1_toronto",
+            "label": "Membership Description (long)"
+            },{
+              "type": "text",
+              "id": "header2_toronto",
+              "label": "PopUp Header Two"
+            }, {
+            "type": "richtext",
+            "id": "description2_toronto",
+            "label": "Description Two (long)"
+            },{
+              "type": "text",
+              "id": "header3_toronto",
+              "label": "PopUp Header Three"
+            }, {
+            "type": "richtext",
+            "id": "description3_toronto",
+            "label": "Description Three (long)"
+            }, {
+            "type": "richtext",
+            "id": "short_code_toronto",
+            "label": "Shortcode for Membership"
+          },{
+          "type": "html",
+          "id": "html_5",
+          "label": "Code for membership 5",
+          "info": "Use shortcode [code_5]"
+        },
+        {
+          "type": "html",
+          "id": "html_6",
+          "label": "Code for membership 6",
+          "info": "Use shortcode [code_6]"
+        },
+        {
+          "type": "html",
+          "id": "html_7",
+          "label": "Code for membership 7",
+          "info": "Use shortcode [code_7]"
+        },
+        {
+          "type": "html",
+          "id": "html_8",
+          "label": "Code for membership 8",
+          "info": "Use shortcode [code_8]"
+        }
+        ]
+		}
+	]
+  }
+{% endschema %}

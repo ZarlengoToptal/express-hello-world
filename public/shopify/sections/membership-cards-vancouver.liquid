@@ -1,0 +1,111 @@
+<!-- /sections/membership-cards-vancouver.liquid -->
+
+<section class="vancouver">{% include 'membership-cards-vancouver' %}</section>
+
+{% schema %}
+  {
+    "name": "Membership Tiers Van",
+    "settings": [
+	{
+      "type": "text",
+      "id": "title",
+      "label": "Heading"
+      },
+      {
+      "type": "textarea",
+      "id": "description",
+      "label": "Text"
+      }
+	],
+  "blocks": [
+        {
+        "type": "membership",
+        "name": "Membership",
+        "settings": [
+        {
+        "type": "text",
+        "id": "title",
+        "label": "Membership Title",
+        "default": "Membership Type"
+        },{
+        "type": "text",
+        "id": "price",
+        "label": "Price",
+        "default": "$150 / Month"
+        },{
+        "type": "text",
+        "id": "header",
+        "label": "Header"
+        }, {
+        "type": "richtext",
+        "id": "description",
+        "label": "Membership Description"
+        }, {
+        "type": "url",
+        "id": "quickview_link",
+        "label": "Learn More"
+        }, {
+			"type": "image_picker",
+            "id": "membershipphoto",
+            "label": "Membership Photo"
+          }, {
+            "type": "text",
+            "id": "header_price",
+            "label": "PopUp Header Name + Price"
+          },{
+              "type": "text",
+              "id": "header1",
+              "label": "PopUp Header One"
+            }, {
+            "type": "richtext",
+            "id": "description1",
+            "label": "Membership Description (long)"
+            },{
+              "type": "text",
+              "id": "header2",
+              "label": "PopUp Header Two"
+            }, {
+            "type": "richtext",
+            "id": "description2",
+            "label": "Description Two (long)"
+            },{
+              "type": "text",
+              "id": "header3",
+              "label": "PopUp Header Three"
+            }, {
+            "type": "richtext",
+            "id": "description3",
+            "label": "Description Three (long)"
+            }, {
+            "type": "richtext",
+            "id": "short_code",
+            "label": "Shortcode for Membership"
+          },{
+          "type": "html",
+          "id": "html_1",
+          "label": "Code for membership 1",
+          "info": "Use shortcode [code_1]"
+        },
+        {
+          "type": "html",
+          "id": "html_2",
+          "label": "Code for membership 2",
+          "info": "Use shortcode [code_2]"
+        },
+        {
+          "type": "html",
+          "id": "html_3",
+          "label": "Code for membership 3",
+          "info": "Use shortcode [code_3]"
+        },
+        {
+          "type": "html",
+          "id": "html_4",
+          "label": "Code for membership 4",
+          "info": "Use shortcode [code_4]"
+        }
+        ]
+		}
+	]
+  }
+{% endschema %}

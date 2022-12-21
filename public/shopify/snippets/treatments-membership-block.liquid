@@ -1,0 +1,15 @@
+<div class="membership-block">
+  <div class="membership-body">
+    <h1>Memberships</h1>
+    <div class="membership-type"><h5>{{section.settings.membership_type}}</h5></div>
+    <div class="membership-details">{{section.settings.membership_details}}</div>
+    <div class="membership-price"><h5>{{section.settings.membership_price}}</h5></div>
+    <a role="button" href="{{section.settings.membership_link}}" target="_blank" class="membership-button-link"><div class="membership-button">Become A Member</div>
+    </a>
+    <a role="button" href="{{section.settings.membership_link}}" target="_blank" class="all-membership">
+    See All Memberships</a>
+  </div>
+  <div class="membership-photo">
+	<img src="{{ section.settings.membership_image | img_url: 'master' }}" alt="{{ section.settings.membership_image.alt | default: section.settings.link_text }}" class="image--flex" />
+  </div>
+</div>

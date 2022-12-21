@@ -1,0 +1,138 @@
+<div class="treatments-banner">
+	{% include 'section-banner-image' %}
+  	<div class="treatments-nav">
+      <nav>
+        <ul class="drop-down closed">
+          <li><a role="button" href="#" class="nav-button">All Treatments</a></li>
+          <li><a role="button" href="stingers">Stingers</a></li>
+          <li><a role="button" href="iv-led">IV + LED</a></li>
+          <li><a role="button" href="fig-shot">Fig Shot</a></li>
+          <li><a role="button" href="radiance-renewal">Radiance + Renewal</a></li>
+          <li><a role="button" href="collagen-texture">Collagen + Texture</a></li>
+          <li><a role="button" href="all-in">All-In</a></li>
+          <li><a role="button" href="lift-tone">Lift + Tone</a></li>
+          <li><a role="button" href="hydrate-glow">Hydrate + Glow</a></li>
+          <li><a role="button" href="led-lymphatic">LED + Lymphatic</a></li>
+          <li><a role="button" href="pregnancy-facial">Pregnancy Facial</a></li>
+          <li><a role="button" href="light-therapy-boost">Light Therapy Boost</a></li>
+        </ul>
+      </nav>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Banner",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image"
+      },
+      {
+        "type": "image_picker",
+        "id": "mobile_image",
+        "label": "Mobile Image",
+        "info": "If parallax enabled only desktop image will be shown"
+      },
+      {
+        "type": "select",
+        "id": "height",
+        "label": "Section height",
+        "default": "use_screen_one_half",
+        "options": [
+          { "value": "use_screen_full", "label": "Full screen height"},
+          { "value": "use_screen_two_thirds", "label": "Tall"},
+          { "value": "use_screen_one_half", "label": "Medium"},
+          { "value": "use_screen_one_third", "label": "Short"},
+          { "value": "use_image", "label": "Image height"}
+        ]
+      },
+      {
+        "type": "checkbox",
+        "id": "parallax",
+        "default": false,
+        "label": "Enable parallax scroll"
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+
+
+/* Drop Down Styles
+================================ */
+.treatments-nav nav .drop-down {
+  list-style: none; 
+  overflow: hidden;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0;
+  text-align: left;
+  -webkit-transition: height 0.3s ease;
+          transition: height 0.3s ease;
+}
+
+.treatments-nav nav .drop-down.closed {
+  /*  When toggled via jQuery this class will reduce the height of the ul which inconjuction
+      with overflow: hidden set on the ul will hide all list items apart from the first */
+  /* current li height 38px + 5px border */
+  height: 46px;
+}
+
+.treatments-nav nav .nav-button {
+  border-top:1px solid #000;
+}
+
+.treatments-nav nav .drop-down li {
+  border-bottom: 1px solid #000;
+  border-right: 1px solid #000;
+  border-left: 1px solid #000;
+  background-color:#f9f9f9;
+  margin-bottom:0;
+}
+
+.treatments-nav nav .drop-down li a {
+  display: block;
+  color: #000;
+  text-decoration: none;
+  padding: 10px; /* Larger touch target area */;
+  font-size:1.2em;
+}
+  
+.treatments-nav nav .drop-down li a:hover {
+  background-color:#5bcd58}
+
+.treatments-nav nav .drop-down li:first-child a:after {
+  content: "v";
+  float: right;
+  margin-left: -30px; /* Excessive -margin to bring link text back to center */
+  margin-right: 5px;
+}
+  
+  .treatments-banner {
+  position:relative;}
+  
+  .treatments-nav {
+  position:absolute;
+  top:20px;
+  left:60px;
+  z-index:100;}
+  
+  @media screen and (max-width: 768px) {
+    .treatments-nav {
+    width:92%;
+    left:4%;
+    }
+  }
+
+{% endstylesheet %}
+
+{% javascript %}
+(function() {
+  document.querySelector('.nav-button').addEventListener('click', function() {
+    this.parentNode.parentNode.classList.toggle('closed')
+  }, false);
+})();
+{% endjavascript %}

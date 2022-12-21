@@ -1,0 +1,83 @@
+<!-- /snippets/location-card.liquid -->
+
+<div
+   class="location-card-wrapper"
+   data-section-type="location-card"
+   data-section-id="{{ section.id }}">
+
+  <div class="">
+    {% for block in section.blocks %}
+    	{%- assign title-location = block.settings.title-location -%}
+        {%- assign address-location = block.settings.address-location -%}
+    	{%- assign telephone-location = block.settings.telephone-location -%}
+    	{%- assign hours-location = block.settings.hours-location -%}
+    	{%- assign location-tour-image = block.settings.location-tour-image -%}
+    	{%- assign location-specific-page = block.settings.location-specific-page -%}
+    	{%- assign tour-video = block.settings.tour-video -%}
+    
+    <div id="show-video-tour" class="video-tour-wrapper">
+      <div class="video-tour-container">
+        <a id="hide-video-tour" href="javascript:void(0)">
+          <div class="video-background-location"></div>
+          <div class="close-video">CLOSE</div>
+        </a>
+        <div class="video-tour-file">
+          {{ tour-video }}
+        </div>
+      </div>
+    </div>
+
+    <div class="locations-home-card">
+        <div class="title--secondary--new">
+          <div class="">
+            <a href="{{ location-specific-page }}">
+<!--               <div class="video-tour-button mono"><img src="{{ 'PLAY_BUTTON.svg' | asset_url }}" /> Video Tour</div> -->
+              {% if block.settings.location-tour-image %}
+                {%- assign locationphoto = block.settings.location-tour-image | img_url: 'large' -%}
+                <img class="lazyload" alt="{{ block.settings.location-tour-image.alt | default: section.settings.link_text }}" src="{{ block.settings.locationphoto | img_url: 'large' }}" data-src="{{ locationphoto }}" data-aspectratio="{{ section.settings.locationphoto.aspect_ratio }}" data-sizes="auto" style="width:100%"/>
+              {% endif %}
+            </a>
+          </div>
+          <div class="location-details">
+          	<h2>{{ title-location }}</h2>
+            <div>{{ address-location }}</div>
+            <div>T. {{ telephone-location }}</div>
+            <div>
+              <div class="tiny_mono">HOURS</div>
+              {{ hours-location }}
+            </div>
+          </div>
+        </div>
+
+
+        <div class="location-buttons-wrapper">
+          <div class="location-card-buttons">
+            <a role="button" href="{{ location-specific-page }}">
+              <div class="learn-more-locations">LEARN MORE</div>
+            </a>
+            <a role="button" href="https://formulafig.com/pages/appointments">
+              <div class="book-now-locations">
+              BOOK NOW</div>
+            </a>
+          </div>
+       </div>
+
+    </div>    
+
+    {% endfor %}
+  </div>
+
+</div>
+
+<script>
+  var videoTour = document.getElementById("video-tour-button");
+  var videoPlay = document.getElementById("show-video-tour");
+  var videoHide = document.getElementById("hide-video-tour");
+  videoTour.addEventListener("click", function(){
+    videoPlay.classList.add("openAndPlay");
+  });
+  videoHide.addEventListener("click", function(){
+    videoPlay.classList.remove("openAndPlay");
+  });
+
+</script>

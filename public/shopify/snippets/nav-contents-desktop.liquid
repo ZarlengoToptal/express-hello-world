@@ -1,0 +1,72 @@
+<div class="main-wrapper-navigation">
+  <div>
+    <h2>
+      <a class="logo-header" href="/" itemprop="url">
+        {% include 'svg-fig' %}
+      </a>
+    </h2>
+
+      <div class="icons-header-navigation">
+        {%- if section.settings.header_enable_search -%}
+          <a href="/search" class="header-search searchToggle">
+            {% include 'svg-search' %}
+          </a>
+        {%- endif -%}
+
+        {%- if section.settings.header_enable_cart -%}
+        <a href="/cart" id="cartModalOpen" class="header-cart CartToggle">
+          {% include 'svg-bag' %}
+          <span class="header-cart__bubble cartCount{% if cart.item_count < 1 %} hidden-count{% endif %}">{% if cart.item_count > 0 %}{{ cart.item_count }}{% endif %}</span>
+        </a>
+        {%- endif -%}
+
+      {%- if shop.customer_accounts_enabled and section.settings.header_enable_account -%}
+        <a href="/pages/account" class="header-account">
+          {% include 'svg-account' %}
+        </a>
+      {%- endif -%}
+      </div>
+      <a class="nav-book-now" href="/pages/appointments">BOOK</a>
+	</div>
+</div>
+
+<div id="desktop-menu" class="nav-wrapper show-menu">
+  <nav role="navigation">
+    <ul id="first-tier-desktop" class="nav-dropdown-open nav-dropdown-active">
+      {% for link in linklists.main-nav-oct22.links %}
+      {% assign child_list_handle = link.title | handle %}
+      {% if linklists[child_list_handle] and linklists[child_list_handle].links.size > 0 %}
+      <li class="has-dropdown">
+        {{ link.title | link_to: link.url }}
+        <ul id="second-tier-desktop">
+          {% for child_link in linklists[child_list_handle].links %}
+          {% assign grand_child_list_handle = child_link.title | handle %}
+          {% if linklists[grand_child_list_handle] and linklists[grand_child_list_handle].links.size > 0 %}
+          <li class="has-dropdown">
+            {{ child_link.title | link_to: child_link.url }}
+            <div class="menu-overlay"></div>
+            <ul id="third-tier-desktop">
+              {% for grand_child_link in linklists[grand_child_list_handle].links %}
+              <li>
+                {{ grand_child_link.title | link_to: grand_child_link.url }}
+              </li>
+              {% endfor %}
+            </ul>
+          </li>
+          {% else %}
+          <li>
+            {{ child_link.title | link_to: child_link.url }}
+          </li>
+          {% endif %}
+          {% endfor %}        
+        </ul>
+      </li>
+      {% else %}
+      <li>
+        {{ link.title | link_to: link.url }}
+      </li>
+      {% endif %}
+      {% endfor %}
+    </ul>
+  </nav>
+</div>

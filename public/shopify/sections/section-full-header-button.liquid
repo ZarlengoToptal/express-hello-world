@@ -1,0 +1,46 @@
+<!-- /sections/section-full-header-button.liquid-->
+
+<section>
+
+  <div class="full-width-header clickcollect">
+  	<div class="double_card_header">
+      <h4>{{ section.settings.full_header_button}}</h4>
+    </div>
+    <div class="double_card_body">
+      <h2>{{ section.settings.full_body_button }}</h2>
+    </div>
+  </div>
+  <div class="double-full-link-index">
+    <a role="button" href="{{ section.settings.header-full-button-link }}">
+      <div class="book-now-locations">SHOP NOW</div>
+    </a>
+  </div>
+  
+</section>
+{% schema %}
+  {
+    "name": "Full Width Header Button",
+    "settings": [
+		{
+          "type": "text",
+          "id": "full_header_button",
+          "label": "Header Text"
+        },{
+          "type": "textarea",
+          "id": "full_body_button",
+          "label": "Subtitle Text"
+        },
+		{
+        "type": "url",
+        "id": "header-full-button-link",
+        "label": "Shop Now"
+        }
+	],
+  "presets": [
+    {
+    "name": "Full Width Header Button",
+    "category": "ADVANCED LAYOUT"
+    }
+   ]
+  }
+{% endschema %}

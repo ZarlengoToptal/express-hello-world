@@ -1,0 +1,36 @@
+<!-- /sections/treatments-essentials.liquid -->
+
+<div class="category-block">
+  <div class="category-title"></div>
+  <h1>{{ section.settings.category_header}} </h1>
+  <div class="category-body">{{ section.settings.category_body }}</div>
+</div>
+
+
+{% include 'essentials-accordion' %}
+
+{% schema %}
+  {
+ 	"name": "Essentials",
+   "class": "category_block",
+    "settings": [
+      {
+        "type": "text",
+        "id": "category_header",
+        "label": "Essentials Header"
+      },
+      {
+        "type": "richtext",
+        "id": "category_body",
+        "label": "Essentials Description"
+      }
+  ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}
+

@@ -1,0 +1,85 @@
+
+.mbo-appointment-wrapper {
+display:flex;
+width:80%;
+gap:5%;
+justify-content:center;
+margin:3% auto;
+}
+
+.mbo-appointment-wrapper a {
+text-decoration:none;}
+
+
+.mbo-mobile-goto {
+  display:none;
+}
+
+.mbo-appointment-location {
+flex-grow:1;
+}
+
+.mbo-appointment-location {
+text-align:center;}
+
+.mbo-location-image {
+position:relative;
+ width:100%;
+ height:auto;
+}
+
+.mbo-location-image img {
+width:100%;
+display:block;}
+
+.mbo-location-title {
+color:white;
+font-size:1.6em;
+text-align: center;
+position:absolute;
+bottom:20px;
+left:0;
+right:0}
+
+
+@media screen and (max-width: 1024px) {
+  .mbo-appointment-wrapper {
+display:flex;
+width:90%;
+justify-content:center;
+margin:0 auto}
+
+
+  
+.mbo-appointment-location {
+flex-grow:1;
+width:100%}
+
+}
+
+
+@media screen and (max-width: 768px) {
+  .mbo-appointment-wrapper {
+display:flex;
+flex-direction:column;
+width:100%;
+justify-content:center;
+margin:0 auto}
+
+  
+.mbo-appointment-location {
+flex-grow:1;
+width:100%}
+  
+   .mbo-mobile-goto {
+  font-family:'Noto Sans JP';
+  font-weight:400;
+  font-size:0.9em;
+  display:block;
+  margin-top:2.5%;
+  line-height:2;
+
+}
+
+}
+

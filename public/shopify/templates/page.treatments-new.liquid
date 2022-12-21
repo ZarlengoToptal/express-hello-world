@@ -1,0 +1,116 @@
+<!-- /templates/page.treatments-new.liquid -->
+
+
+
+<div class="page-treatments-new" id="treatments">
+    {% section 'section-video' %}
+
+    <div class="mbo-mobile-goto treatments-goto">
+        <button href="javascript:void(0)" id="scrollButton2" style="text-decoration:none;">&#8594; INJECTABLES</button><br>
+        <button href="javascript:void(0)" id="scrollButton" style="text-decoration:none;">&#8594; HIGH TECH FACIALS</button>
+    </div>
+</div>
+<div class="treatment-body" id="mobileWrapper">
+
+    {% section 'treatments-injectables' %}
+    {% section 'treatments-hightechfacials-super' %}
+
+</div>
+
+<br>
+{% section 'membership-one-third' %}
+{% section 'treatments-essentials' %}
+{% section 'location-title' %}
+
+
+<script>
+    var elem = document.getElementById("high-tech-facials-link-mobile");
+
+    var topPos = elem
+        .offsetTop
+
+        document
+        .getElementById("scrollButton")
+        .onclick = function () {
+        scrollTo(document.getElementById("mobileWrapper"), topPos - 400, 600);
+    }
+
+    function scrollTo(element, to, duration) {
+        var start = element.scrollTop,
+            change = to - start,
+            currentTime = 0,
+            increment = 20;
+
+        var animateScroll = function () {
+            currentTime += increment;
+            var val = Math.easeInOutQuad(currentTime, start, change, duration);
+            element.scrollTop = val;
+            if (currentTime < duration) {
+                setTimeout(animateScroll, increment);
+            }
+        };
+        animateScroll();
+    }
+
+    // t = current time
+    // b = start value
+    // c = change in value
+    // d = duration
+    Math.easeInOutQuad = function (t, b, c, d) {
+        t /= d / 2;
+        if (t < 1) 
+            return c / 2 * t * t + b;
+        
+
+
+        t--;
+        return - c / 2 * (t * (t - 2) - 1) + b;
+    };
+
+
+    // /Same for injectables different math
+
+
+    var elem = document.getElementById("injectables-link-mobile");
+
+    var backTopPos = elem
+        .offsetTop
+
+        document
+        .getElementById("scrollButton2")
+        .onclick = function () {
+        scrollTo(document.getElementById("mobileWrapper"), backTopPos - 400, 600);
+    }
+
+    function scrollTo(element, to, duration) {
+        var start = element.scrollTop,
+            change = to - start,
+            currentTime = 0,
+            increment = 20;
+
+        var animateScroll = function () {
+            currentTime += increment;
+            var val = Math.easeInOutQuad(currentTime, start, change, duration);
+            element.scrollTop = val;
+            if (currentTime < duration) {
+                setTimeout(animateScroll, increment);
+            }
+        };
+        animateScroll();
+    }
+
+    // t = current time
+    // b = start value
+    // c = change in value
+    // d = duration
+    Math.easeInOutQuad = function (t, b, c, d) {
+        t /= d / 2;
+        if (t < 1) 
+            return c / 2 * t * t + b;
+        
+
+
+        t--;
+        return - c / 2 * (t * (t - 2) - 1) + b;
+    };
+</script>

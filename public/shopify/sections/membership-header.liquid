@@ -1,0 +1,43 @@
+<div class="grid membership-header">
+  <div class="grid__item text-center">
+    <div class="content">
+      {%- unless section.settings.category == blank -%}
+      <p class="treatments__category">{{ section.settings.category | escape }}</p>
+      {%- endunless -%}
+
+      {%- unless section.settings.title == blank -%}
+      <h2 class="treatments__title title--primary">{{ section.settings.title | escape }}</h2>
+      {%- endunless -%}
+
+      {%- unless section.settings.content == blank -%}
+      <div class="treatments__content rte title">{{ section.settings.content }}</div>
+      {%- endunless -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Membership header",
+    "settings": [
+      {
+        "type": "text",
+        "id": "category",
+        "label": "Category",
+        "default": "Treatments"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "Not just a pretty facial."
+      },
+      {
+        "type": "richtext",
+        "id": "content",
+        "label": "Content",
+        "default": "<p>Backed by science, technology, and a commitment to clean ingredients</p>"
+      }
+    ]
+  }
+{% endschema %}

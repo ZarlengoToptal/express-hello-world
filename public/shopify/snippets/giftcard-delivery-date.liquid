@@ -1,0 +1,35 @@
+{{ '//code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css' | stylesheet_tag }}
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js" defer="defer"></script>
+
+<div id="my-giftcard-delivery_date"style="width:300px; clear:both;">
+  <p>
+    <label for="date">Pick a delivery date:</label>
+    <input id="send_date" name="properties[_Send date]" type="text"/ autocomplete="false" autofill="false">
+  </p>
+</div>
+
+<script>
+  const product = {{ product | json }};
+  const variant = {{ variant | json }};
+ 
+  window.onload = function() {
+      if (window.jQuery) {
+        let $ = window.jQuery;
+
+        $(function() {
+          $("#send_date").datepicker({
+          minDate: 0,
+          maxDate: '+1Y',
+          //beforeShowDay: $.datepicker.noWeekends,
+          beforeShow: function() {
+              setTimeout(function(){
+                  $('.ui-datepicker').css('z-index', 999);
+              }, 0);
+          }
+
+        });
+      });
+    }
+    
+  }
+</script>

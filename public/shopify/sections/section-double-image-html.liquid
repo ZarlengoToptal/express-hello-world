@@ -1,0 +1,39 @@
+<!-- /sections/section-double-image-html.liquid-->
+
+<section class="double-section">
+  
+  <div class="index-image-double">
+  	{% if section.settings.double-image-left-index-section %}
+      {%- assign double-image-left-index-section = section.settings.double-image-left-index-section | img_url: '2400x2400' -%}
+      <img class="lazyload" alt="{{ section.settings.double-image-left-index-section.alt | default: section.settings.double-image-left-index-section }}" src="{{ block.settings.double-image-left-index-section | img_url: 'large' }}" data-src="{{ double-image-left-index-section }}" data-aspectratio="{{ section.settings.double-image-left-index-section.aspect_ratio }}" data-sizes="auto" />
+    {% endif %}
+  </div>
+  <div class="index-html-double">
+  	{{ section.settings.section-double-html }}
+  </div>
+  
+</section>
+
+{% schema %}
+  {
+    "name": "Double Image + HTML",
+    "settings": [
+		{
+          "type": "image_picker",
+          "id": "double-image-left-index-section",
+          "label": "Left Image"
+        },
+		{
+        "type": "html",
+        "id": "section-double-html",
+        "label": "Learn More"
+        }
+	],
+  "presets": [
+    {
+    "name": "Double Image + HTML",
+    "category": "ADVANCED LAYOUT"
+    }
+   ]
+  }
+{% endschema %}

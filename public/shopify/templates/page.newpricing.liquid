@@ -1,0 +1,351 @@
+<style>
+
+  
+.pricing-header {
+border-top:1px solid black;
+border-bottom:1px solid black;
+padding:10px 40px}
+  
+  .treatments-table {
+  margin:20px auto;
+  width:60%;
+  display:flex;}
+  
+  .members-table {
+     margin:40px auto 0px auto;
+  width:30%;
+  }
+  
+  .membership-button:hover {
+  background-color:white;
+  color:black;
+  border:1px solid black;
+  }
+  
+  a.membership-button:hover {
+  text-decoration:none;}
+  
+  .membership-button {
+  width:100%;
+  background-color:black;
+  color:white;
+  letter-spacing:1px;
+  margin-bottom:40px;}
+  
+  .treatments-button {
+  width:30%;
+  background-color:#1AB25D;
+  color:black;
+  margin:0 auto;
+  text-align:center;
+  border:1px solid black;
+  letter-spacing:1px;
+  margin-bottom:40px;}
+  
+  a {
+  text-decoration: none;}
+  
+  table {
+  width:100%;
+  border:1px solid black;}  
+  
+  td a {
+    text-decoration:none;}
+/*   font-family:'FF Sans Regular', sans-serif!important;
+  font-size:0.85rem} */
+  
+  .left-table {
+  width:100%;
+    padding:10px;}
+  .right-table {
+  width:100%;
+    padding:10px;}
+  
+  th.table-title {
+  background-color:#1AB25D;
+  text-align:center;
+  font-size:1.2rem;}
+  
+  th {
+  background-color:#f9f9f9;
+  font-family:'Founders Grotesk Mono', monospace;
+  padding:5px 10px 5px 20px;
+  text-align:left;
+  font-size:0.9rem;
+  border-right:1px solid black;
+  border-bottom:1px solid black;}
+  
+  td.table-left {
+  width:50%;
+  font-family:'FF Sans Regular', sans-serif!important;}
+  td.table-middle {
+  width:25%}
+  td.table-right {
+  width:25%}
+  
+  td {
+  border-bottom:1px solid black!important;
+  border-right:1px solid black;
+  padding:5px 20px}
+  
+  td:first-child, th:first-child {
+  padding-left:20px;}
+  
+@media only screen and (max-width:500px) {
+  
+  .pricing-header {
+  padding-left:20px;}
+  
+  th {
+    padding:5px 10px 5px 10px!important;}
+  
+  td {
+    padding:5px 10px!important;}
+    .treatments-table {
+    display:block;
+    width:95%}
+  
+  td:first-child, th:first-child {
+  padding-left:10px;}
+  
+  .treatments-button {
+  width:90%;}
+  
+  .members-table {
+  width:90%;}
+  }
+</style>
+
+<div class="header-wrapper-fig-bar">
+  <div class="hero__description">
+  	<h1 class="standard__heading"
+        data-aos="hero">
+      {{ page.title }}
+    </h1>
+    <p>Effective July 1st, 2022.</p>
+  </div>
+</div>
+
+<div class="pricing-header">
+<h2>Treatments</h2>
+</div>
+
+<div class="treatments-table">
+
+  <div class="left-table">
+<table>
+  <tr>
+    <th colspan="3" class="table-title">NEW PRICING</th>
+  </tr>
+  <tr>
+    <th>TREATMENT</th>
+     <th>DROP IN</th>
+     <th>MEMBER</th>
+  </tr>
+<tr>
+    <td class="table-left"><a href="radiance-renewal">Radiance + Renewal*</a></td>
+    <td class="table-middle">$325</td>
+    <td class="table-right">$295</td>
+  </tr>
+  
+  <tr>
+    <td class="table-left"><a href="collagen-texture">Collagen + Texture</a></td>
+    <td class="table-middle">$205</td>
+    <td class="table-right">$185</td>
+  </tr>
+  
+  <tr>
+    <td class="table-left"><a href="all-in">All-In</a></td>
+    <td class="table-middle">$185</td>
+    <td class="table-right">$165</td>
+  </tr>
+  
+  <tr>
+    <td class="table-left"><a href="lift-tone">Lift + Tone</a></td>
+    <td class="table-middle">$125</td>
+    <td class="table-right">$115</td>
+  </tr>
+  
+  <tr>
+    <td class="table-left"><a href="hydrate-glow">Hydrate + Glow</a></td>
+    <td class="table-middle">$99</td>
+    <td class="table-right">$95</td>
+  </tr>
+  
+  <tr>
+    <td class="table-left"><a href="led-lymphatic">LED + Lymphatic</a></td>
+    <td class="table-middle">$79</td>
+    <td class="table-right">$75</td>
+  </tr>
+  
+  <tr>
+    <td class="table-left"><a href="pregnancy-facial">Pregnancy</a></td>
+    <td class="table-middle">$79</td>
+    <td class="table-right">$75</td>
+  </tr>
+  
+  <tr>
+    <td class="table-left"><a href="light-therapy-boost">Light Therapy Boost*</a></td>
+    <td class="table-middle">$30</td>
+    <td class="table-right">$25</td>
+  </tr>
+  
+  
+  <tr>
+    <td class="table-left"><a href="stingers">Stinger — $/unit*</a></td>
+    <td class="table-middle">$12</td>
+    <td class="table-right">$10</td>
+  </tr>
+  
+  <tr>
+    <td class="table-left"><a href="iv-led">IV + LED*</a></td>
+    <td class="table-middle">$165</td>
+    <td class="table-right">$150</td>
+  </tr>
+  
+   <tr>
+    <td class="table-left"><a href="fig-shot">Fig Shot*</a></td>
+    <td class="table-middle">$35</td>
+    <td class="table-right">$30</td>
+  </tr>
+</table>
+    <div class="no-change">*No change</div>
+  </div>
+  
+    <div class="right-table">
+<table>
+  <tr>
+    <th colspan="3" class="table-title">CURRENT PRICING</th>
+  </tr>
+  <tr>
+    <th>TREATMENT</th>
+     <th>DROP IN</th>
+     <th>MEMBER</th>
+  </tr>
+<tr>
+    <td class="table-left"><a href="radiance-renewal">Radiance + Renewal</a></td>
+    <td class="table-middle">$325</td>
+    <td class="table-right">$295</td>
+  </tr>
+  
+   <tr>
+    <td class="table-left"><a href="collagen-texture">Collagen + Texture</a></td>
+    <td class="table-middle">$175</td>
+    <td class="table-right">$160</td>
+  </tr>
+  
+  <tr>
+    <td class="table-left"><a href="all-in">All-In</a></td>
+    <td class="table-middle">$165</td>
+    <td class="table-right">$150</td>
+  </tr>
+  
+  <tr>
+    <td class="table-left"><a href="lift-tone">Lift + Tone</a></td>
+    <td class="table-middle">$115</td>
+    <td class="table-right">$105</td>
+  </tr>
+  
+  <tr>
+    <td class="table-left"><a href="hydrate-glow">Hydrate + Glow</a></td>
+    <td class="table-middle">$95</td>
+    <td class="table-right">$89</td>
+  </tr>
+  
+  <tr>
+    <td class="table-left"><a href="led-lymphatic">LED + Lymphatic</a></td>
+    <td class="table-middle">$75</td>
+    <td class="table-right">$69</td>
+  </tr>
+  
+  <tr>
+    <td class="table-left"><a href="pregnancy-facial">Pregnancy</a></td>
+    <td class="table-middle">$75</td>
+    <td class="table-right">$69</td>
+  </tr>
+  
+  <tr>
+    <td class="table-left"><a href="light-therapy-boost">Light Therapy Boost</a></td>
+    <td class="table-middle">$30</td>
+    <td class="table-right">$25</td>
+  </tr>
+  
+  
+  <tr>
+    <td class="table-left"><a href="stingers">Stinger — $/unit</a></td>
+    <td class="table-middle">$12</td>
+    <td class="table-right">$10</td>
+  </tr>
+  
+  <tr>
+    <td class="table-left"><a href="iv-led">IV + LED</a></td>
+    <td class="table-middle">$165</td>
+    <td class="table-right">$150</td>
+  </tr>
+  
+   <tr>
+    <td class="table-left"><a href="fig-shot">Fig Shot</a></td>
+    <td class="table-middle">$35</td>
+    <td class="table-right">$30</td>
+  </tr>
+</table>
+    
+  </div>
+  
+    
+    
+  </div>
+ <a href="/pages/appointments"> <div class="treatments-button membership-button">
+       BOOK NOW</div></a>
+
+
+<div class="pricing-header">
+<h2>Membership</h2>
+</div>
+
+    <div class="members-table">
+<table>
+  <tr>
+    <th colspan="3" class="table-title">NEW MONTHLY PRICING</th>
+  </tr>
+  <tr>
+    <th>TIERS</th>
+     <th>NEW</th>
+     <th>CURRENT</th>
+  </tr>
+<tr>
+    <td class="table-left"><a href="">Ultimate</a></td>
+    <td class="table-middle">$165</td>
+    <td class="table-right">$149</td>
+  </tr>
+  
+   <tr>
+    <td class="table-left"><a href="">Advanced</a></td>
+    <td class="table-middle">$109</td>
+    <td class="table-right">$99</td>
+  </tr>
+  
+  <tr>
+    <td class="table-left"><a href="">Classic</a></td>
+    <td class="table-middle">$95</td>
+    <td class="table-right">$89</td>
+  </tr>
+  
+  <tr>
+    <td class="table-left"><a href="">Basic</a></td>
+    <td class="table-middle">$85</td>
+    <td class="table-right">$79</td>
+  </tr>
+
+</table>
+      
+     <a href="mailto:member@formulafig.com?subject=Pricing Update + My Membership"> <div class="membership-button">
+       LOCK IN CURRENT PRICING</div></a>
+    
+  </div>
+
+<div class="pricing-header">
+<h2>Frequently Asked Questions</h2>
+</div>
+
+{% section 'section-group-accordion' %}

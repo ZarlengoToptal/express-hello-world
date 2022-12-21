@@ -1,0 +1,39 @@
+<!-- /sections/section-full-header.liquid-->
+
+<section>
+  <div class="full-width-header">
+  	<div class="double_card_header">
+      <h4>{{ section.settings.full_header}}</h4>
+    </div>
+    <div class="double_card_body">
+      <div><h2>{{ section.settings.full_body }}</h2></div>
+<!--       <div class="mobile-show"><h2>{{ section.settings.full_body_mobile }}</h2></div> -->
+    </div>
+  </div>
+</section>
+{% schema %}
+  {
+    "name": "Full Width Header",
+    "settings": [
+		{
+          "type": "text",
+          "id": "full_header",
+          "label": "Header Text"
+        },{
+          "type": "textarea",
+          "id": "full_body",
+          "label": "Subtitle Text"
+        },{
+          "type": "textarea",
+          "id": "full_body_mobile",
+          "label": "Subtitle Text Mobile"
+        }
+	],
+  "presets": [
+    {
+    "name": "Full Width Header",
+    "category": "ADVANCED LAYOUT"
+    }
+   ]
+  }
+{% endschema %}

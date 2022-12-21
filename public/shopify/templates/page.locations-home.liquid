@@ -1,0 +1,162 @@
+<!-- /templates/page.locations-home.liquid -->
+
+<div class="header-wrapper-fig-bar">
+  <div class="hero__description">
+  	<h1 class="standard__heading"
+        data-aos="hero">
+      {{ page.title }}
+    </h1>
+    <p>We'd love to see your face at one of our Fig Bars.</p>
+  </div>
+</div>
+
+
+
+
+<div class="nation-banner-animation">	
+  <div class="item-repeat-banner">
+    <div class="item-banner-canada mono">Canada &nbsp;&nbsp; Canada &nbsp;&nbsp; Canada &nbsp;&nbsp; Canada &nbsp;&nbsp; Canada &nbsp;&nbsp; Canada &nbsp;&nbsp; Canada &nbsp;&nbsp; Canada &nbsp;&nbsp; Canada &nbsp;&nbsp; Canada &nbsp;&nbsp; Canada &nbsp;&nbsp;Canada &nbsp;&nbsp; Canada &nbsp;&nbsp; Canada &nbsp;&nbsp; Canada &nbsp;&nbsp; Canada &nbsp;&nbsp; Canada &nbsp;&nbsp; Canada &nbsp;&nbsp; Canada &nbsp;&nbsp; Canada &nbsp;&nbsp; Canada &nbsp;&nbsp; Canada &nbsp;&nbsp; </div>
+    <div class="item-banner-canada mono">Canada &nbsp;&nbsp; Canada &nbsp;&nbsp; Canada &nbsp;&nbsp; Canada &nbsp;&nbsp; Canada &nbsp;&nbsp; Canada &nbsp;&nbsp; Canada &nbsp;&nbsp; Canada &nbsp;&nbsp; Canada &nbsp;&nbsp; Canada &nbsp;&nbsp; Canada &nbsp;&nbsp; Canada &nbsp;&nbsp; Canada &nbsp;&nbsp; Canada &nbsp;&nbsp; Canada &nbsp;&nbsp; Canada &nbsp;&nbsp; Canada &nbsp;&nbsp; Canada &nbsp;&nbsp; Canada &nbsp;&nbsp; Canada &nbsp;&nbsp; Canada &nbsp;&nbsp; Canada &nbsp;&nbsp;</div>
+  </div>
+</div>
+<div class="canada-wrapper">
+  <div class="location-cards-canada location-home-padding">
+    {% section 'location-cards-canada' %}
+  </div>
+  <div class="location-cards-canada location-home-padding">
+    {% section 'location-cards-canada-cs' %}
+  </div>
+</div><!-- end of Canada -->
+
+<div class="nation-banner-animation">
+  <div class="item-repeat-banner">
+    <div class="item-banner mono">United States &nbsp;&nbsp; United States &nbsp;&nbsp; United States &nbsp;&nbsp; United States &nbsp;&nbsp; United States &nbsp;&nbsp; United States &nbsp;&nbsp; United States &nbsp;&nbsp; United States &nbsp;&nbsp; United States &nbsp;&nbsp; United States &nbsp;&nbsp; United States &nbsp;&nbsp; </div>
+    <div class="item-banner mono">United States &nbsp;&nbsp; United States &nbsp;&nbsp; United States &nbsp;&nbsp; United States &nbsp;&nbsp; United States &nbsp;&nbsp; United States &nbsp;&nbsp; United States &nbsp;&nbsp; United States &nbsp;&nbsp; United States &nbsp;&nbsp; United States &nbsp;&nbsp; United States &nbsp;&nbsp;  </div>
+  </div>
+</div>
+
+<div class="united-states-wrapper">  
+  <div class="location-cards-usa location-home-padding">
+    {% section 'location-cards-united-states' %}
+  </div>
+  
+  <div class="location-cards-usa location-home-padding">
+    {% section 'location-cards-united-states-cs' %}
+  </div>
+  
+</div><!-- end of United States -->
+
+<script>  
+	const lerp = (current, target, factor) => {
+    let holder = current * (1 - factor) + target * factor;
+    holder = parseFloat(holder).toFixed(3);
+    return holder;
+};
+
+class LoopingText {
+    constructor(DOMElements) {
+        this.DOMElements = DOMElements;
+        this.lerpingData = {
+            counterOne: { current: 0, target: 0 },
+            counterTwo: { current: 100, target: 100 },
+        };
+        this.interpolationFactor = 0.1;
+        this.speed = 0.1;
+        this.render();
+    }
+
+
+    lerp() {
+        for (const counter in this.lerpingData) {
+            this.lerpingData[counter].current = lerp(
+                this.lerpingData[counter].current,
+                this.lerpingData[counter].target,
+                this.interpolationFactor
+            );
+        }
+
+        this.lerpingData["counterOne"].target += this.speed;
+        this.lerpingData["counterTwo"].target += this.speed;
+
+        if (this.lerpingData["counterOne"].target < 100) {
+            this.DOMElements[0].style.transform = `translate(${this.lerpingData["counterOne"].current}%, 0%)`;
+        } else {
+            this.lerpingData["counterOne"].current = -100;
+            this.lerpingData["counterOne"].target = -100;
+        }
+
+        if (this.lerpingData["counterTwo"].target < 100) {
+            this.DOMElements[1].style.transform = `translate(${this.lerpingData["counterTwo"].current}%, 0%)`;
+        } else {
+            this.lerpingData["counterTwo"].current = -100;
+            this.lerpingData["counterTwo"].target = -100;
+        }
+    }
+
+    render() {
+        this.lerp();
+
+        window.requestAnimationFrame(() => this.render());
+    }
+}
+
+let textArray = document.getElementsByClassName("item-banner");
+new LoopingText(textArray);
+  
+//Canada
+  const lerp2 = (current, target, factor) => {
+    let holder = current * (1 - factor) + target * factor;
+    holder = parseFloat(holder).toFixed(3);
+    return holder;
+};
+
+class LoopingText2 {
+    constructor(DOMElements) {
+        this.DOMElements = DOMElements;
+        this.lerpingData = {
+            counterThree: { current: 0, target: 0 },
+            counterFour: { current: 100, target: 100 },
+        };
+        this.interpolationFactor = 0.1;
+        this.speed = 0.1;
+        this.render();
+    }
+
+
+    lerp2() {
+        for (const counter in this.lerpingData) {
+            this.lerpingData[counter].current = lerp2(
+                this.lerpingData[counter].current,
+                this.lerpingData[counter].target,
+                this.interpolationFactor
+            );
+        }
+
+        this.lerpingData["counterThree"].target += this.speed;
+        this.lerpingData["counterFour"].target += this.speed;
+
+        if (this.lerpingData["counterThree"].target < 100) {
+            this.DOMElements[0].style.transform = `translate(${this.lerpingData["counterOne"].current}%, 0%)`;
+        } else {
+            this.lerpingData["counterThree"].current = -100;
+            this.lerpingData["counterThree"].target = -100;
+        }
+
+        if (this.lerpingData["counterFour"].target < 100) {
+            this.DOMElements[1].style.transform = `translate(${this.lerpingData["counterTwo"].current}%, 0%)`;
+        } else {
+            this.lerpingData["counterFour"].current = -100;
+            this.lerpingData["counterFour"].target = -100;
+        }
+    }
+
+    render() {
+        this.lerp2();
+
+        window.requestAnimationFrame(() => this.render());
+    }
+}
+
+let textArray2 = document.getElementsByClassName("item-banner-canada");
+new LoopingText(textArray2);
+</script>

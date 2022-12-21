@@ -1,0 +1,97 @@
+{% assign blockList = '' %}
+{% for block in section.blocks %}
+  {% assign blockList = blockList | append: block.type | append:','  %}
+{% endfor %}
+{% assign blockArray = blockList | split: "," %}
+
+{% assign swaparoo = false %}
+{% if blockArray[0] != 'image' and  blockArray[1] == 'image' %}
+  {% assign swaparoo = true %}
+{% endif %}
+
+<div class="grid--full homepage-double fig-five-story-double{% unless section.settings.align_top %} equalOverflowHeight {{ section.settings.height }}{% endunless %}{% if swaparoo %} grid--rev{% endif %}">
+  {%- if swaparoo -%}
+    {%- assign block = section.blocks[1] -%}
+    {% include 'index-double-image' %}
+  {%- endif -%}
+
+  {% for block in section.blocks %}
+    {% case block.type %}
+      {% when 'image' %}
+        {% unless swaparoo %}
+          {% include 'index-double-image' %}
+        {% endunless %}
+      {% when 'text' %}
+  		
+  		{% comment %}Shortcode replacement script for Membership section {% section 'membership-double-3' %}{% endcomment %}
+        {% if block.settings.html_1 != blank %}
+          {% assign code_1 = block.settings.html_1 %}
+        {% endif %}
+  		{% if block.settings.html_2 != blank %}
+          {% assign code_2 = block.settings.html_2 %}
+        {% endif %}
+  		{% if block.settings.html_3 != blank %}
+          {% assign code_3 = block.settings.html_3 %}
+        {% endif %}
+  		{% if block.settings.html_4 != blank %}
+          {% assign code_4 = block.settings.html_4 %}
+        {% endif %}
+  
+        <div class="grid__item large--one-half medium--one-half double__block {{ block.settings.homepage_bg_color }} preventOverflow" {{ block.shopify_attributes }}>
+          <div class="content--centered{% if section.settings.align_top%} reset-position{% endif %}">
+            <div class="{{ block.settings.text_align }}{% unless section.settings.align_top%} preventOverflowContent{% endunless %}">
+              {% if block.settings.title != '' %}
+                <h2>{{ block.settings.title | escape }}</h2>
+              {% endif %}
+              {% if block.settings.subheading1 != blank %}
+              	<h4 class="home__subtitle">{{ block.settings.subheading1 | escape }}</h4>
+              {% endif %}
+              {% if block.settings.richtext1 != blank %}
+                <div class="rte rte--homepage">
+                  {% if block.settings.list_items %}
+                  	{% assign items = block.settings.richtext1 | newline_to_br | split: "<br />" %}
+                  	<ul>
+                      {% for item in items %}
+                        {% if item contains '[code_' %}
+                          {{ item | replace: '[code_1]', code_1 | replace: '[code_2]', code_2 | replace: '[code_3]', code_3 | replace: '[code_4]', code_4 }}
+                        {% else %}
+                          <li>{{item}}</li>
+                        {% endif %}
+                      {% endfor %}
+                  	</ul>
+                  {% else %}
+                    {{ block.settings.richtext1 | replace: '[code_1]', code_1 | replace: '[code_2]', code_2 | replace: '[code_3]', code_3 | replace: '[code_4]', code_4 }}
+                  {% endif %}
+                </div>
+              {% endif %}
+              {% if block.settings.subheading2 != blank %}
+              	<h4 class="home__subtitle">{{ block.settings.subheading2 | escape }}</h4>
+              {% endif %}
+              {% if block.settings.richtext2 != blank %}
+                {% if block.settings.list_items %}
+                  	{% assign items = block.settings.richtext2 | newline_to_br | split: "<br />" %}
+                  	<ul>
+                      {% for item in items %}
+                        {% if item contains '[code_' %}
+                          {{ item | replace: '[code_1]', code_1 | replace: '[code_2]', code_2 | replace: '[code_3]', code_3 | replace: '[code_4]', code_4 }}
+                        {% else %}
+                          <li>{{item}}</li>
+                        {% endif %}
+                      {% endfor %}
+                  	</ul>
+                  {% else %}
+                    {{ block.settings.richtext2 | replace: '[code_1]', code_1 | replace: '[code_2]', code_2 | replace: '[code_3]', code_3 | replace: '[code_4]', code_4 }}
+                  {% endif %}
+              {% endif %}
+              {% if block.settings.link_text != '' %}
+                <a role="button" class="{{ block.settings.button_style }}" href="{{ block.settings.link }}">
+                  {{ block.settings.link_text | escape }}
+                </a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      {% else %}
+    {% endcase %}
+  {% endfor %}
+</div>

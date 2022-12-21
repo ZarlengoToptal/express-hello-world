@@ -1,0 +1,38 @@
+<!-- /snippets/mobile-index-membership-card.liquid -->
+
+<div class="double-section-right">
+  <div class="double_card_header">
+    <h2>{{ section.settings.single_card_header_right_mobile}}</h2>
+  </div>
+  <div class="double_card_body">
+    <h4>{{ section.settings.single_card_body_right_mobile }}</h4>
+  </div>
+</div>
+
+<div style="position:relative">
+  <div class="right-image">
+    {%- assign double-image-right-mobile = section.settings.double-image-right-mobile | img_url: 'master' -%}
+    <img class="lazyload" alt="{{ section.settings.double-image-right-mobile.alt | default: section.settings.double-image-right-mobile }}" src="{{ block.settings.double-image-right-mobile | img_url: 'master' }}" data-src="{{ double-image-right-mobile }}" data-aspectratio="{{ section.settings.double-image-right-mobile.aspect_ratio }}" data-sizes="auto" style="width:100%"/>
+  </div>
+  <div class="index-memb-quote">
+    <h1>{{ section.settings.single_card_quote_mobile }}</h1>
+    <p>- {{ section.settings.single_card_quote_name_mobile }}</p>
+  </div>
+</div>
+
+<div class="location-card-buttons">
+  <a role="button" href="https://formulafig.com/pages/membership">
+    <div class="learn-more-locations">LEARN MORE</div>
+  </a>
+  <a role="button" href="https://formulafig.com/pages/memberships-quiz">
+    <div class="take-the-quiz">
+      TAKE THE QUIZ</div>
+  </a>
+</div>
+
+<div class="single-full-link">
+  <a role="button" href="https://formulafig.com/pages/membership#membershiptiers">
+    <div class="learn-more-index">
+      SIGN-UP</div>
+  </a>
+</div>

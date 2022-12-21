@@ -1,0 +1,374 @@
+$primaryTextColor: #BA6B77;
+
+$white: #FFFFFF;
+
+$backgroundPrimary: #F7EdEE;
+$backgroundGray: #F3F3F3;
+$backgroundDarkGray: #B5B5B5;
+
+
+
+.bw-widget {
+  display: flex;
+  flex-direction: column;
+
+  .bw-filters { order: 2; }
+  .bw-calendar-container { order: 1; }
+  .bw-widget__sessions { order: 3; }
+
+  /* hide filters */
+  .bw-filters-flex-container {
+    display: none !important;
+  }
+
+  /* hide widget headers */
+  .bw-widget__header {
+    display: none !important;
+  }
+
+  /* always open the filters to timeslot selectors are visible */
+  .bw-filters {
+    display: block !important;
+    background: none !important;
+    text-transform: uppercase !important;
+    font-size: 12px !important;
+
+    .filter_time_of_day  {
+      &:before{
+        content:'FILTER BY:    ';
+        font-weight: 500;
+      }
+
+      @media screen and (max-width: 600px) {
+        &:before{
+          display: block;
+          margin-bottom: 10px;
+        }
+        label:first-of-type {
+          margin-left: 0 !important;
+        }
+      }
+
+      padding-left: 0 !important;
+      border-bottom: solid 2px $backgroundDarkGray !important;
+
+      &.bw-filters__checkboxes {
+        padding: 16px 16px 16px 0 !important;
+      }
+    }
+  }
+
+
+  /* date header styles */
+  .bw-widget__date {
+    color: $primaryTextColor !important;
+    font-weight: 500 !important;
+    text-transform: uppercase !important;
+    background-color: $white !important;
+    border: none !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+
+  /* calendar */
+  .bw-calendar-container {
+    border: solid 1px black !important;
+    position: relative;
+
+    &:before{
+      content:'';
+      position:absolute;
+      display:block;
+      height: 20px;
+      width: 20px;
+
+      background-image: url(traingle.jpg);
+      background-size: 100%;
+
+      left: 50%;
+      top: -20px;
+      transform: translateX(-50%);
+    }
+
+    table.bw-calendar {
+      tbody {
+        tr {
+          &:first-of-type {
+            border-top: solid 1px $backgroundGray !important;
+            border-bottom: solid 1px $backgroundGray !important;
+          }
+
+          th {
+            font-size: 14px !important;
+            padding-top: 10px !important;
+            padding-bottom: 10px !important;
+          }
+
+          td.bw-calendar__day {
+            padding-top: 15px !important;
+            padding-bottom: 15px !important;
+          }
+
+
+          /* selected day */
+          .bw-calendar__day--current {
+            span {
+              background-color: $backgroundPrimary !important;
+              color: $primaryTextColor !important;
+            }
+          }
+        }
+      }
+    }
+  }
+
+
+  /* row styles */
+  .bw-session {
+    border: none !important;
+    padding: 16px 12px !important;
+
+    &:nth-of-type(1n) {
+      background-color: $white !important;
+    }
+
+    &:nth-of-type(2n) {
+      background-color: $backgroundGray !important;
+    }
+
+
+
+    /* hide staff information */
+    .bw-session__group2 {
+      display: none !important;
+    }
+
+    /* book button */
+    .bw-widget__cart_button {
+      button {
+        text-decoration: underline !important;
+      }
+    }
+  }
+}
+
+
+
+.healcode {
+  
+  #options_staff_ids_,
+  .trainer-label {
+    display: none !important; 
+  }
+  
+  span.action_text.my_account_text {
+    text-transform: uppercase;
+    color: #3DA0E0;
+    font-size: 14px !important;
+  }
+  
+  a.action_icon {
+
+    &.cart_version,
+    &.print_version {
+      &:before {
+        text-transform: uppercase;
+        color: #3DA0E0;
+        font-size: 14px !important;        
+      }
+      
+      img {
+        display: none;
+      }
+    }
+    
+    &.my_account_version,
+    &.cart_version {
+      margin-top: 0 !important;
+    }
+    &.my_account_version {
+      display: none !important; 
+    }
+    
+    &.cart_version:before {
+      content: 'MY CART';
+      display: none !important;
+    }
+    
+    &.print_version:before {
+      content: 'PRINT';
+      display: none !important;
+    }
+  }
+  
+  .header {
+    >h1 {
+      display: none; 
+    }
+  }
+  
+  .ui-datepicker-inline.ui-datepicker.ui-widget.ui-widget-content.ui-helper-clearfix.ui-corner-all {
+    width: 100%;
+    border: 0 !important;
+    background: #fff;
+    padding: 0 !important;
+  }
+
+  .ui-datepicker-header.ui-widget-header.ui-helper-clearfix.ui-corner-all {
+    -webkit-border-radius: 0px !important;
+    -moz-border-radius: 0px !important;
+    -o-border-radius: 0px !important;
+    border-radius: 0px !important;
+    background: none !important;
+    border: 0 !important;
+    color: $primaryTextColor !important;
+    font-size: 16px;
+  }
+  
+  form {
+/*     margin-top: 16px !important; */
+/*     padding: 20px !important;
+    border: solid 1px black !important; */
+    position: relative;
+
+/*     &:before{
+      content:'';
+      position:absolute;
+      display:block;
+      height: 20px;
+      width: 20px;
+
+      background-image: url(traingle.jpg);
+      background-size: 100%;
+
+      left: 50%;
+      top: -20px;
+      transform: translateX(-50%);
+    } */
+  }
+  
+  
+  
+  .ui-widget-header .ui-icon {
+    -webkit-filter: invert(100%);
+    filter: invert(100%);
+  }
+
+  tr {
+    background: #fff;
+    
+    td {
+      width: calc(100%/7);
+    }
+  }
+  
+  .list_view td {
+    padding: 0 !important;
+    opacity: 0.7 !important;
+  }
+  
+  span.ui-state-default,
+  a.ui-state-active,
+  a.ui-state-default,
+  td.ui-datepicker-current-day {
+    text-align: center !important;
+    height: 40px;
+    line-height: 40px;
+    background: none !important;
+    padding: 0 !important;
+    border: 1px solid #fff !important;
+  }
+
+
+  a#hc-find-appt,
+  span.appointment.button a {
+    font-size: 14px !important;
+    width: 100px;
+    -webkit-border-radius: 2px !important;
+    -moz-border-radius: 2px !important;
+    -o-border-radius: 2px !important;
+    border-radius: 2px !important;
+  }
+
+  table.ui-datepicker-calendar {
+    border: 0 !important;
+    thead {
+      tr {
+        border-top: solid 1px $backgroundGray !important;
+        border-bottom: solid 1px $backgroundGray !important;
+        th {
+          font-size: 14px !important;
+          padding-top: 10px !important;
+          padding-bottom: 10px !important;
+        }
+
+      }
+    }
+    a.ui-state-active {
+      background: $backgroundPrimary !important;
+      color: $primaryTextColor !important;
+    }
+  }
+  
+  .healcode-date-label{
+    color: $primaryTextColor !important;
+    font-weight: 500 !important;
+    text-transform: uppercase !important; 
+    border: none !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  
+  .appointment.button {
+    display: block !important;
+    
+    a {
+      display: block !important; 
+      width: initial !important;
+      margin: 0 !important;
+      color: rgba(0,0,0,0.9) !important;
+      text-align: left !important;
+      padding: 20px !important;
+      
+      &:after {
+        content: 'BOOK';
+        color: black;
+        text-decoration: underline;
+        display: block;
+        float: right;
+      }
+    }
+    
+    &:nth-of-type(1n) a{
+      background-color: $white !important;
+    }
+
+    &:nth-of-type(2n) a{
+      background-color: $backgroundGray !important;
+    }
+    
+    &:hover a{
+      background-color: $backgroundDarkGray !important;
+    }
+  }
+  
+  input.parsley-success, 
+  select.parsley-success, 
+  textarea.parsley-success, {
+    color: $primaryTextColor !important;
+    background-color: transparent !important;
+    border: 1px solid $primaryTextColor  !important;
+  }
+  
+  .signup_now.appointment {
+    display: block !important;
+    width: initial !important;
+    padding: 15px !important; 
+  }
+}
+
+.healcode-link{
+  text-decoration: none;
+}
+

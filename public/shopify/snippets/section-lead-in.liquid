@@ -1,0 +1,50 @@
+{%- if section.settings.image -%}
+  {%- assign img_object = section.settings.image -%}
+{%- else -%}
+  {%- assign img_object = 'blank.svg' | asset_url -%}
+{%- endif -%}
+{%- if section.settings.mobile_image -%}
+  {%- assign mobile_img_object = section.settings.mobile_image -%}
+{%- else -%}
+  {%- assign mobile_img_object = img_object -%}
+{%- endif -%}
+{%- assign title = section.settings.title -%}
+
+<div class="lead-in">
+  <div class="lead-in__content{% if section.settings.reverse_direction %} reverse{% endif %}{% if section.settings.prevent_overlap %} prevent-overlap{% endif %}">
+    {%- unless section.settings.subtitle1 == blank -%}
+      <p class="capitalized__header">{{ section.settings.subtitle1 | newline_to_br }}</p>
+    {%- endunless -%}
+    {%- unless title == blank -%}
+    	<h2 class="title--primary">{{ title }}</h2>
+    {%- endunless -%}
+    {%- unless section.settings.subtitle2 == blank -%}
+      <p class="capitalized__header">{{ section.settings.subtitle2 | newline_to_br }}</p>
+    {%- endunless -%}
+  </div>
+  <div class="lead-in__image lazyload desktop-only{% if section.settings.small %} small{% endif %}{% if section.settings.reverse_direction %} reverse{% endif %}" data-bgset="{% include 'bgset', image: img_object %}">
+    <div class="layover" style="opacity:{{ section.settings.opacity | divided_by: 100.0 }}"></div>
+  </div>
+  <div class="lead-in__image lazyload mobile-only{% if section.settings.small %} small{% endif %}{% if section.settings.reverse_direction %} reverse{% endif %}" data-bgset="{% include 'bgset', image: mobile_img_object %}">
+    <div class="layover" style="opacity:{{ section.settings.opacity | divided_by: 100.0 }}"></div>
+  </div>
+  <noscript>
+    <div class="lead-in__image desktop-only{% if section.settings.small %} small{% endif %}{% if section.settings.reverse_direction %} reverse{% endif %}" style="background-image: url('{{ img_object | img_url: '800x' }}');">
+      <div class="layover" style="opacity:{{ section.settings.opacity | divided_by: 100.0 }}"></div>
+    </div>
+    <div class="lead-in__image mobile-only{% if section.settings.small %} small{% endif %}{% if section.settings.reverse_direction %} reverse{% endif %}" style="background-image: url('{{ img_object | img_url: '800x' }}');">
+      <div class="layover" style="opacity:{{ section.settings.opacity | divided_by: 100.0 }}"></div>
+    </div>
+  </noscript>
+</div>
+
+{% if section.blocks.size > 0 %}
+  <div class="lead-in__body{% if section.settings.reverse_direction %} reverse{% endif %}">
+    {% for block in section.blocks %}
+      <div class="lead-in__body__block">
+        {%- unless block.settings.title == blank -%}<div class="capitalized__header">{{block.settings.title}}</div>{%- endunless -%}
+        {%- unless block.settings.body == blank -%}<p>{{block.settings.body }}</p>{%- endunless -%}
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}

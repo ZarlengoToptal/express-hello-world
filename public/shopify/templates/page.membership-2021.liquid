@@ -1,0 +1,113 @@
+<!-- /templates/page.membership-2021.liquid -->
+
+{% section 'membership-banner' %}
+
+<div class="membership-wrapper">
+  <div class="membership-subheader-padding">{% section 'membership-subheader' %}</div>
+  
+	{% section 'membership-double-new' %}
+  
+  <div id="membershiptiers">
+
+  <div >{% section 'membership-tiers-header' %}</div>
+    
+  <div class="location-drop-down">
+      <div class="dropdow-title title mono">Select Your City</div>
+      <select class="membership-city-dropdown div-toggle" data-target=".im-in-here">
+        <option id="location-vancouver" data-show="#shopify-section-membership-cards-vancouver" class="city-drop-down">Vancouver</option>
+        <option id="location-toronto" data-show="#shopify-section-membership-cards-toronto" class="city-drop-down">Toronto</option>
+      </select>
+    </div>
+     
+    <div class="im-in-here">
+      {% section 'membership-cards-vancouver' %}
+      {% section 'membership-cards-toronto' %}
+    </div>
+  
+</div>
+  	
+  	{% section 'membership-one-third' %}
+  
+  
+  
+  	<div class="membership-accordion">{% section 'section-faq' %}</div>
+</div>
+
+
+  <script>
+  
+    $(document).on('change', '.div-toggle', function() {
+      var target = $(this).data('target');
+      var show = $("option:selected", this).data('show');
+      $(target).children().addClass('hide-location');
+      $(show).removeClass('hide-location');
+    });
+    $(document).ready(function(){
+    	$('.div-toggle').trigger('change');
+    });
+
+  
+    $( document ).ready(function() {
+  	// Slick Slider Init
+  	$('#MembershipSlider-locations').slick({
+      dots: true,
+      infinite: true,
+      slidesToShow: 4,
+      slidesToScroll: 1,
+      responsive: [
+        {
+          breakpoint: 780,
+          settings: {
+			centerMode: true,
+            slidesToShow: 2,
+            slidesToScroll: 1,
+			dots: true,
+			infinite: true,
+          }
+        },
+		{
+          breakpoint: 600,
+          settings: {
+			centerMode: true,
+            slidesToShow: 1,
+            slidesToScroll: 1,
+			dots: true,
+          }
+        }
+      ]
+    });
+  });
+
+  
+    $( document ).ready(function() {
+  	// Slick Slider Init
+  	$('#MembershipSlider-locations-toronto').slick({
+      dots: true,
+      infinite: true,
+      slidesToShow: 4,
+      slidesToScroll: 1,
+      responsive: [
+        {
+          breakpoint: 780,
+          settings: {
+			centerMode: true,
+            slidesToShow: 2,
+            slidesToScroll: 1,
+			dots: true,
+			infinite: true,
+          }
+        },
+		{
+          breakpoint: 600,
+          settings: {
+			centerMode: true,
+            slidesToShow: 1,
+            slidesToScroll: 1,
+			dots: true,
+          }
+        }
+      ]
+    });
+  });
+
+</script>

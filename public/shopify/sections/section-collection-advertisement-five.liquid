@@ -1,0 +1,40 @@
+<!-- /sections/section-collection-advertisement-five.liquid-->
+
+<section>
+  {% include 'collection-advertisement-five' %}
+</section>
+
+
+{% schema %}
+  {
+    "name": "Advertisment Card Five",
+    "settings": [
+		{
+          "type": "image_picker",
+          "id": "double-image-left-collection-section-five",
+          "label": "Left Image"
+        },
+		{
+        "type": "html",
+        "id": "double-html-left-collection-section-five",
+        "label": "Content"
+        },
+		{
+        "type": "text",
+        "id": "section-double-collection-url-lable-five",
+        "label": "Link Lable"
+        },
+		{
+        "type": "url",
+        "id": "section-double-collection-url-five",
+        "label": "Link"
+        }
+	],
+  "presets": [
+    {
+    "name": "Advertisment Card Five",
+    "category": "collections"
+    }
+   ]
+  }
+{% endschema %}

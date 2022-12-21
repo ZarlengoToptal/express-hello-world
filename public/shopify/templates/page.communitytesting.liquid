@@ -1,0 +1,76 @@
+{% layout 'theme.community-testing' %}
+
+<script src='https://cdn.jsdelivr.net/jquery.marquee/1.3.1/jquery.marquee.min.js'></script>
+<script type="text/javascript">/**
+ * Example of starting a plugin with options.
+ * I am just passing some of the options in the following example.
+ * you can also start the plugin using $('.marquee').marquee(); with defaults
+*/
+$(function(){
+$('.marquee').marquee({
+	//duration in milliseconds of the marquee
+	duration: 6500,
+	//gap in pixels between the tickers
+	gap: 50,
+	//time in milliseconds before the marquee will start animating
+	delayBeforeStart: 0,
+	//'left' or 'right'
+	direction: 'left',
+	//true or false - should the marquee be duplicated to show an effect of continues flow
+	duplicated: true
+});
+});
+</script>
+
+
+<div class="community-test-background">
+
+<div class="signup-container">
+  <div class="signup">
+	    <div class="signup-header marquee">BE A PART OF WHAT'S NEXT</div>
+	    <div class="signup-body"><br>Help us shape the future of skincare.<br><br>Sign up to become part of our try + test product community.  (And stay tuned for more details.)
+		    <div class="signup-form"><div class="klaviyo-form-S8sPFb"></div></div>
+		     <div class="signup-footer">
+		 	<div class="signup-footer-ig"><a href="https://www.instagram.com/formulafig" target="_blank">FOLLOW US ON INSTAGRAM <div class="signup-footer-ig-icon"><i class="fab fa-instagram"></i></a></div></div>
+		 	<div class="signup-footer-icons">
+		 		<div class="signup-footer-trial">TRIAL PERIOD <div class="signup-footer-ig-icon">TBD</div>
+		 		<div class="community-icon"><img src="https://cdn.shopify.com/s/files/1/0050/3932/5297/files/community-icons.svg?v=1625861367"></div>
+		 	</div>
+	 	</div>
+		 </div>
+ 	 </div></div>
+
+<div class="signup-music">
+<audio id="track">
+  <source src="https://cdn.shopify.com/s/files/1/0050/3932/5297/files/wavves.wav?v=1625874660" type="audio/mpeg" />
+</audio>
+
+<div id="player-container" class="slide">
+  <div id="play-pause" class="play float">Play</div>
+</div>
+
+</div>
+</div>
+</div>
+
+<script>var track = document.getElementById('track');
+
+var controlBtn = document.getElementById('play-pause');
+
+function playPause() {
+    if (track.paused) {
+        track.play();
+        //controlBtn.textContent = "Pause";
+        controlBtn.className = "pause";
+    } else { 
+        track.pause();
+         //controlBtn.textContent = "Play";
+        controlBtn.className = "play";
+    }
+}
+
+controlBtn.addEventListener("click", playPause);
+track.addEventListener("ended", function() {
+  controlBtn.className = "play";
+});
+</script>

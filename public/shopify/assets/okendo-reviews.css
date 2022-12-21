@@ -1,0 +1,4 @@
+/* Reviews Widget > Hidden elements */
+.okeReviews.okeReviews--theme .okeReviews-review-reviewer-product-details {
+    display: none;
+}

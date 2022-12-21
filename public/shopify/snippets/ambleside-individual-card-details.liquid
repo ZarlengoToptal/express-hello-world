@@ -1,0 +1,257 @@
+<!-- /snippets/ambleside-individual-card-details.liquid -->
+
+
+<div
+   class="location-ambleside-card-wrapper"
+   data-section-type="location-individual-card"
+   data-section-id="{{ section.id }}">
+
+  <div class="locations-individual">
+    {% for block in section.blocks %}
+    	{%- assign description-ambleside-header = block.settings.description-ambleside-header -%}
+        {%- assign title-ambleside-individual = block.settings.title-ambleside-individual -%}
+    	{%- assign tagline-ambleside-individual = block.settings.tagline-ambleside-individual -%}
+    	{%- assign country-ambleside-individual = block.settings.country-ambleside-individual -%}
+    	{%- assign address-ambleside-individual = block.settings.address-ambleside-individual -%}
+    	{%- assign telephone-ambleside-individual = block.settings.telephone-ambleside-individual -%}
+    	{%- assign hours-ambleside-individual = block.settings.hours-ambleside-individual -%}
+    	{%- assign cancelation-ambleside-individual = block.settings.cancelation-ambleside-individual -%}
+    	{%- assign ambleside-banner-image = block.settings.ambleside-banner-image -%}
+    	{%- assign book-now-ambleside-individual = block.settings.book-now-ambleside-individual -%}
+    	{%- assign google-ambleside-individual = block.settings.google-ambleside-individual -%}
+    	{%- assign address-ambleside-full-description = block.settings.address-ambleside-full-description -%}
+    	{%- assign parking-ambleside-individual = block.settings.parking-ambleside-individual -%}
+    	{%- assign accessability-ambleside-individual = block.settings.accessability-ambleside-individual -%}
+    	{%- assign ambleside-shop-now-image = block.settings.ambleside-shop-now-image -%}
+    	{%- assign ambleside-shop-now-cta = block.settings.ambleside-shop-now-cta -%}
+    	{%- assign ambleside-skin-care-location-text = block.settings.ambleside-skin-care-location-text -%}
+    	{%- assign ambleside-services-available-treatments = block.settings.ambleside-services-available-treatments -%}
+    	{%- assign treatments-ambleside-text = block.settings.treatments-ambleside-text -%}
+    	{%- assign ambleside-services-available-memberships = block.settings.ambleside-services-available-memberships -%}
+    	{%- assign skin-care-ambleside-text = block.settings.skin-care-ambleside-text -%}
+    	{%- assign membership-ambleside-text = block.settings.membership-ambleside-text -%}
+    	{%- assign ambleside-video = block.settings.ambleside-video -%}
+
+    
+    	{%- assign img_object = section.settings.ambleside-banner-image -%}
+  		{%- assign img_small = section.settings.ambleside-banner-image | img_url: '18x' -%}
+  		{%- assign img_api = section.settings.ambleside-banner-image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+
+  		{%- assign mobile_img_object = section.settings.ambleside-banner-image -%}
+  		{%- assign mobile_img_small = section.settings.ambleside-banner-image | img_url: '18x' -%}
+  		{%- assign mobile_img_api = section.settings.ambleside-banner-image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+    
+    <div class="locations-individual-home-banner homepage-image fade-in-child preventOverflow {{ section.settings.height }} {{ section.settings.color }}" data-section-id="{{ section.id }}" data-section-type="parallax" id="FeaturedImage-{{ section.id }}"
+      {% if section.settings.parallax %}
+        data-parallax-src="{{ img_small }}"
+        data-src="{{ img_api }}"
+        data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048, 2450, 2700, 3000, 3350, 3750, 4100, 4480]"
+        data-aspectratio="{{  section.settings.image.aspect_ratio }}"
+        data-sizes="auto"
+        style="background-image: url('{{ section.settings.image | img_url: '1x1' }}');"
+      {% endif %}>
+
+      {% if section.settings.height == 'use_image' %}
+        <div class="lazy-image desktop-only" style="padding-top:{{ 1 | divided_by: section.settings.image.aspect_ratio | times: 100}}%; background-image: url('{{ section.settings.image | img_url: '1x1' }}');">
+          <img class="lazyload fade-in" {% if section.settings.parallax %} style="opacity: 0;"{% endif %}
+            alt="{{ section.settings.image.alt | default: shop.name }}"
+            data-src="{{ img_api }}"
+            data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048, 2450, 2700, 3000, 3350, 3750, 4100, 4480]"
+            data-aspectratio="{{  section.settings.image.aspect_ratio }}"
+            data-parent-fit="cover"
+            data-sizes="auto"/>
+        </div>
+        <div class="lazy-image mobile-only" style="padding-top:{{ 1 | divided_by: section.settings.image.aspect_ratio | times: 100}}%; background-image: url('{{ section.settings.image | mobile_img_url: '1x1' }}');">
+          <img class="lazyload fade-in" {% if section.settings.parallax %} style="opacity: 0;"{% endif %}
+            alt="{{ section.settings.image.alt | default: shop.name }}"
+            data-src="{{ mobile_img_api }}"
+            data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048, 2450, 2700, 3000, 3350, 3750, 4100, 4480]"
+            data-aspectratio="{{  section.settings.image.aspect_ratio }}"
+            data-parent-fit="cover"
+            data-sizes="auto"/>
+        </div>
+      {% endif %}
+
+      {% if section.settings.parallax == false and section.settings.height != 'use_image' %}
+        <div class="background-size-cover lazyload desktop-only" data-bgset="{% include 'bgset', image: img_object %}"></div>
+        <div class="background-size-cover lazyload mobile-only" data-bgset="{% include 'bgset', image: mobile_img_object %}"></div>
+      {% endif %}
+
+      {% if section.settings.height == 'use_screen_full' %}
+        <div class="scroll_icon_wrap">
+          <a role="button" href="#scroll-{{ section.id }}" class="scroll_link bloop">
+            <span class="scroll_icon">{% include 'svg-down' %}</span>
+          </a>
+        </div>
+        <div class="scroll__link" id="scroll-{{ section.id }}"></div>
+      {% endif %}
+
+      <noscript>
+        <img src="{{ img_object | img_url: '1440x' }}" alt="{{ img_object.alt | default: section.settings.title }}" class="responsive-wide-image"/>
+      </noscript>
+    </div>
+    
+    
+    <div id="show-video-tour" class="video-tour-wrapper">
+      	<a id="hide-video-tour" href="javascript:void(0)">CLOSE</a>
+        <div class="video-tour-file">
+          {{ ambleside-video }}
+        </div>
+    </div>
+      
+    <div class="wrapper">
+      <div class="location-individual-details location-desktop-grid location-horizontal-padding">
+        <div class="section-padding">
+          <div class="title_mono">{{ country-ambleside-individual }}</div>
+          <h1>{{ title-ambleside-individual }}</h1>
+          <div class="section-padding-bottom hero__description"><p>{{ tagline-ambleside-individual }}</p></div>
+          <div>{{ address-ambleside-individual }}</div>
+          <div>T. {{ telephone-ambleside-individual }}</div>
+<!--           <div class="play-location-video">
+            <a id="video-tour-button" href="javascript:void(0)">PLAY VIDEO</a>
+          </div> -->
+          <div class="location-individual-card-button section-padding">
+            <a role="button" href="{{ book-now-ambleside-individual }}">
+              <div class="book-now-locations-individual">BOOK NOW</div>
+            </a>
+          </div>
+        </div>
+        
+      </div> 
+      
+	<div class="location-desktop-grid location-horizontal-padding">
+      <div class="location-individual-details">
+        <div class="section-padding">
+          	<div>
+            <div class="title_mono">Opening HOURS</div>
+              <div class="hours-grid">
+ 
+ <div>MON<br>TUE<br>WED<br>THU<br>FRI<br>SAT<br>SUN</div>
+                <div>{{ hours-ambleside-individual }}</div>
+              </div>
+          </div>
+        </div>
+        <div>
+            <div class="title_mono">CANCELLATIONS</div>
+            {{ cancelation-ambleside-individual }}
+          </div>
+        <div style="padding-top:1rem;">
+        	<div class="title_mono">PARKING</div>
+        	{{ parking-ambleside-individual }}
+        </div>
+        <div class="section-padding">
+        	<div class="title_mono">ACCESSIBILITY</div>
+        	{{ accessability-ambleside-individual }}
+        </div>
+      </div>
+      
+      <div class="google-individual-location-wrapper">
+        <div class="title_mono">DIRECTIONS</div>
+          {{ google-ambleside-individual }}
+        <div>{{ address-ambleside-full-description }}</div>
+      </div>
+      
+    </div><!-- end of grid -->
+
+    <div class="services-available-location-wrapper">
+      <div class="shop-now-wrapper">
+      	<h2>Services Available</h2>
+      </div>
+      <div class="locations-home-grid location-horizontal-padding">
+        <div class="services-individual-location section-margin">
+          <div class="services-image-location">
+            {%- assign ambleside-services-available-treatments = block.settings.ambleside-services-available-treatments | img_url: 'large' -%}
+            <div class="services-image">
+              <img class="lazyload" alt="{{ block.settings.ambleside-services-available-treatments.alt | default: section.settings.link_text }}" src="{{ block.settings.ambleside-services-available-treatments | img_url: 'large' }}" data-src="{{ ambleside-services-available-treatments }}" data-aspectratio="{{ section.settings.ambleside-services-available-treatments.aspect_ratio }}" data-sizes="auto" style="width:100%"/>
+            </div>
+            <div class="services-specific">
+              <div class="title_mono">Treatments</div>
+              <div class="services-individual-padding">{{ treatments-ambleside-text }}</div>
+            </div>
+          </div>
+          <div class="static-services"><a href="https://formulafig.com/pages/treatments">Learn More</a></div>
+        </div>
+        <div class="services-individual-location section-margin">
+          <div class="services-image-location">
+            {%- assign ambleside-services-available-skin-care = block.settings.ambleside-services-available-skin-care | img_url: 'large' -%}
+            <div class="services-image">
+              <img class="lazyload" alt="{{ block.settings.ambleside-services-available-skin-care.alt | default: section.settings.link_text }}" src="{{ block.settings.ambleside-services-available-skin-care | img_url: 'large' }}" data-src="{{ ambleside-services-available-skin-care }}" data-aspectratio="{{ section.settings.ambleside-services-available-skin-care.aspect_ratio }}" data-sizes="auto" style="width:100%"/>
+            </div>
+            <div class="services-specific">
+              <div class="title_mono">Skincare</div>
+              <div class="services-individual-padding">{{ ambleside-skin-care-location-text }}</div>
+            </div>
+          </div>
+          <div class="static-services"><a href="https://formulafig.com/collections/shop-all">Shop Now</a></div>
+        </div>
+        <div class="services-individual-location section-margin">
+          <div class="services-image-location">
+            {%- assign ambleside-services-available-membership = block.settings.ambleside-services-available-membership | img_url: 'large' -%}
+            <div class="services-image">
+              <img class="lazyload" alt="{{ block.settings.ambleside-services-available-membership.alt | default: section.settings.link_text }}" src="{{ block.settings.ambleside-services-available-membership | img_url: 'large' }}" data-src="{{ ambleside-services-available-membership }}" data-aspectratio="{{ section.settings.ambleside-services-available-membership.aspect_ratio }}" data-sizes="auto" style="width:100%"/>
+            </div>
+            <div class="services-specific">
+              <div class="title_mono">Membership</div>
+              <div class="services-individual-padding">{{ membership-ambleside-text }}</div>
+            </div>
+          </div>
+          <div class="static-services"><a href="https://formulafig.com/pages/membership">Become A Member</a></div>
+        </div>
+      
+      </div>
+    </div><!-- end of services -->
+      
+    <div class="shop-now-wrapper">
+      <h2>Shop Skincare</h2>
+      <div class="location-desktop-grid location-horizontal-padding">
+        <div class="locations-individual-home-banner" style="padding:1rem 0;">
+          <div class="shop-now-banner locations-individual-inner">
+            {% if block.settings.ambleside-shop-now-image %}
+            {%- assign ambleside-shop-now-image = block.settings.ambleside-shop-now-image | img_url: 'master' -%}
+            <img class="lazyload" alt="{{ block.settings.ambleside-shop-now-image.alt | default: section.settings.link_text }}" src="{{ block.settings.ambleside-shop-now-image | img_url: 'master' }}" data-src="{{ shop-now-image }}" data-aspectratio="{{ section.settings.ambleside-shop-now-image.aspect_ratio }}" data-sizes="auto" style="width:100%"/>
+            {% endif %}
+          </div>
+        </div>
+        <div class="section-padding locations-individual-inner">   
+          <div class="services-static-wrapper hero__description">
+            <p style="padding-bottom:2rem;">{{ ambleside-shop-now-cta }}</p>
+           <a href="https://formulafig.com/collections/shop-all" style="text-decoration:none"> <div class="static-services">Shop Now</div></a>
+          </div>
+        </div>
+      </div>
+    </div>
+      
+    <div class="services-available-location-wrapper">
+      <div class="shop-now-wrapper">
+      	<h2>Concierge</h2>
+        <div class="location-horizontal-padding"><p>Questions? Our concierge team is here to help.<br>
+         <span style="text-decoration:underline;"><a onclick="GorgiasChat.open();">Chat with us</a></span> or email us at <a href="mailto:hello@formulafig.com" title="mailto:hello@formulafig.com">hello@formulafig.com</p>
+        </div>
+        </div>
+    </div>
+      
+    <!-- <div class="services-available-location-wrapper">
+      <div class="shop-now-wrapper">
+      	<h2>Reviews</h2>
+      </div>
+    </div> -->
+    
+   </div><!-- end of containing wrapper -->
+    
+
+    {% endfor %}
+</div>
+  
+  
+<script>
+  var videoTour = document.getElementById("video-tour-button");
+  var videoPlay = document.getElementById("show-video-tour");
+  var videoHide = document.getElementById("hide-video-tour");
+  videoTour.addEventListener("click", function(){
+    videoPlay.classList.add("openAndPlay");
+  });
+  videoHide.addEventListener("click", function(){
+    videoPlay.classList.remove("openAndPlay");
+  });
+
+</script>

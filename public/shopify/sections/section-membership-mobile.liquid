@@ -1,0 +1,55 @@
+<!-- /sections/section-full-header-button.liquid-->
+
+<section class="mobile-show">
+  
+  <div class="right-card" style="line-height:2.25;padding:1rem;">
+	{% include 'mobile-index-membership-card' %}
+  </div>
+  
+</section>
+{% schema %}
+  {
+    "name": "Membership Mobile",
+    "settings": [
+		{
+          "type": "text",
+          "id": "single_card_header_right_mobile",
+          "label": "Header Text Right"
+        },{
+          "type": "textarea",
+          "id": "single_card_body_right_mobile",
+          "label": "Subtitle Text Right"
+        },
+		{
+          "type": "image_picker",
+          "id": "double-image-right-mobile",
+          "label": "Right Image"
+        },{
+          "type": "textarea",
+          "id": "single_card_quote_mobile",
+          "label": "Membership Quote"
+        },
+		{
+          "type": "text",
+          "id": "single_card_quote_name_mobile",
+          "label": "Membership Quote Name"
+        },
+		{
+        "type": "url",
+        "id": "section-double-LM-mobile2",
+        "label": "Learn More"
+        },
+		{
+        "type": "url",
+        "id": "section-double-right-link-mobile",
+        "label": "Take the Quiz"
+        }
+	],
+  "presets": [
+    {
+    "name": "Membership Mobile",
+    "category": "ADVANCED LAYOUT"
+    }
+   ]
+  }
+{% endschema %}

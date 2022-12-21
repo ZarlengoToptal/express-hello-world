@@ -1,0 +1,79 @@
+<!-- /sections/index-lead-in.liquid -->
+{% include 'section-lead-in' %}
+
+{% schema %}
+  {
+    "name": "Lead In",
+    "class": "section-lead-in",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image"
+      },
+      {
+        "type": "image_picker",
+        "id": "mobile_image",
+        "label": "Mobile Image"
+      },
+	  {
+		"type": "range",
+		"id": "opacity",
+		"label": "Opacity",
+		"min": 0,
+		"max": 100,
+		"step": 5,
+		"default": 0
+	  },
+      {
+        "type": "textarea",
+        "id": "title",
+        "label": "Text",
+        "default": "Welcome to Fig, the world's first doctor-led clean skincare bar."
+      },
+      {
+        "type": "richtext",
+        "id": "subtitle1",
+        "label": "Subtitle 1"
+      },
+      {
+        "type": "richtext",
+        "id": "subtitle2",
+        "label": "Subtitle 2"
+      },
+      {
+		"type": "checkbox",
+		"id": "reverse_direction",
+		"label": "Reverse direction"
+	  },
+      {
+		"type": "checkbox",
+		"id": "prevent_overlap",
+		"label": "Prevent Overlap"
+	  },
+      {
+		"type": "checkbox",
+		"id": "small",
+		"label": "Small Image"
+	  }
+    ],
+	"blocks": [
+	  {
+		"type": "content",
+		"name": "Content",
+		"settings": [
+		  {
+			"type": "text",
+			"id": "title",
+			"label": "Title"
+		  },
+		  {
+			"type": "richtext",
+			"id": "body",
+			"label": "Body"
+		  }
+		]
+	  }
+	]
+  }
+{% endschema %}

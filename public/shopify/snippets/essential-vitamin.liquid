@@ -1,0 +1,11 @@
+<!-- /snippets/essential-vitamin.liquid -->
+
+<div class="mobile2-slider-wrapper" data-section-type="mobile2-slider" data-section-id="{{ section.id }}" data-slider-dots="false">
+    <ul class="mobile-slider mobile2-slider" id="Mobile2Slider-{{ section.id }}">
+        {% for product in collections.treatments-vitamin-c.products %}
+            <li class="essential-mobile2">
+                {% include 'product-essential' %}
+            </li>
+        {% endfor %}
+    </ul>
+</div>

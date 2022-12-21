@@ -1,0 +1,31 @@
+
+  <div class="qv-product-images" style="opacity: 0"></div>
+  <div class="qv-content">
+    <div class="holder">
+      <h4 class="qv-vendor grid__vendor uppercase no-underline"></h4>
+      <h3 class="qv-product-title"></h3>
+      <h5 class="qv-product-price"></h5>
+      <h5 class="qv-product-original-price"></h5>
+      <div class="qv-product-description"></div>
+      <div class="quick-view-bottom-buttons">
+        <div class="wrapper" style="padding: 0px!important;">
+          <form id="qv-add-to-cart"method="post" action="/cart/add" accept-charset="UTF-8" class="product-form shopify-product-form" enctype="multipart/form-data" data-product-form>
+            <input type="hidden" name="form_type" value="product">
+            <input type="hidden" name="utf8" value="✓">
+            <div class="qv-product-options"></div>
+            <input type="text" class="js-qty__num QuantityInput" value="1" min="1" data-id="" aria-label="quantity" pattern="[0-9]*" name="quantity" id="" data-submit="" style="display: none">
+            <a class="view-product" href="">
+              <span>Learn More</span>
+            </a>
+            <div class="add-to-cart__wrapper" data-add-action-wrapper>
+              <button data-drawer-toggle="drawer-cart" data-add-to-cart type="submit" name="add" id="AddToCart-product" class="btn btn--large btn--full btn--clear uppercase addToCart qv-add-button">
+                <span id="AddToCartText-product">Add to Cart</span>
+              </button>
+            </div>
+            <div data-add-action-errors="" class="add-action-errors"></div>
+          </form>
+        </div>          
+        <div class="qv-add-to-cart-response"></div>
+      </div>
+    </div>
+  </div>

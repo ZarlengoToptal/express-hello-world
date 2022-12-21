@@ -1,0 +1,174 @@
+<!-- /section/treatments-hightechfacials.liquid -->
+
+<div class="fig-facials">
+  <div class="wrapper">
+    <div id="high-tech-facials-link-mobile">
+      {% include 'treatments-section-title' %}
+    </div>
+    <div class="treatments-flex">
+      {% include 'treatments-cards' %}
+    </div>
+  </div>
+</div>
+
+
+{% schema %}
+{
+    "name": "High Tech Facial",
+    "class": "section-treatments-new",
+    "settings": [
+        {
+            "type": "text",
+            "id": "title",
+            "label": "Block Title",
+            "default": "Injectables"
+        }, {
+            "type": "richtext",
+            "id": "content",
+            "label": "Content",
+            "default": "<p>Wrinkle relaxers. Plus health boosting IV and Vitamin Injections.</p>"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "treatment",
+            "name": "Injectables",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "videofile",
+                    "label": "Treatment Video",
+                    "default": "https://cdn.shopify.com/s/files/1/0050/3932/5297/files/Collagen_Texture-compressed.mp4?v=1628756735"
+                }, {
+                    "type": "image_picker",
+                    "id": "thumbnail",
+                    "label": "Treatment Card Thumbnail"
+                }, {
+                    "type": "text",
+                    "id": "facial",
+                    "label": "Treatment Type"
+                }, {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Treatment Title",
+                    "default": "Treatment Name"
+                }, {
+                    "type": "text",
+                    "id": "price",
+                    "label": "Price",
+                    "default": "Drop-In $150 | Member $135"
+                }, {
+                    "type": "richtext",
+                    "id": "description",
+                    "label": "Treatment Description"
+                }, {
+                    "type": "url",
+                    "id": "quickview_link",
+                    "label": "Quickview Link"
+                }, {
+                    "type": "url",
+                    "id": "booknow_link",
+                    "label": "Book Now Link"
+                }, {
+                    "type": "image_picker",
+                    "id": "treatmentphoto",
+                    "label": "Treatment Photo"
+                }, {
+                    "type": "text",
+                    "id": "header_price",
+                    "label": "PopUp Header Price"
+                }, {
+                    "type": "text",
+                    "id": "popup_duration",
+                    "label": "Popup Duration"
+                }, {
+                    "type": "richtext",
+                    "id": "popup_description",
+                    "label": "Treatment Description (long)"
+                }, {
+                    "type": "text",
+                    "id": "popup_subheader1",
+                    "label": "Subheader 1"
+                }, {
+                    "type": "richtext",
+                    "id": "popup_description1",
+                    "label": "Description 1"
+                }, {
+                    "type": "text",
+                    "id": "popup_subheader2",
+                    "label": "Subheader 2"
+                }, {
+                    "type": "richtext",
+                    "id": "popup_description2",
+                    "label": "Description 2"
+                }, {
+                    "type": "text",
+                    "id": "popup_subheader3",
+                    "label": "Subheader 3"
+                }, {
+                    "type": "richtext",
+                    "id": "popup_description3",
+                    "label": "Description 3"
+                }, {
+                    "type": "text",
+                    "id": "popup_subheader4",
+                    "label": "Subheader 4"
+                }, {
+                    "type": "richtext",
+                    "id": "popup_description4",
+                    "label": "Description 4"
+                }, {
+                    "type": "text",
+                    "id": "popup_subheader5",
+                    "label": "Subheader 5"
+                }, {
+                    "type": "richtext",
+                    "id": "popup_description5",
+                    "label": "Description 5"
+                }, {
+                    "type": "text",
+                    "id": "popup_subheader6",
+                    "label": "Subheader 6"
+                }, {
+                    "type": "richtext",
+                    "id": "popup_description6",
+                    "label": "Description 6"
+                }, {
+                    "type": "text",
+                    "id": "popup_subheader7",
+                    "label": "Subheader 7"
+                }, {
+                    "type": "richtext",
+                    "id": "popup_description7",
+                    "label": "Description 7"
+                }, {
+                    "type": "text",
+                    "id": "popup_subheader8",
+                    "label": "Subheader 8"
+                }, {
+                    "type": "richtext",
+                    "id": "popup_description8",
+                    "label": "Description 8"
+                }, {
+                    "type": "text",
+                    "id": "popup_subheader9",
+                    "label": "Subheader 9"
+                }, {
+                    "type": "richtext",
+                    "id": "popup_description9",
+                    "label": "Description 9"
+                }, {
+                    "type": "richtext",
+                    "id": "popup_fineprint",
+                    "label": "Fineprint"
+                }, {
+                    "type": "url",
+                    "id": "popup_learnmore_link",
+                    "label": "Learn More - Treatment Page URL"
+                }
+            ]
+        }
+    ]
+}
+
+{% endschema %}

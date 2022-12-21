@@ -1,0 +1,119 @@
+<div class="category-block">
+    <ul class="essentials-menu">
+        <li class="top-level-navigation">
+            <div class="treatment-essential-title">
+                <button class="switch3">
+
+                    <div class="padding-essential">
+                        <h2>{{ collections['spf-1'].title }}</h2>
+                        <p>{{ collections['spf-1'].description }}</p>
+                    </div>
+                    <div>
+                        <div class="plus">+</div>
+                        <div class="minus">-</div>
+                    </div>
+                </button>
+            </div>
+            <div class="text-block3 pressed">
+                <div class="essential-grid-item">
+                    <div class="fixed-mobile" role="region">
+                        {% include 'essential-spf' %}
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li class="top-level-navigation">
+            <div class="treatment-essential-title">
+                <button class="switch2">
+                    <div class="padding-essential">
+                        <h2>{{ collections['treatments-vitamin-c'].title }}</h2>
+                        <p>{{ collections['treatments-vitamin-c'].description }}</p>
+                    </div>
+                    <div>
+                        <div class="plus">+</div>
+                        <div class="minus">-</div>
+                    </div>
+                </button>
+            </div>
+            <div class="text-block2">
+                <div class="essential-grid-item">
+                    <div class="fixed-mobile">
+                        {% include 'essential-vitamin' %}
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li class="top-level-navigation">
+            <div class="treatment-essential-title">
+                <button class="switch">
+                    <div class="padding-essential">
+                        <h2>{{ collections['retinol'].title }}</h2>
+                        <div>
+                            <p>{{ collections['retinol'].description }}</p>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="plus">+</div>
+                        <div class="minus">-</div>
+                    </div>
+                </button>
+            </div>
+            <div class="text-block">
+                <div class="essential-grid-item">
+                    <div class="fixed-mobile">
+                        {% include 'essential-retinol' %}
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+
+</div>
+
+<script>
+  $( document ).ready(function() {
+    $(".switch").on("click", function (e) {
+        $(".text-block").toggleClass("pressed");
+        e.preventDefault();
+    });
+
+    $(".switch2").on("click", function (e) {
+        $(".text-block2").toggleClass("pressed");
+        e.preventDefault();
+    });
+
+    $(".switch3").on("click", function (e) {
+        $(".text-block3").toggleClass("pressed");
+        e.preventDefault();
+    });
+  
+  	// Slick Slider Inits
+  	$('.mobile-slider').slick({
+      dots: true,
+      infinite: true,
+      slidesToShow: 5,
+      slidesToScroll: 1,
+      responsive: [
+        {
+          breakpoint: 770,
+          settings: {
+            slidesToShow: 3,
+            slidesToScroll: 3,
+            infinite: true,
+            dots: true
+          }
+        },
+        {
+          breakpoint: 600,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            centerMode: true,
+            dots: true
+          }
+        }
+      ]
+    });
+  });
+    
+</script>

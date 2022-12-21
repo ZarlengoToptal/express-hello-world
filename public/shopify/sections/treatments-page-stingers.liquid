@@ -1,0 +1,636 @@
+<div id="BackToTop"></div>
+<div class="treatments-page-header treatments-page-{{ section.settings.title }}">
+  <div class="treatments-page-price">{{ section.settings.facial }}</div>
+  <div class="treatments-page-title title--secondary">{{ section.settings.title }}</div>
+<div class="treatments-page-price">{{ section.settings.price }}</div>
+  <a role="button" href="{{ section.settings.booknow }}"><div class="treatments-page-booknow">BOOK NOW</div></a>
+</div>
+
+<div  id="tab-height" class="main-tab">
+
+  <ul class="button-container">
+     <li class="button-treatments tab-stingers press" data-tab="1">How It Works</li>
+     <li class="button-treatments tab-stingers" data-tab="2">Know Your Units</li>
+     <li class="button-treatments tab-stingers" data-tab="3">Pre-Treatment</li>
+     <li class="button-treatments tab-stingers" data-tab="4">Post-Treatment</li>
+     <li class="button-treatments tab-stingers" data-tab="5">Before + After</li>
+     <li class="button-treatments tab-stingers" data-tab="6">Reviews</li>
+  </ul>
+  
+  <div id="tabTop" class="content-container">  
+    <div class="content press" data-tab="1">
+		<div class="holding-height">
+    <div class="howitworks">
+
+                <div class="tab-video">
+             {%- unless section.settings.tab_videofile == blank -%}
+            <video autoplay loop muted playsinline width="100%">
+        <source src="{{ section.settings.tab_videofile }}" type="video/mp4" id="{{ section.id }}">
+      </video>{%- endunless -%}
+            
+             {%- unless section.settings.tab_img == blank -%}
+      
+          <img class="lazyload"
+          alt="{{ section.settings.tab_img.alt | default: section.settings.link_text }}"
+          src="{{ section.settings.tab_img | img_url: 'master' }}"
+          data-src="{{ tab_img }}"
+
+          data-aspectratio="{{  section.settings.tab_img.aspect_ratio }}"
+          data-sizes="auto"
+          style="width:100%"/>
+          <noscript>
+            <img src="{{ section.settings.tab_img | img_url: 'master' }}" alt="{{ section.settings.tab_img.alt | default: section.settings.link_text }}" class="image--flex" />
+          </noscript>
+        
+            {%- endunless -%}</div>
+           <div class="tab-howitworks">
+                  <div class="tab-subheader"><i class="far fa-clock"></i> {{ section.settings.tab_duration }}</div>
+             <div style="line-height:0.7;">&nbsp;</div>
+              <div class="tab-body">{{ section.settings.tab_description }}</div>
+                <div class="tab-subheader">{{ section.settings.tab_subheader1 }}</div>
+              <div class="tab-body">{{ section.settings.tab_description1 }}</div>
+                 <div class="tab-subheader">{{ section.settings.tab_subheader2 }}</div>
+              <div class="tab-body">{{ section.settings.tab_description2 }}</div>
+                 <div class="tab-subheader">{{ section.settings.tab_subheader3 }}</div>
+              <div class="tab-body">{{ section.settings.tab_description3 }}</div>  
+               <div class="tab-subheader">{{ section.settings.tab_subheader10 }}</div>
+              <div class="tab-body">{{ section.settings.tab_description10 }}</div> 
+       <div class="toTheTop"><a href="#BackToTop">Back to the top</a></div>
+      </div>
+      
+    </div>
+          
+    </div>
+    </div>
+    <!-- #tab2 -->    
+    <div class="content" data-tab="2">
+      <div class="holding-height">
+        <div class="tab-howitworks-2">
+<div class="tab-howitworks2">
+   <div class="tab-body knowyourunits">
+
+     {{ section.settings.tab_knowyourunits }}</div>
+  <div class="tab-subheader">{{ section.settings.tab_treatableareas }}</div></div>  
+   
+  <div class="treatable-areas">
+        
+               {%- for block in section.blocks -%}
+  {% if block.type == 'block-1' %}
+      {%- assign treatableareas_img = block.settings.treatableareas_img -%}
+	{%- assign title = block.settings.title -%}	
+      {%- assign treatableareas_unit = block.settings.treatableareas_unit -%}
+      {%- assign treatableareas_text = block.settings.treatableareas_text -%}
+
+     	
+          
+          <div class="treatable-area-cards">
+           {%- unless treatableareas_img == blank -%}
+             {% if treatableareas_img %}
+        {%- assign treatableareas_img = treatableareas_img | img_url: 'master' -%}
+          <img class="lazyload"
+          alt="{{ treatableareas_img.alt | default: section.settings.link_text }}"
+          src="{{ treatableareas_img | img_url: 'large' }}"
+          data-src="{{ treatableareas_img }}"
+
+          data-aspectratio="{{  block.settings.treatableareas_img.aspect_ratio }}"
+          data-sizes="auto"
+          style="width:100%"/>
+          <noscript>
+            <img src="{{ section.settings.treatableareas_img | img_url: 'master' }}" alt="{{ section.settings.thumbnail.alt | default: section.settings.link_text }}" class="image--flex" />
+          </noscript>
+            {% endif %}
+            {%- endunless -%}
+        
+           <div class="tab-subheader">{{ title }}<br>
+            {{ treatableareas_unit }} </div>
+           <div class="tab-body"> {{ treatableareas_text }}</div>
+            </div>
+    {% endif %}
+                 {%- endfor -%}
+      <br><div class="toTheTop"><a role="button" href="#BackToTop">Back to the top</a></div>
+          </div>
+          
+           
+        </div>
+
+ 
+     	</div>
+    </div>
+    
+        <!-- #tab3 -->    
+    <div class="content" data-tab="3">
+      <div class="holding-height">
+        <div class="howitworks">
+         <div class="tab-video">
+             {%- unless section.settings.tab_videofile == blank -%}
+            <video autoplay loop muted playsinline width="100%">
+        <source src="{{ section.settings.tab_videofile }}" type="video/mp4" id="{{ section.id }}">
+      </video>{%- endunless -%}
+            
+             {%- unless section.settings.tab_img == blank -%}
+      
+          <img class="lazyload"
+          alt="{{ section.settings.tab_img.alt | default: section.settings.link_text }}"
+          src="{{ section.settings.tab_img | img_url: 'master' }}"
+          data-src="{{ tab_img }}"
+
+          data-aspectratio="{{  section.settings.tab_img.aspect_ratio }}"
+          data-sizes="auto"
+          style="width:100%"/>
+          <noscript>
+            <img src="{{ section.settings.tab_img | img_url: 'master' }}" alt="{{ section.settings.tab_img.alt | default: section.settings.link_text }}" class="image--flex" />
+          </noscript>
+        
+            {%- endunless -%}</div>
+          
+           <div class="tab-howitworks">
+ 
+   
+           <div class="tab-body">{{ section.settings.tab_pretreatment_text }}</div>
+     <div class="tab-subheader">{{ section.settings.tab_subheader4 }}</div>
+              <div class="tab-body">{{ section.settings.tab_description4 }}</div>
+                 <div class="tab-subheader">{{ section.settings.tab_subheader5 }}</div>
+              <div class="tab-body">{{ section.settings.tab_description5 }}</div>
+              <div class="tab-subheader">{{ section.settings.tab_subheader12 }}</div>
+              <div class="tab-body">{{ section.settings.tab_description12 }}</div>
+
+    </div>
+
+    </div>
+     	</div>
+    </div>
+      
+    <!-- #tab4 --> 
+    <div class="content" data-tab="4">
+      <div class="holding-height">
+
+        
+                  <div class="howitworks">
+                    
+                   <div class="tab-video">
+             {%- unless section.settings.tab_videofile == blank -%}
+            <video autoplay loop muted playsinline width="100%">
+        <source src="{{ section.settings.tab_videofile }}" type="video/mp4" id="{{ section.id }}">
+      </video>{%- endunless -%}
+            
+             {%- unless section.settings.tab_img == blank -%}
+      
+          <img class="lazyload"
+          alt="{{ section.settings.tab_img.alt | default: section.settings.link_text }}"
+          src="{{ section.settings.tab_img | img_url: 'master' }}"
+          data-src="{{ tab_img }}"
+
+          data-aspectratio="{{  section.settings.tab_img.aspect_ratio }}"
+          data-sizes="auto"
+          style="width:100%"/>
+          <noscript>
+            <img src="{{ section.settings.tab_img | img_url: 'master' }}" alt="{{ section.settings.tab_img.alt | default: section.settings.link_text }}" class="image--flex" />
+          </noscript>
+        
+            {%- endunless -%}</div>
+           <div class="tab-howitworks">
+                 <div class="tab-subheader">{{ section.settings.tab_subheader11 }}</div>
+              <div class="tab-body">{{ section.settings.tab_description11 }}</div>
+        <div class="tab-body">{{ section.settings.tab_posttreatment_text }}</div>
+       <div class="tab-subheader">{{ section.settings.tab_subheader6 }}</div>
+              <div class="tab-body">{{ section.settings.tab_description6 }}</div>
+                 <div class="tab-subheader">{{ section.settings.tab_subheader7 }}</div>
+              <div class="tab-body">{{ section.settings.tab_description7 }}</div>
+       <div class="tab-subheader">{{ section.settings.tab_subheader8 }}</div>
+              <div class="tab-body">{{ section.settings.tab_description8 }}</div>
+       <div class="tab-subheader">{{ section.settings.tab_subheader9 }}</div>
+              <div class="tab-body">{{ section.settings.tab_description9 }}</div>
+
+                      <div class="treatments-subheader">
+              {{ section.settings.tab_posttreatment_recco_one }}
+              <div class="rec-1">
+                <div class="padding-essential">
+                    <h2>{{ collections['treatments-retinoids'].title }}</h2>
+                    <p>{{ collections['treatments-retinoids'].description }}</p>
+                    <div class="essential-grid-item">
+                      <div class="fixed-mobile"> {% include 'gallery-treatments-retinoids' %} </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+             
+          <div class="treatments-subheader">
+              {{ section.settings.tab_posttreatment_recco_two }}
+            <div class="rec-1">
+              <div class="padding-essential">
+                  <h2>{{ collections['treatments-spf'].title }}</h2>
+                  <p>{{ collections['treatments-spf'].description }}</p>
+                  <div class="essential-grid-item">
+                    <div class="fixed-mobile"> {% include 'gallery-treatments-spf' %} </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+             
+          <div class="treatments-subheader">
+              {{ section.settings.tab_posttreatment_recco_three }}
+            <div class="rec-1">
+              <div class="padding-essential">
+                  <h2>{{ collections['treatments-vitamin-c'].title }}</h2>
+                  <p>{{ collections['treatments-vitamin-c'].description }}</p>
+                  <div class="essential-grid-item">
+                    <div class="fixed-mobile"> {% include 'gallery-treatments-vitamin-c' %} </div>
+                  </div>
+              </div>
+    </div>
+
+    </div>
+        
+          <div class="toTheTop"><a role="button" href="#BackToTop">Back to the top</a></div>
+
+            </div>
+
+      </div>
+      </div></div>
+    
+    
+    <!-- #tab5 -->
+    <div class="content tab_content" data-tab="5" id="tab5">
+      <div class="holding-height">
+		<div class="tab-howitworks-3">
+               <div class="tab-howitworks2">
+         <div class="tab-body"> {{ section.settings.beforeafter_text }}</div></div>
+                    {%- for block in section.blocks -%}
+  {% if block.type == 'block-2' %}
+      {%- assign before_img = block.settings.before_img -%}
+          {%- assign before_text = block.settings.before_text -%}
+	{%- assign title = block.settings.title -%}	
+      {%- assign after_img = block.settings.after_img -%}
+          {%- assign after_text = block.settings.after_text -%}
+      {%- assign other_areas_treated = block.settings.other_areas_treated -%}
+
+    <div class="beforeafter-cards">
+      <div class="beforeafter-left">
+        <div class="before-img">
+ {%- unless before_img == blank -%}
+             {% if before_img %}
+        {%- assign before_img = before_img | img_url: 'master' -%}
+          <img class="lazyload"
+          alt="{{ before_img.alt | default: section.settings.link_text }}"
+          src="{{ before_img | img_url: 'large' }}"
+          data-src="{{ before_img }}"
+
+          data-aspectratio="{{  block.settings.before_img.aspect_ratio }}"
+          data-sizes="auto"
+          style="width:100%"/>
+          <noscript>
+            <img src="{{ section.settings.before_img | img_url: 'master' }}" alt="{{ section.settings.before_img.alt | default: section.settings.link_text }}" class="image--flex" />
+          </noscript>
+            {% endif %}
+            {%- endunless -%}
+        <div class="before-text">{{ before_text }}</div></div>
+        
+        <div class="after-img">
+          {%- unless after_img == blank -%}
+             {% if after_img %}
+        {%- assign after_img = after_img | img_url: 'master' -%}
+          <img class="lazyload"
+          alt="{{ after_img.alt | default: section.settings.link_text }}"
+          src="{{ after_img | img_url: 'large' }}"
+          data-src="{{ after_img }}"
+
+          data-aspectratio="{{  block.settings.after_img.aspect_ratio }}"
+          data-sizes="auto"
+          style="width:100%"/>
+          <noscript>
+            <img src="{{ section.settings.after_img | img_url: 'master' }}" alt="{{ section.settings.after_img.alt | default: section.settings.link_text }}" class="image--flex" />
+          </noscript>
+            {% endif %}
+            {%- endunless -%}
+        <div class="after-text">{{ after_text }}</div></div>
+        </div>
+      <div class="beforeafter-right">
+        <div class="tab-subheader">{{ title }}</div>
+         {%- unless other_areas_treated == blank -%}
+        <div class="tab-body bottom">Other areas treated:<br>{{ other_areas_treated }}</div>
+      {% endunless %}</div>
+        </div>
+          {% endif %}
+          {% endfor %}
+        
+          <br><div class="toTheTop"><a role="button" href="#BackToTop">Back to the top</a></div></div>
+</div>
+
+    </div>
+
+    <!-- #tab6 -->
+    <div class="content tab_content" data-tab="6" id="tab6">
+      <div class="holding-height padding-tab-container">
+       <div class="tab-howitworks-2">
+{% render 'okendo-reviews-widget-stingers', product: product %}
+         <br>  <div class="toTheTop"><a href="#BackToTop">Back to the top</a></div>
+</div>
+
+      </div>
+    </div>
+
+
+
+  </div></div>
+<!-- .tab_container -->
+
+<div style="line-height:0;">&nbsp;</div>
+</div>
+
+{% include 'treatments-membership-block' %}
+
+<br><br>
+
+
+
+{% schema %}
+
+{
+    "name": "Treatments + Blocks",
+    "class": "treatments-page-body2",
+    "settings": [
+        {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+        }, {
+            "type": "text",
+            "id": "facial",
+            "label": "Treatment Type",
+            "default": "<p>Supers Facial</p>"
+        }, {
+            "type": "text",
+            "id": "title",
+            "label": "Treatment Title",
+            "default": "Facial Name"
+        }, {
+            "type": "richtext",
+            "id": "price",
+            "label": "Price",
+            "default": "<p>$115 DROP-IN | $105 MEMBER</p>"
+        }, {
+            "type": "url",
+            "id": "booknow",
+            "label": "Book Now"
+        }, {
+            "type": "text",
+            "id": "tab_videofile",
+            "label": "Treatment Video"
+        }, {
+            "type": "image_picker",
+            "id": "tab_img",
+            "label": "Treatment Image"
+        }, {
+            "type": "text",
+            "id": "tab_duration",
+            "label": "HOW IT WORKS Duration"
+        }, {
+            "type": "richtext",
+            "id": "tab_description",
+            "label": "Treatment Description (long)"
+        }, {
+            "type": "text",
+            "id": "tab_subheader1",
+            "label": "Subheader 1"
+        }, {
+            "type": "richtext",
+            "id": "tab_description1",
+            "label": "Description 1"
+        }, {
+            "type": "text",
+            "id": "tab_subheader2",
+            "label": "Subheader 2"
+        }, {
+            "type": "richtext",
+            "id": "tab_description2",
+            "label": "Description 2"
+        }, {
+            "type": "text",
+            "id": "tab_subheader3",
+            "label": "Subheader3"
+        }, {
+            "type": "richtext",
+            "id": "tab_description3",
+            "label": "Description 3"
+        }, {
+            "type": "text",
+            "id": "tab_subheader10",
+            "label": "Subheader10"
+        }, {
+            "type": "richtext",
+            "id": "tab_description10",
+            "label": "Description 10"
+        }, {
+            "type": "richtext",
+            "id": "tab_knowyourunits",
+            "label": "Know Your Units Description"
+        }, {
+            "type": "text",
+            "id": "tab_treatableareas",
+            "label": "Treatable Areas"
+        }, {
+            "type": "richtext",
+            "id": "tab_pretreatment_text",
+            "label": "PRE TREATMENT text"
+        }, {
+            "type": "text",
+            "id": "tab_subheader4",
+            "label": "Subheader4"
+        }, {
+            "type": "richtext",
+            "id": "tab_description4",
+            "label": "Description 4"
+        }, {
+            "type": "text",
+            "id": "tab_subheader5",
+            "label": "Subheader5"
+        }, {
+            "type": "richtext",
+            "id": "tab_description5",
+            "label": "Description 5"
+        }, {
+            "type": "text",
+            "id": "tab_subheader12",
+            "label": "Subheader12"
+        }, {
+            "type": "richtext",
+            "id": "tab_description12",
+            "label": "Description 12"
+        }, {
+            "type": "text",
+            "id": "tab_pretreatment_addon_title",
+            "label": "Add On Title"
+        }, {
+            "type": "text",
+            "id": "tab_pretreatment_addon_name",
+            "label": "Add On Name"
+        }, {
+            "type": "text",
+            "id": "tab_pretreatment_addon_price",
+            "label": "Add On Price"
+        }, {
+            "type": "image_picker",
+            "id": "tab_pretreatment_addon_image",
+            "label": "Add On Photo"
+        }, {
+            "type": "richtext",
+            "id": "tab_pretreatment_addon_text",
+            "label": "Add On Details"
+        }, {
+            "type": "url",
+            "id": "tab_pretreatment_addon_link",
+            "label": "Quickview Link"
+        }, {
+            "type": "richtext",
+            "id": "tab_posttreatment_text",
+            "label": "POST TREATMENT text"
+        }, {
+            "type": "text",
+            "id": "tab_subheader11",
+            "label": "Subheader11"
+        }, {
+            "type": "richtext",
+            "id": "tab_description11",
+            "label": "Description 11"
+        }, {
+            "type": "text",
+            "id": "tab_subheader6",
+            "label": "Subheader6"
+        }, {
+            "type": "richtext",
+            "id": "tab_description7",
+            "label": "Description 7"
+        }, {
+            "type": "text",
+            "id": "tab_subheader8",
+            "label": "Subheader8"
+        }, {
+            "type": "richtext",
+            "id": "tab_description8",
+            "label": "Description 8"
+        }, {
+            "type": "text",
+            "id": "tab_subheader9",
+            "label": "Subheader9"
+        }, {
+            "type": "richtext",
+            "id": "tab_description9",
+            "label": "Description 9"
+        }, {
+            "type": "richtext",
+            "id": "beforeafter_text",
+            "label": "Before + After Description"
+        }, {
+            "type": "image_picker",
+            "id": "before_img",
+            "label": "Before Image"
+        }, {
+            "type": "image_picker",
+            "id": "after_img",
+            "label": "After Image"
+        }, {
+            "type": "image_picker",
+            "id": "membership_image",
+            "label": "Membership Image Desktop"
+        }, {
+            "type": "text",
+            "id": "membership_type",
+            "label": "Type"
+        }, {
+            "type": "richtext",
+            "id": "membership_details",
+            "label": "Details"
+        }, {
+            "type": "text",
+            "id": "membership_price",
+            "label": "Price"
+        }, {
+            "type": "url",
+            "id": "membership_link",
+            "label": "Book Now"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "block-1",
+            "name": "Treatable Areas",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "treatableareas_img",
+                    "label": "Stingers Map"
+                }, {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Treatable Area"
+                }, {
+                    "type": "text",
+                    "id": "treatableareas_unit",
+                    "label": "Units"
+                }, {
+                    "type": "richtext",
+                    "id": "treatableareas_text",
+                    "label": "Description"
+                }
+            ]
+        }, {
+            "type": "block-2",
+            "name": "Before + After",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "before_img",
+                    "label": "Before Image"
+                }, {
+                    "type": "text",
+                    "id": "before_text",
+                    "label": "Before",
+                    "default": "Before"
+                }, {
+                    "type": "image_picker",
+                    "id": "after_img",
+                    "label": "After Image"
+                }, {
+                    "type": "text",
+                    "id": "after_text",
+                    "label": "After X Weeks"
+                }, {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Before + After Details"
+                }, {
+                    "type": "text",
+                    "id": "other_areas_treated",
+                    "label": "Other Areas Treated"
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}
+
+{% stylesheet %}
+
+{% endstylesheet %}
+
+{% javascript %}
+  	var contentHeight = $(".holding-height").height();
+      	  $("#tab-height").height(contentHeight);
+  
+      $('.button-treatments').click(function() {
+        
+         $('.button-treatments.press').removeClass('press');
+          $(this).addClass('press');
+          $('.content.press').removeClass('press');
+          var tabNumber = $(this).attr('data-tab');
+          var tabToOpen = ".content[data-tab='" + tabNumber + "']"; 
+          var tabHeight = ".content[data-tab='" + tabNumber + "'] .holding-height"; 
+        
+          $(tabToOpen).addClass('press');
+        
+        $('#tab-height').height($(tabHeight).height());
+          
+      });
+  
+  
+{% endjavascript %}

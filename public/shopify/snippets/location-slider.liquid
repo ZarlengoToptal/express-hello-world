@@ -1,0 +1,39 @@
+<!-- /snippets/location-slider.liquid -->
+
+<div
+   class="location-slider-wrapper"
+   data-section-type="locations-slider"
+   data-section-id="{{ section.id }}"
+   data-slider-dots="false">
+
+  <ul id="LocationSlider-locations" class="location-cards">
+    {% for block in section.blocks %}
+    {%- assign category = block.settings.category -%}
+      {%- assign title = block.settings.title -%}
+      {%- assign length = block.settings.length -%}
+      {%- assign price = block.settings.price -%}
+      {%- assign notes = block.settings.notes -%}
+      {%- assign button_text = block.settings.button_text -%}
+      {%- assign button_link = block.settings.button_link -%}
+
+    <li class="location">
+      <div class="location-card">
+        <div class="location-image"> 
+            <img src="{{ block.settings.locationimage | img_url: "large" }}" alt="{{ block.settings.locationimage.alt | default: block.settings.link_text }}" class="image--flex" /> 
+        </div>
+        <div class="location-body">
+            <h2>{{block.settings.title}}</h2>
+            {{block.settings.locationbody}}
+          {% if block.settings.locationlink == blank %}
+          <div class="tab-subheader">{{ block.settings.locationlinktext }}</div>
+          {% else %}
+            <a href="{{ block.settings.locationlink }}">{{ block.settings.locationlinktext }}</a>
+          {% endif %}
+        </div>
+     </div> 
+    </li>
+
+    {% endfor %}
+  </ul>
+
+</div>

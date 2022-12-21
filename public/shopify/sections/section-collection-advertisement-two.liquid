@@ -1,0 +1,40 @@
+<!-- /sections/section-collection-advertisement-two.liquid-->
+
+<section>
+  {% include 'collection-advertisement-two' %}
+</section>
+
+
+{% schema %}
+  {
+    "name": "Advertisment Card Two",
+    "settings": [
+		{
+          "type": "image_picker",
+          "id": "double-image-left-collection-section-two",
+          "label": "Left Image"
+        },
+		{
+        "type": "html",
+        "id": "double-html-left-collection-section-two",
+        "label": "Content"
+        },
+		{
+        "type": "text",
+        "id": "section-double-collection-url-lable-two",
+        "label": "Link Lable"
+        },
+		{
+        "type": "url",
+        "id": "section-double-collection-url-two",
+        "label": "Link"
+        }
+	],
+  "presets": [
+    {
+    "name": "Advertisment Card Two",
+    "category": "collections"
+    }
+   ]
+  }
+{% endschema %}

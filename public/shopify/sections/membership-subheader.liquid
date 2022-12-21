@@ -1,0 +1,50 @@
+<!-- Membership Header and Sub -->
+<div class="membership-banner-text">
+  <h1>{{ section.settings.banner-title }}</h1>
+  <p class="text-left">{{ section.settings.banner-description }}</p>
+    <div id="membership-banner-cta">
+  		<a role="button" href="#membershiptiers" class="btn--membership btn--outline">SIGN UP</a>
+        <a role="button" href="https://formulafig.com/pages/memberships-quiz" class="btn--membership btn--outline" target="_blank">TAKE THE QUIZ</a>
+</div>
+  
+  
+  
+</div>
+
+<h2>{{ section.settings.title }}</h2>
+<p class="text-left">{{ section.settings.description }}</p>
+
+
+{% schema %}
+  {
+    "name": "Membership Header",
+    "settings": [
+	{
+      "type": "text",
+      "id": "banner-title",
+      "label": "Membership Banner Title",
+      "default": "Membership Type"
+      },
+      {
+      "type": "textarea",
+      "id": "banner-description",
+      "label": "Short Description"
+      },{
+      "type": "text",
+      "id": "title",
+      "label": "Heading"
+      },
+      {
+      "type": "textarea",
+      "id": "description",
+      "label": "Text"
+      }
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

@@ -1,0 +1,39 @@
+<div
+     class="mobile12-slider-wrapper"
+     data-section-type="mobile12-slider"
+     data-section-id="{{ section.id }}"
+     data-slider-dots="true">
+  <ul id="Mobile12Slider-{{ section.id }}" class="mobile12-slider">
+    {% for product in collections.treatments-serums.products %}
+    <li class="essential-mobile12">
+      {% include 'product-essential' %}
+    </li>
+    {% endfor %}
+  </ul>
+  <script>
+  $( document ).ready(function() {
+  	$('.mobile12-slider').slick({
+      dots: true,
+      infinite: true,
+      slidesToShow: 3,
+      slidesToScroll: 1,
+      responsive: [
+        {
+          breakpoint: 600,
+          settings: {
+            slidesToShow: 3,
+            slidesToScroll: 1
+          }
+        },
+        {
+          breakpoint: 480,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1
+          }
+        }
+      ]
+    });
+  });
+  </script>
+</div>

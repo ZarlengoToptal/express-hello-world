@@ -1,0 +1,32 @@
+<!-- /sections/section-single-card.liquid-->
+
+<section>
+  <div class="single_card_header">
+      <h4>{{ section.settings.single_card_header}}</h4>
+    </div>
+  <div class="single_card_body">
+    <h2>{{ section.settings.single_card_body }}</h2>
+  </div>
+</section>
+{% schema %}
+  {
+    "name": "Single Card",
+    "settings": [
+		{
+          "type": "text",
+          "id": "single_card_header",
+          "label": "Header Text"
+        },{
+          "type": "textarea",
+          "id": "single_card_body",
+          "label": "Body Text"
+        }
+	],
+  "presets": [
+    {
+    "name": "Single Card",
+    "category": "ADVANCED LAYOUT"
+    }
+   ]
+  }
+{% endschema %}

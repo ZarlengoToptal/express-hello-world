@@ -1,0 +1,79 @@
+<!-- /templates/collection.2022-listed.liquid -->
+
+
+<nav class="breadcrumb plp-breadcrumb" role="navigation" aria-label="breadcrumbs">
+  <a href="{{ routes.root_url }}" title="{{ 'general.breadcrumbs.home_link_title' | t }}">{{ 'general.breadcrumbs.home' | t }}</a>
+  <span aria-hidden="true">&rsaquo;</span>
+  <a href="https://formulafig.com/collections/shop-all" title="shop All">Shop All</a>
+  {% if collection.handle %}
+    <span aria-hidden="true">&rsaquo;</span>
+    {% capture url %}{{ routes.collections_url }}/{{ collection.handle }}{% endcapture %}
+    {{ collection.title | link_to: url }}
+  {% endif %}
+  <span aria-hidden="true">&rsaquo;</span>
+  <span>{{ product.title }}</span>
+</nav>
+
+<div class="plpSA-wrapper-header">
+  <div class="plpSA-header">
+    <div><h1>{{ collection.title }}</h1></div>
+    {%- if collection.metafields.custom.collection_tag_line != blank -%}
+      <h2>{{ collection.metafields.custom.collection_tag_line }}</h2>
+    {%- endif -%}
+  </div>
+
+</div>
+
+<div class="plpSA-wrapper-collections listed" style="border-top: 1px solid #000;">
+          <div class="collection__products">
+            <div class="js-grid" data-grid-large="4" data-grid-small="2">
+              <!-- /snippets/product-grid-item-2022.liquid -->
+                
+              {% for product in collection.products %}
+              {% capture iteration %}{% cycle '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18',
+              '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', 
+                                    '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53' %}{% endcapture %}
+
+              {% if iteration == '9' or iteration == 9 %}
+                 <div class="js-grid__full-row"> {% section 'section-collection-advertisement-one' %}</div>
+              {% endif %}
+
+              {% if iteration == '17' or iteration == 17 %}
+                 <div class="js-grid__full-row"> {% section 'section-collection-advertisement-two' %}</div>
+              {% endif %}
+
+              {% if iteration == '25' or iteration == 25 %}
+                 <div class="js-grid__full-row"> {% section 'section-collection-advertisement-three' %}</div>
+              {% endif %}
+
+              {% if iteration == '33' or iteration == 33 %}
+                 <div class="js-grid__full-row"> {% section 'section-collection-advertisement-four' %}</div>
+              {% endif %}
+
+              {% if iteration == '41' or iteration == 41 %}
+                 <div class="js-grid__full-row"> {% section 'section-collection-advertisement-five' %}</div>
+              {% endif %}
+
+             
+                
+              <div class="product-grid-2022">
+                {% render 'product-grid-item-2022', product: product %}
+              </div>
+              {% else %}
+                {% if collection.handle == 'all' and collection.current_tags == '' %}
+                  {% render 'onboarding-empty-collection' %}
+                {% else %}
+                <div class="js-grid__full-row">
+                  <p>{{ 'collections.general.no_matches' | t }}</p>
+                </div>
+                {% endif %}
+                
+              {% endfor %}
+          
+            </div>
+
+
+</div>
+
+
+

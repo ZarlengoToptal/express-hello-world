@@ -1,0 +1,256 @@
+<!-- /snippets/kitsilano-individual-card-details.liquid -->
+
+
+<div
+   class="location-kitsilano-card-wrapper"
+   data-section-type="location-individual-card"
+   data-section-id="{{ section.id }}">
+
+  <div class="locations-individual">
+    {% for block in section.blocks %}
+    	{%- assign description-kitsilano-header = block.settings.description-kitsilano-header -%}
+        {%- assign title-kitsilano-individual = block.settings.title-kitsilano-individual -%}
+    	{%- assign tagline-kitsilano-individual = block.settings.tagline-kitsilano-individual -%}
+    	{%- assign country-kitsilano-individual = block.settings.country-kitsilano-individual -%}
+    	{%- assign address-kitsilano-individual = block.settings.address-kitsilano-individual -%}
+    	{%- assign telephone-kitsilano-individual = block.settings.telephone-kitsilano-individual -%}
+    	{%- assign hours-kitsilano-individual = block.settings.hours-kitsilano-individual -%}
+    	{%- assign cancelation-kitsilano-individual = block.settings.cancelation-kitsilano-individual -%}
+    	{%- assign kitsilano-banner-image = block.settings.kitsilano-banner-image -%}
+    	{%- assign book-now-kitsilano-individual = block.settings.book-now-kitsilano-individual -%}
+    	{%- assign google-kitsilano-individual = block.settings.google-kitsilano-individual -%}
+    	{%- assign address-kitsilano-full-description = block.settings.address-kitsilano-full-description -%}
+    	{%- assign parking-kitsilano-individual = block.settings.parking-kitsilano-individual -%}
+    	{%- assign accessability-kitsilano-individual = block.settings.accessability-kitsilano-individual -%}
+    	{%- assign kitsilano-shop-now-image = block.settings.kitsilano-shop-now-image -%}
+    	{%- assign kitsilano-shop-now-cta = block.settings.kitsilano-shop-now-cta -%}
+    	{%- assign kitsilano-skin-care-location-text = block.settings.kitsilano-skin-care-location-text -%}
+    	{%- assign kitsilano-services-available-treatments = block.settings.kitsilano-services-available-treatments -%}
+    	{%- assign treatments-kitsilano-text = block.settings.treatments-kitsilano-text -%}
+    	{%- assign kitsilano-services-available-memberships = block.settings.kitsilano-services-available-memberships -%}
+    	{%- assign skin-care-kitsilano-text = block.settings.skin-care-kitsilano-text -%}
+    	{%- assign membership-kitsilano-text = block.settings.membership-kitsilano-text -%}
+    	{%- assign kitsilano-video = block.settings.kitsilano-video -%}
+
+    
+    	{%- assign img_object = section.settings.kitsilano-banner-image -%}
+  		{%- assign img_small = section.settings.kitsilano-banner-image | img_url: '18x' -%}
+  		{%- assign img_api = section.settings.kitsilano-banner-image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+
+  		{%- assign mobile_img_object = section.settings.kitsilano-banner-image -%}
+  		{%- assign mobile_img_small = section.settings.kitsilano-banner-image | img_url: '18x' -%}
+  		{%- assign mobile_img_api = section.settings.kitsilano-banner-image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+    
+    <div class="locations-individual-home-banner homepage-image fade-in-child preventOverflow {{ section.settings.height }} {{ section.settings.color }}" data-section-id="{{ section.id }}" data-section-type="parallax" id="FeaturedImage-{{ section.id }}"
+      {% if section.settings.parallax %}
+        data-parallax-src="{{ img_small }}"
+        data-src="{{ img_api }}"
+        data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048, 2450, 2700, 3000, 3350, 3750, 4100, 4480]"
+        data-aspectratio="{{  section.settings.image.aspect_ratio }}"
+        data-sizes="auto"
+        style="background-image: url('{{ section.settings.image | img_url: '1x1' }}');"
+      {% endif %}>
+
+      {% if section.settings.height == 'use_image' %}
+        <div class="lazy-image desktop-only" style="padding-top:{{ 1 | divided_by: section.settings.image.aspect_ratio | times: 100}}%; background-image: url('{{ section.settings.image | img_url: '1x1' }}');">
+          <img class="lazyload fade-in" {% if section.settings.parallax %} style="opacity: 0;"{% endif %}
+            alt="{{ section.settings.image.alt | default: shop.name }}"
+            data-src="{{ img_api }}"
+            data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048, 2450, 2700, 3000, 3350, 3750, 4100, 4480]"
+            data-aspectratio="{{  section.settings.image.aspect_ratio }}"
+            data-parent-fit="cover"
+            data-sizes="auto"/>
+        </div>
+        <div class="lazy-image mobile-only" style="padding-top:{{ 1 | divided_by: section.settings.image.aspect_ratio | times: 100}}%; background-image: url('{{ section.settings.image | mobile_img_url: '1x1' }}');">
+          <img class="lazyload fade-in" {% if section.settings.parallax %} style="opacity: 0;"{% endif %}
+            alt="{{ section.settings.image.alt | default: shop.name }}"
+            data-src="{{ mobile_img_api }}"
+            data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048, 2450, 2700, 3000, 3350, 3750, 4100, 4480]"
+            data-aspectratio="{{  section.settings.image.aspect_ratio }}"
+            data-parent-fit="cover"
+            data-sizes="auto"/>
+        </div>
+      {% endif %}
+
+      {% if section.settings.parallax == false and section.settings.height != 'use_image' %}
+        <div class="background-size-cover lazyload desktop-only" data-bgset="{% include 'bgset', image: img_object %}"></div>
+        <div class="background-size-cover lazyload mobile-only" data-bgset="{% include 'bgset', image: mobile_img_object %}"></div>
+      {% endif %}
+
+      {% if section.settings.height == 'use_screen_full' %}
+        <div class="scroll_icon_wrap">
+          <a role="button" href="#scroll-{{ section.id }}" class="scroll_link bloop">
+            <span class="scroll_icon">{% include 'svg-down' %}</span>
+          </a>
+        </div>
+        <div class="scroll__link" id="scroll-{{ section.id }}"></div>
+      {% endif %}
+
+      <noscript>
+        <img src="{{ img_object | img_url: '1440x' }}" alt="{{ img_object.alt | default: section.settings.title }}" class="responsive-wide-image"/>
+      </noscript>
+    </div>
+    
+    
+    <div id="show-video-tour" class="video-tour-wrapper">
+      	<a id="hide-video-tour" href="javascript:void(0)">CLOSE</a>
+        <div class="video-tour-file">
+          {{ kitsilano-video }}
+        </div>
+    </div>
+      
+    <div class="wrapper">
+      <div class="location-individual-details location-desktop-grid location-horizontal-padding">
+        <div class="section-padding">
+          <div class="title_mono">{{ country-kitsilano-individual }}</div>
+          <h1>{{ title-kitsilano-individual }}</h1>
+          <div class="section-padding-bottom hero__description"><p>{{ tagline-kitsilano-individual }}</p></div>
+          <div>{{ address-kitsilano-individual }}</div>
+          <div>T. {{ telephone-kitsilano-individual }}</div>
+<!--           <div class="play-location-video">
+            <a id="video-tour-button" href="javascript:void(0)">PLAY VIDEO</a>
+          </div> -->
+          <div class="location-individual-card-button section-padding">
+            <a role="button" href="{{ book-now-kitsilano-individual }}">
+              <div class="book-now-locations-individual">BOOK NOW</div>
+            </a>
+          </div>
+        </div>
+        
+      </div> 
+      
+	<div class="location-desktop-grid location-horizontal-padding">
+      <div class="location-individual-details">
+        <div class="section-padding">
+          	<div>
+            <div class="title_mono">Opening HOURS</div>
+              <div class="hours-grid">
+                 <div>MON<br>TUE<br>WED<br>THU<br>FRI<br>SAT<br>SUN</div>
+                <div>{{ hours-kitsilano-individual }}</div>
+              </div>
+          </div>
+        </div>
+        <div>
+            <div class="title_mono">CANCELLATIONS</div>
+            {{ cancelation-kitsilano-individual }}
+          </div>
+        <div style="padding-top:1rem;">
+        	<div class="title_mono">PARKING</div>
+        	{{ parking-kitsilano-individual }}
+        </div>
+        <div class="section-padding">
+        	<div class="title_mono">ACCESSIBILITY</div>
+        	{{ accessability-kitsilano-individual }}
+        </div>
+      </div>
+      
+      <div class="google-individual-location-wrapper">
+        <div class="title_mono">DIRECTIONS</div>
+          {{ google-kitsilano-individual }}
+        <div>{{ address-kitsilano-full-description }}</div>
+      </div>
+      
+    </div><!-- end of grid -->
+
+    <div class="services-available-location-wrapper">
+      <div class="shop-now-wrapper">
+      	<h2>Services Available</h2>
+      </div>
+      <div class="locations-home-grid location-horizontal-padding">
+        <div class="services-individual-location section-margin">
+          <div class="services-image-location">
+            {%- assign kitsilano-services-available-treatments = block.settings.kitsilano-services-available-treatments | img_url: 'large' -%}
+            <div class="services-image">
+              <img class="lazyload" alt="{{ block.settings.kitsilano-services-available-treatments.alt | default: section.settings.link_text }}" src="{{ block.settings.kitsilano-services-available-treatments | img_url: 'large' }}" data-src="{{ kitsilano-services-available-treatments }}" data-aspectratio="{{ section.settings.kitsilano-services-available-treatments.aspect_ratio }}" data-sizes="auto" style="width:100%"/>
+            </div>
+            <div class="services-specific">
+              <div class="title_mono">Treatments</div>
+              <div class="services-individual-padding">{{ treatments-kitsilano-text }}</div>
+            </div>
+          </div>
+          <div class="static-services"><a href="https://formulafig.com/pages/treatments">Learn More</a></div>
+        </div>
+        <div class="services-individual-location section-margin">
+          <div class="services-image-location">
+            {%- assign kitsilano-services-available-skin-care = block.settings.kitsilano-services-available-skin-care | img_url: 'large' -%}
+            <div class="services-image">
+              <img class="lazyload" alt="{{ block.settings.kitsilano-services-available-skin-care.alt | default: section.settings.link_text }}" src="{{ block.settings.kitsilano-services-available-skin-care | img_url: 'large' }}" data-src="{{ kitsilano-services-available-skin-care }}" data-aspectratio="{{ section.settings.kitsilano-services-available-skin-care.aspect_ratio }}" data-sizes="auto" style="width:100%"/>
+            </div>
+            <div class="services-specific">
+              <div class="title_mono">Skincare</div>
+              <div class="services-individual-padding">We're committed to solutions for every complexion concern.{{ kitsilano-skin-care-location-text }}</div>
+            </div>
+          </div>
+          <div class="static-services"><a href="https://formulafig.com/collections/shop-all">Shop Now</a></div>
+        </div>
+        <div class="services-individual-location section-margin">
+          <div class="services-image-location">
+            {%- assign kitsilano-services-available-membership = block.settings.kitsilano-services-available-membership | img_url: 'large' -%}
+            <div class="services-image">
+              <img class="lazyload" alt="{{ block.settings.kitsilano-services-available-membership.alt | default: section.settings.link_text }}" src="{{ block.settings.kitsilano-services-available-membership | img_url: 'large' }}" data-src="{{ kitsilano-services-available-membership }}" data-aspectratio="{{ section.settings.kitsilano-services-available-membership.aspect_ratio }}" data-sizes="auto" style="width:100%"/>
+            </div>
+            <div class="services-specific">
+              <div class="title_mono">Membership</div>
+              <div class="services-individual-padding">{{ membership-kitsilano-text }}</div>
+            </div>
+          </div>
+          <div class="static-services"><a href="https://formulafig.com/pages/membership">Become A Member</a></div>
+        </div>
+      
+      </div>
+    </div><!-- end of services -->
+      
+    <div class="shop-now-wrapper">
+      <h2>Shop Skincare</h2>
+      <div class="location-desktop-grid location-horizontal-padding">
+        <div class="locations-individual-home-banner" style="padding:1rem 0;">
+          <div class="shop-now-banner locations-individual-inner">
+            {% if block.settings.kitsilano-shop-now-image %}
+            {%- assign kitsilano-shop-now-image = block.settings.kitsilano-shop-now-image | img_url: 'master' -%}
+            <img class="lazyload" alt="{{ block.settings.kitsilano-shop-now-image.alt | default: section.settings.link_text }}" src="{{ block.settings.kitsilano-shop-now-image | img_url: 'master' }}" data-src="{{ shop-now-image }}" data-aspectratio="{{ section.settings.kitsilano-shop-now-image.aspect_ratio }}" data-sizes="auto" style="width:100%"/>
+            {% endif %}
+          </div>
+        </div>
+        <div class="section-padding locations-individual-inner">   
+          <div class="services-static-wrapper hero__description">
+            <p style="padding-bottom:2rem;">{{ kitsilano-shop-now-cta }}</p>
+           <a href="https://formulafig.com/collections/shop-all" style="text-decoration:none"> <div class="static-services">Shop Now</div></a>
+          </div>
+        </div>
+      </div>
+    </div>
+      
+    <div class="services-available-location-wrapper">
+      <div class="shop-now-wrapper">
+      	<h2>Concierge</h2>
+        <div class="location-horizontal-padding"><p>Questions? Our concierge team is here to help.<br>
+         <span style="text-decoration:underline;"><a onclick="GorgiasChat.open();">Chat with us</a></span> or email us at <a href="mailto:hello@formulafig.com" title="mailto:hello@formulafig.com">hello@formulafig.com</p>
+        </div>
+        </div>
+    </div>
+      
+    <!-- <div class="services-available-location-wrapper">
+      <div class="shop-now-wrapper">
+      	<h2>Reviews</h2>
+      </div>
+    </div> -->
+    
+   </div><!-- end of containing wrapper -->
+    
+
+    {% endfor %}
+</div>
+  
+  
+<script>
+  var videoTour = document.getElementById("video-tour-button");
+  var videoPlay = document.getElementById("show-video-tour");
+  var videoHide = document.getElementById("hide-video-tour");
+  videoTour.addEventListener("click", function(){
+    videoPlay.classList.add("openAndPlay");
+  });
+  videoHide.addEventListener("click", function(){
+    videoPlay.classList.remove("openAndPlay");
+  });
+
+</script>

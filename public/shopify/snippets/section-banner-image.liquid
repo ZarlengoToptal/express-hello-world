@@ -1,0 +1,102 @@
+{%- if section.settings.image -%}
+	
+  {%- assign img_object = section.settings.image -%}
+  {%- assign img_small = section.settings.image | img_url: '18x' -%}
+  {%- assign img_api = section.settings.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+{%- else -%}
+	
+  {%- assign img_object = 'blank.svg' | asset_url -%}
+  {%- assign img_small =  'blank.svg' | asset_url -%}
+  {%- assign img_api = 'blank.svg' | asset_url -%}
+{%- endif -%}
+{%- if section.settings.mobile_image -%}
+
+  {%- assign mobile_img_object = section.settings.mobile_image -%}
+  {%- assign mobile_img_small = section.settings.mobile_image | img_url: '18x' -%}
+  {%- assign mobile_img_api = section.settings.mobile_image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+{%- else -%}
+  {%- assign mobile_img_object = img_object -%}
+  {%- assign mobile_img_small =  img_small -%}
+  {%- assign mobile_img_api = img_api -%}
+{%- endif -%}
+<div class="homepage-image fade-in-child preventOverflow {{ section.settings.height }} {{ section.settings.color }}" data-section-id="{{ section.id }}" data-section-type="parallax" id="FeaturedImage-{{ section.id }}"
+  {% if section.settings.parallax %}
+    data-parallax-src="{{ img_small }}"
+    data-src="{{ img_api }}"
+    data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048, 2450, 2700, 3000, 3350, 3750, 4100, 4480]"
+    data-aspectratio="{{  section.settings.image.aspect_ratio }}"
+    data-sizes="auto"
+    style="background-image: url('{{ section.settings.image | img_url: '1x1' }}');"
+  {% endif %}>
+
+  <div class="content--centered">
+    <div class="{{ section.settings.text_align }} preventOverflowContent">
+      {% unless section.settings.title == '' %}
+        <div class="title--flex">
+          {{ section.settings.title }}
+        </div>
+      {% endunless %}
+
+      {% unless section.settings.description == '' %}
+        <p class="content--flex uppercase">{{ section.settings.description }}</p>
+      {% endunless %}
+
+      <div>
+        {%- for i in (1..2) -%}
+          {% capture button_text_key = %}button_text_{{ i }}{% endcapture %}
+          {% capture button_link_key = %}button_link_{{ i }}{% endcapture %}
+          {% capture button_style_key = %}button_style_{{ i }}{% endcapture %}
+          {%- assign button_text = section.settings[button_text_key] -%}
+          {%- assign button_link = section.settings[button_link_key] -%}
+          {%- assign button_style = section.settings[button_style_key] -%}
+          {% unless button_text == blank and button_link == blank %}
+            <a role="button" class="{{ button_style }}" href="{{ button_link }}">
+              {{ button_text | escape }}
+            </a>
+          {% endunless %}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+
+
+
+  {% if section.settings.height == 'use_image' %}
+    <div class="lazy-image desktop-only" style="padding-top:{{ 1 | divided_by: section.settings.image.aspect_ratio | times: 100}}%; background-image: url('{{ section.settings.image | img_url: '1x1' }}');">
+      <img class="lazyload fade-in" {% if section.settings.parallax %} style="opacity: 0;"{% endif %}
+        alt="{{ section.settings.image.alt | default: shop.name }}"
+        data-src="{{ img_api }}"
+        data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048, 2450, 2700, 3000, 3350, 3750, 4100, 4480]"
+        data-aspectratio="{{  section.settings.image.aspect_ratio }}"
+        data-parent-fit="cover"
+        data-sizes="auto"/>
+    </div>
+    <div class="lazy-image mobile-only" style="padding-top:{{ 1 | divided_by: section.settings.image.aspect_ratio | times: 100}}%; background-image: url('{{ section.settings.image | mobile_img_url: '1x1' }}');">
+      <img class="lazyload fade-in" {% if section.settings.parallax %} style="opacity: 0;"{% endif %}
+        alt="{{ section.settings.image.alt | default: shop.name }}"
+        data-src="{{ mobile_img_api }}"
+        data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048, 2450, 2700, 3000, 3350, 3750, 4100, 4480]"
+        data-aspectratio="{{  section.settings.image.aspect_ratio }}"
+        data-parent-fit="cover"
+        data-sizes="auto"/>
+    </div>
+  {% endif %}
+
+  {% if section.settings.parallax == false and section.settings.height != 'use_image' %}
+    <div class="background-size-cover lazyload desktop-only" data-bgset="{% include 'bgset', image: img_object %}"></div>
+    <div class="background-size-cover lazyload mobile-only" data-bgset="{% include 'bgset', image: mobile_img_object %}"></div>
+  {% endif %}
+
+  {% if section.settings.height == 'use_screen_full' %}
+    <div class="scroll_icon_wrap">
+      <a role="button" href="#scroll-{{ section.id }}" class="scroll_link bloop">
+        <span class="scroll_icon">{% include 'svg-down' %}</span>
+      </a>
+    </div>
+    <div class="scroll__link" id="scroll-{{ section.id }}"></div>
+  {% endif %}
+
+  <noscript>
+    <img src="{{ img_object | img_url: '1440x' }}" alt="{{ img_object.alt | default: section.settings.title }}" class="responsive-wide-image"/>
+  </noscript>
+</div>

@@ -1,0 +1,11 @@
+<!-- /snippets/essential-retinol.liquid -->
+
+<div class="mobile3-slider-wrapper" data-section-type="mobile3-slider" data-section-id="{{ section.id }}" data-slider-dots="true">
+    <ul class="mobile-slider mobile3-slider" id="Mobile3Slider-{{ section.id }}">
+        {% for product in collections.retinol.products %}
+            <li class="essential-mobile3">
+                {% include 'product-essential' %}
+            </li>
+        {% endfor %}
+    </ul>
+</div>

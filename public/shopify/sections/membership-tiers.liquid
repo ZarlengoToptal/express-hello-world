@@ -1,0 +1,154 @@
+<!-- Membership Tiers -->
+
+<div class="membership-tiers-header">
+	<h2>{{ section.settings.title }}</h2>
+	<p class="text-left">{{ section.settings.description }}<br><br>
+    For Ossington Fig Bar guests, please reach out to our <a style="text-decoration:underline" onclick="GorgiasChat.open();">Guest Concierge</a></span> to sign up.</p>
+</div>
+
+{% include 'membership-cards' %}
+
+{% schema %}
+  {
+    "name": "Membership Tiers",
+    "settings": [
+	{
+      "type": "text",
+      "id": "title",
+      "label": "Heading"
+      },
+      {
+      "type": "textarea",
+      "id": "description",
+      "label": "Text"
+      }
+	],
+  "blocks": [
+        {
+        "type": "membership",
+        "name": "Membership",
+        "settings": [
+        {
+        "type": "text",
+        "id": "title",
+        "label": "Membership Title",
+        "default": "Membership Type"
+        },{
+        "type": "text",
+        "id": "price",
+        "label": "Price",
+        "default": "$150 / Month"
+        },{
+        "type": "text",
+        "id": "header",
+        "label": "Header"
+        }, {
+        "type": "richtext",
+        "id": "description",
+        "label": "Membership Description"
+        }, {
+        "type": "url",
+        "id": "quickview_link",
+        "label": "Learn More"
+        }, {
+			"type": "image_picker",
+            "id": "membershipphoto",
+            "label": "Membership Photo"
+          }, {
+            "type": "text",
+            "id": "header_price",
+            "label": "PopUp Header Name + Price"
+          },{
+              "type": "text",
+              "id": "header1",
+              "label": "PopUp Header One"
+            }, {
+            "type": "richtext",
+            "id": "description1",
+            "label": "Membership Description (long)"
+            },{
+              "type": "text",
+              "id": "header2",
+              "label": "PopUp Header Two"
+            }, {
+            "type": "richtext",
+            "id": "description2",
+            "label": "Description Two (long)"
+            },{
+              "type": "text",
+              "id": "header3",
+              "label": "PopUp Header Three"
+            }, {
+            "type": "richtext",
+            "id": "description3",
+            "label": "Description Three (long)"
+            }, {
+            "type": "richtext",
+            "id": "short_code",
+            "label": "Shortcode for Membership"
+          },{
+          "type": "html",
+          "id": "html_1",
+          "label": "Code for membership 1",
+          "info": "Use shortcode [code_1]"
+        },
+        {
+          "type": "html",
+          "id": "html_2",
+          "label": "Code for membership 2",
+          "info": "Use shortcode [code_2]"
+        },
+        {
+          "type": "html",
+          "id": "html_3",
+          "label": "Code for membership 3",
+          "info": "Use shortcode [code_3]"
+        },
+        {
+          "type": "html",
+          "id": "html_4",
+          "label": "Code for membership 4",
+          "info": "Use shortcode [code_4]"
+        }
+        ]
+		}
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+
+{% endstylesheet %}
+
+{% javascript %}
+  $( document ).ready(function() {
+  	// Slick Slider Init
+  	$('#MembershipSlider-locations').slick({
+      dots: true,
+      infinite: true,
+      slidesToShow: 4,
+      slidesToScroll: 1,
+      responsive: [
+        {
+          breakpoint: 780,
+          settings: {
+			centerMode: true,
+            slidesToShow: 2,
+            slidesToScroll: 1,
+			dots: true,
+			infinite: true,
+          }
+        },
+		{
+          breakpoint: 600,
+          settings: {
+			centerMode: true,
+            slidesToShow: 1,
+            slidesToScroll: 1,
+			dots: true,
+          }
+        }
+      ]
+    });
+  });
+{% endjavascript %}

@@ -1,0 +1,9 @@
+{%- for link in linklists.collection-navigation.links %}
+  <div class="plpSA-navigation"><a href="{{ link.url }}">
+    {% if forloop.index != 5 %}
+      <div class="collection-nav-line"></div>
+    {%- endif -%}
+    <div class="collection-nav-box"></div>
+    <div class="nav-item-plpSA">{{ link.title }}</div>
+  </a></div>
+{%- endfor -%}

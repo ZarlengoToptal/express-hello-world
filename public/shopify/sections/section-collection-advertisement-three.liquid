@@ -1,0 +1,40 @@
+<!-- /sections/section-collection-advertisement-three.liquid-->
+
+<section>
+  {% include 'collection-advertisement-three' %}
+</section>
+
+
+{% schema %}
+  {
+    "name": "Advertisment Card Three",
+    "settings": [
+		{
+          "type": "image_picker",
+          "id": "double-image-left-collection-section-three",
+          "label": "Left Image"
+        },
+		{
+        "type": "html",
+        "id": "double-html-left-collection-section-three",
+        "label": "Content"
+        },
+		{
+        "type": "text",
+        "id": "section-double-collection-url-lable-three",
+        "label": "Link Lable"
+        },
+		{
+        "type": "url",
+        "id": "section-double-collection-url-three",
+        "label": "Link"
+        }
+	],
+  "presets": [
+    {
+    "name": "Advertisment Card Three",
+    "category": "collections"
+    }
+   ]
+  }
+{% endschema %}

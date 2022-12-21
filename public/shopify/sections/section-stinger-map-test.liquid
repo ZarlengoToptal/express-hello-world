@@ -1,0 +1,267 @@
+<!-- /sections/section-stinger-map.liquid-->
+<style>
+  .stinger-column-all{
+    display: inline-block;
+  }
+  .stinger-column-all .stinger-column-outer{
+    width:100%;
+  }
+  .stinger-column-all .stinger-column-inner{
+    float:left;
+    padding: 0.25rem 1rem;
+    width:30%;
+  }
+@media only screen and (max-width: 1100px) {
+  .stinger-column-all .stinger-column-inner{
+    width:48% !important;
+  }
+}
+  
+</style>
+<section>
+  <div class="stinger-map-section">
+  	<div class="stinger-map">
+      <h2 class="mobile-show">Our Guide to Stingers</h2>
+      {% render 'stinger-map' %}
+    </div>
+    <!-- desktop map -->
+    <div class="">
+      <h2 class="desktop-show" style="padding: 4rem 0 1rem 1rem;">Our Guide to Stingers</h2>
+     <div class="stinger-column-all ">
+        <div class="stinger-column-outer">
+          <div class="stinger-column-inner">
+            <div class="stinger-number"><p>1</p></div><div class="stinger-type foreheadLines"><p>Forehead Lines</p></div>
+          </div>
+          <div class="stinger-column-inner">
+            <div class="stinger-number"><p>2</p></div><div class="stinger-type Glabella"><p>11s (Glabella)</p></div>
+          </div>
+          <div class="stinger-column-inner">
+            <div class="stinger-number"><p>3</p></div><div class="stinger-type BrowLift"><p>Brow Lift</p></div>
+          </div>
+          <div class="stinger-column-inner">
+            <div class="stinger-number"><p>4</p></div><div class="stinger-type CrowsFeet"><p>Crow’s Feet</p></div>
+          </div>
+          <div class="stinger-column-inner">
+            <div class="stinger-number"><p>5</p></div><div class="stinger-type BunnyLines"><p>Bunny Lines</p></div>
+          </div>
+          <div class="stinger-column-inner">
+            <div class="stinger-number"><p>6</p></div><div class="stinger-type doa-6"><p>DAO</p></div>
+          </div>
+          <div class="stinger-column-inner">
+            <div class="stinger-number"><p>7</p></div><div class="stinger-type GummySmile"><p>Gummy Smile</p></div>
+          </div>
+          <div class="stinger-column-inner">
+            <div class="stinger-number"><p>8</p></div><div class="stinger-type LipFlip"><p>Lip Flip + Perioral</p></div>
+          </div>
+          <div class="stinger-column-inner">
+            <div class="stinger-number"><p>9</p></div><div class="stinger-type MentalisMuscle"><p>Mentalis Muscle</p></div>
+          </div>
+          <div class="stinger-column-inner">
+            <div class="stinger-number"><p>10</p></div><div class="stinger-type CosmeticMasseter"><p>Cosmetic Masseter</p></div>
+          </div>
+          <div class="stinger-column-inner">
+            <div class="stinger-number"><p>11</p></div><div class="stinger-type stinger-neck"><p>Neck</p></div>
+          </div>
+        </div>
+     </div>
+      <div class="stinger-cta">
+        <div class="double_card_header">
+          <h4>{{ section.settings.stinger_header}}</h4>
+        </div>
+        <div class="double_card_body">
+          <p>{{ section.settings.stinger_body }}</p>
+        </div>
+        <a role="button" href="https://formulafig.com/pages/appointments">
+          <div><div class="book-now-locations">BOOK NOW</div></div>
+          <!--       	  <div class="mobile-show"><div class="book-now-locations">BOOK CONSULTATION</div></div> -->
+        </a>
+      </div>
+  </div><!-- end of desktop -->
+  
+        
+</div><!-- end of map grid -->
+    
+
+</section>
+{% schema %}
+  {
+    "name": "Stinger Map",
+    "settings": [
+		{
+          "type": "text",
+          "id": "stinger_header",
+          "label": "Header Text"
+        },{
+          "type": "textarea",
+          "id": "stinger_body",
+          "label": "Subtitle Text"
+        }
+	],
+  "presets": [
+    {
+    "name": "Stinger Map",
+    "category": "ADVANCED LAYOUT"
+    }
+   ]
+  }
+{% endschema %}
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var listItem1 = document.querySelector('.foreheadLines');
+  	var item1 = document.querySelectorAll(".forehead-lines");
+  
+    for (let i = 0; i < item1.length; i++) {
+
+    listItem1.addEventListener('mouseenter', function (e) {
+        item1[i].classList.add('green');
+    });
+    listItem1.addEventListener('mouseleave', function () {
+        item1[i].classList.remove('green');
+    })
+    
+    };
+  
+  	var listItem2 = document.querySelector('.Glabella');
+  	var item2 = document.querySelectorAll(".Glabella-2");
+  
+    for (let i = 0; i < item2.length; i++) {
+
+    listItem2.addEventListener('mouseenter', function (e) {
+        item2[i].classList.add('green');
+    });
+    listItem2.addEventListener('mouseleave', function () {
+        item2[i].classList.remove('green');
+    })
+    
+    };
+  
+  	var listItem3 = document.querySelector('.BrowLift');
+  	var item3 = document.querySelectorAll(".brow-lift");
+  
+    for (let i = 0; i < item3.length; i++) {
+
+    listItem3.addEventListener('mouseenter', function (e) {
+        item3[i].classList.add('green');
+    });
+    listItem3.addEventListener('mouseleave', function () {
+        item3[i].classList.remove('green');
+    })
+    
+    };
+  
+  	var listItem4 = document.querySelector('.CrowsFeet');
+  	var item4 = document.querySelectorAll(".crows-feet");
+  
+    for (let i = 0; i < item4.length; i++) {
+
+    listItem4.addEventListener('mouseenter', function (e) {
+        item4[i].classList.add('green');
+    });
+    listItem4.addEventListener('mouseleave', function () {
+        item4[i].classList.remove('green');
+    })
+    
+    };
+  
+  	var listItem5 = document.querySelector('.BunnyLines');
+  	var item5 = document.querySelectorAll(".bunnie-lines");
+  
+    for (let i = 0; i < item5.length; i++) {
+
+    listItem5.addEventListener('mouseenter', function (e) {
+        item5[i].classList.add('green');
+    });
+    listItem5.addEventListener('mouseleave', function () {
+        item5[i].classList.remove('green');
+    })
+    
+    };
+  
+  	var listItem6 = document.querySelector('.doa-6');
+  	var item6 = document.querySelectorAll(".doa");
+  
+    for (let i = 0; i < item6.length; i++) {
+
+    listItem6.addEventListener('mouseenter', function (e) {
+        item6[i].classList.add('green');
+    });
+    listItem6.addEventListener('mouseleave', function () {
+        item6[i].classList.remove('green');
+    })
+    
+    };
+  
+  	var listItem7 = document.querySelector('.GummySmile');
+  	var item7 = document.querySelectorAll(".gummy-smile");
+  
+    for (let i = 0; i < item7.length; i++) {
+
+    listItem7.addEventListener('mouseenter', function (e) {
+        item7[i].classList.add('green');
+    });
+    listItem7.addEventListener('mouseleave', function () {
+        item7[i].classList.remove('green');
+    })
+    
+    };
+  
+  	var listItem8 = document.querySelector('.LipFlip');
+  	var item8 = document.querySelectorAll(".flip-lip");
+  
+    for (let i = 0; i < item8.length; i++) {
+
+    listItem8.addEventListener('mouseenter', function (e) {
+        item8[i].classList.add('green');
+    });
+    listItem8.addEventListener('mouseleave', function () {
+        item8[i].classList.remove('green');
+    })
+    
+    };
+  
+  	var listItem9 = document.querySelector('.MentalisMuscle');
+  	var item9 = document.querySelectorAll(".mentalis-muscle");
+  
+    for (let i = 0; i < item9.length; i++) {
+
+    listItem9.addEventListener('mouseenter', function (e) {
+        item9[i].classList.add('green');
+    });
+    listItem9.addEventListener('mouseleave', function () {
+        item9[i].classList.remove('green');
+    })
+    
+    };
+  
+  	var listItem10 = document.querySelector('.CosmeticMasseter');
+  	var item10 = document.querySelectorAll(".cosmetic-masseter");
+  
+    for (let i = 0; i < item10.length; i++) {
+
+    listItem10.addEventListener('mouseenter', function (e) {
+        item10[i].classList.add('green');
+    });
+    listItem10.addEventListener('mouseleave', function () {
+        item10[i].classList.remove('green');
+    })
+    
+    };
+  
+  	var listItem11 = document.querySelector('.stinger-neck');
+  	var item11 = document.querySelectorAll(".neck");
+  
+    for (let i = 0; i < item11.length; i++) {
+
+    listItem11.addEventListener('mouseenter', function (e) {
+        item11[i].classList.add('green');
+    });
+    listItem11.addEventListener('mouseleave', function () {
+        item11[i].classList.remove('green');
+    })
+    
+    }
+
+})
+
+</script>

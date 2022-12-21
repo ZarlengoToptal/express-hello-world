@@ -1,0 +1,67 @@
+<!-- /templates/collection.2022-shop-all.liquid -->
+
+<div id="fade-into-you" style="display:block;">
+  <div id="pageLoadAni" class="loading-wrapper">
+    <div class="loading-bar">
+      <div class="progress-bar"></div>
+    </div>
+  </div>
+</div>
+
+<nav class="breadcrumb plp-breadcrumb" role="navigation" aria-label="breadcrumbs">
+  <a href="{{ routes.root_url }}" title="{{ 'general.breadcrumbs.home_link_title' | t }}">{{ 'general.breadcrumbs.home' | t }}</a>
+  {% if collection.handle %}
+    <span aria-hidden="true">&rsaquo;</span>
+    {% capture url %}{{ routes.collections_url }}/{{ collection.handle }}{% endcapture %}
+    {{ collection.title | link_to: url }}
+  {% endif %}
+  <span aria-hidden="true">&rsaquo;</span>
+  <span>{{ product.title }}</span>
+</nav>
+
+<div class="shop-all-collections">
+    <div class="plpSA-wrapper-header">
+      <div class="plpSA-header">
+        <div><h1>{{ collection.title }}</h1></div>
+        {%- if collection.metafields.custom.collection_tag_line != blank -%}
+          <h2>{{ collection.metafields.custom.collection_tag_line }}</h2>
+        {%- endif -%}
+      </div>
+      <div class="plpSA-navigation-wrapper">
+        {% include 'collection-sub-navigation' %}
+      </div>
+    </div>
+
+    <div class="plpSA-wrapper-collections" style="border-top: 1px solid #000;">
+      {% section 'section-first-collection' %}
+    </div>
+    
+    <div class="plpSA-wrapper-collections">
+      {% section 'section-second-collection' %}
+    </div>
+    
+    <div class="plpSA-wrapper-card">
+      {% section 'section-static-card-collection' %}
+    </div>
+    
+    <div class="plpSA-wrapper-collections" style="border-top:1px solid #000;">
+      {% section 'section-third-collection' %}
+    </div>
+    
+    <div class="plpSA-wrapper-collections">
+      {% section 'section-fourth-collection' %}
+    </div>
+    
+    <div class="plpSA-wrapper-collections">
+      {% section 'section-fifth-collection' %}
+    </div>
+    
+    {% section 'section-sixth-collection' %}
+</div>
+
+<script>
+  window.addEventListener("load", function(){
+    document.querySelector('#fade-into-you').style.display = 'none';
+  });
+</script>
+

@@ -1,0 +1,494 @@
+<!-- /snippets/treatments-cards.liquid -->
+
+<style>
+    .treatments-cards .drawer {
+      display: none;
+    }
+    
+  	.treatments-cards .drawer__overlay {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      z-index: 200;
+      opacity: 0;
+      
+      transition: opacity 0.3s;
+      will-change: opacity;
+      background-color: #000;
+
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;      
+    }
+
+    .treatments-cards .drawer__header {
+      /* Optional */
+      padding: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  
+  .treatments-cards .drawer__title {
+  	width:100%}
+
+    .treatments-cards .drawer__close {
+      /* Optional */
+      margin: 0;
+      padding: 0;
+      border: none;
+      background-color: transparent;
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%0A%3Csvg width='15px' height='16px' viewBox='0 0 15 16' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Cg id='Page-1' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'%3E%3Cg id='2.-Menu' transform='translate(-15.000000, -13.000000)' stroke='%23000000'%3E%3Cg id='Group' transform='translate(15.000000, 13.521000)'%3E%3Cpath d='M0,0.479000129 L15,14.2971819' id='Path-3'%3E%3C/path%3E%3Cpath d='M0,14.7761821 L15,-1.24344979e-14' id='Path-3'%3E%3C/path%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      width: 15px;
+      height: 15px;
+      flex-shrink: 0;
+      margin-left: 1rem;
+      position:absolute;
+	  top:15px;
+	  right:15px;
+      filter: invert(1);
+    }
+
+    .treatments-cards .drawer__wrapper {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      height: 100vh;
+      width: 100%;
+      max-width: 450px;
+      z-index: 99999;
+      overflow: auto;
+      border:1px solid black;
+      
+      transition: transform 0.3s;
+      will-change: transform;
+      background-color: #fff;
+     
+      display: flex;
+      flex-direction: column; 
+
+      -webkit-transform: translate3d(103%, 0, 0);
+      transform: translate3d(103%, 0, 0); /* extra 3% because of box-shadow */ 
+      
+      -webkit-overflow-scrolling: touch; /* enables momentum scrolling in iOS overflow elements */
+
+      /* Optional */
+      box-shadow: 0 2px 6px #777;
+    }
+
+    .treatments-cards .drawer__content {
+      position: relative;
+      overflow-x: hidden;
+      overflow-y: auto;
+      height: 100%;
+      flex-grow: 1;
+      /* Optional */
+      padding: 15px 30px;
+    }
+
+    .treatments-cards .drawer--left .drawer__wrapper {
+      left: 0;
+      right: auto;
+      -webkit-transform: translate3d(-100%, 0, 0);
+      transform: translate3d(-100%, 0, 0);
+    }
+
+    .treatments-cards .drawer.is-active {
+      display: block;
+    }
+
+    .treatments-cards .drawer.is-visible .drawer__wrapper {
+      -webkit-transform: translate3d(0, 0, 0);
+      transform: translate3d(0, 0, 0);
+    }
+
+    .treatments-cards .drawer.is-visible .drawer__overlay {
+      opacity:1;
+	  background: rgba(255, 255, 255, 0.1); 
+      backdrop-filter: blur(5px); 
+    }
+  
+  @media screen and (max-width: 768px) {
+    .treatments-cards .drawer__content {
+      padding:15px 20px;
+   
+    }}
+      
+    @media screen and (max-width: 500px) {
+   .treatments-cards .drawer__wrapper {
+padding:0;
+      max-width:400px;
+   
+    }}
+      
+  </style>
+
+{%- unless section.blocks.size == 0 -%}
+
+    {%- for block in section.blocks -%}
+
+        {%- assign videofile = block.settings.videofile -%}
+        {%- assign thumbnail = block.settings.thumbnail -%}
+        {%- assign title = block.settings.title -%}
+        {%- assign price = block.settings.price -%}
+        {%- assign facial = block.settings.facial -%}
+        {%- assign description = block.settings.description -%}
+        {%- assign quickview_link = block.settings.quickview_link -%}
+        {%- assign booknow_link = block.settings.booknow_link -%}
+        {%- assign popup_description = block.settings.popup_description -%}
+        {%- assign header_price = block.settings.header_price -%}
+        {%- assign popup_duration = block.settings.popup_duration -%}
+        {%- assign popup_whatwetreat = block.settings.popup_whatwetreat -%}
+        {%- assign popup_technology = block.settings.popup_technology -%}
+        {%- assign popup_benefits = block.settings.popup_benefits -%}
+        {%- assign popup_learnmore_link = block.settings.popup_learnmore_link -%}
+
+        {%- assign popup_subheader1 = block.settings.popup_subheader1 -%}
+        {%- assign popup_description1 = block.settings.popup_description1 -%}
+        {%- assign popup_subheader2 = block.settings.popup_subheader2 -%}
+        {%- assign popup_description2 = block.settings.popup_description2 -%}
+        {%- assign popup_subheader3 = block.settings.popup_subheader3 -%}
+        {%- assign popup_description3 = block.settings.popup_description3 -%}
+        {%- assign popup_subheader4 = block.settings.popup_subheader4 -%}
+        {%- assign popup_description4 = block.settings.popup_description4 -%}
+        {%- assign popup_subheader5 = block.settings.popup_subheader5 -%}
+        {%- assign popup_description5 = block.settings.popup_description5 -%}
+        {%- assign popup_subheader6 = block.settings.popup_subheader6 -%}
+        {%- assign popup_description6 = block.settings.popup_description6 -%}
+        {%- assign popup_subheader7 = block.settings.popup_subheader7 -%}
+        {%- assign popup_description7 = block.settings.popup_description7 -%}
+        {%- assign popup_subheader8 = block.settings.popup_subheader8 -%}
+        {%- assign popup_description8 = block.settings.popup_description8 -%}
+        {%- assign popup_fineprint = block.settings.popup_fineprint -%}
+
+
+        <div class="treatments-cards {{title}}" style="position:relative">
+
+
+            <div class="treatments-cards-left">
+                {%- unless videofile == blank -%}
+              <a role="button" href="{{ popup_learnmore_link }}">
+                <div class="video-autoplay-wrapper">
+                  <video data-video-autoplay autoplay loop muted playsinline width="100%">
+                    <source src="{{ videofile }}" type="video/mp4" id="{{ section.id }}">
+                  </video>
+                </div>
+                {%- endunless -%}
+                {%- unless thumbnail == blank -%}
+                    {% if block.settings.thumbnail %}
+                        {%- assign thumbnail = block.settings.thumbnail | img_url: 'large' -%}
+                        <img class="lazyload" alt="{{ block.settings.thumbnail.alt | default: section.settings.link_text }}" src="{{ block.settings.thumbnail | img_url: 'large' }}" data-src="{{ thumbnail }}" data-aspectratio="{{ section.settings.thumbnail.aspect_ratio }}" data-sizes="auto" style="width:100%"/>
+                        <noscript>
+                            <img src="{{ section.settings.thumbnail | img_url: 'large' }}" alt="{{ section.settings.thumbnail.alt | default: section.settings.link_text }}" class="image--flex"/>
+                        </noscript>
+                    {% endif %}
+                {%- endunless -%}
+                </a>
+          	</div>
+
+            <div class="treatments-cards-right">
+                <div class="treatments__title__new title--secondary--new">
+                    <div class="treatments__price__new title mono">{{ facial }}</div>
+                    {%- unless title == blank -%}
+                  <a role="button" href="{{ popup_learnmore_link }}" style="text-decoration:none;">  <h3>{{ title }}</h3></a>
+                        {%- unless price == blank -%}
+                            <div class="treatments__price__new title mono">{{ price }}</div>
+                        {%- endunless -%}
+                    {%- endunless -%}
+                </div>
+
+
+                <div class="treatments-cards-body">
+                  {%- unless description == blank -%}
+                  <div class="treatments__description">{{ description }}</div>
+                  {%- endunless -%}
+                </div>
+
+                <div class="treatments-buttons">
+
+                    {%- unless quickview_link == blank -%}
+
+                        <a role="button" class="treatments__quickview__btn" data-drawer-trigger aria-controls="drawer-name-{{ title }}" aria-expanded="false" href="{{ title }}">
+                            <div>Details</div>
+                        </a>
+
+
+                        <section class="drawer drawer--left" data-drawer-target id="drawer-name-{{ title }}">
+                            <div class="drawer__overlay" data-drawer-close tabindex="-1"></div>
+                            <div class="drawer__wrapper">
+                                <div class="drawer__header">
+                                    <div class="drawer__title">
+                                        <div class="popup-image-wrapper">
+                                            <div class="popup-title">
+                                                <div class="popup-facial">{{ facial }}</div>
+                                                {{ title }}
+                                                <div class="popup-facial">{{ header_price }}</div>
+                                            </div>
+                                            {% if block.settings.treatmentphoto %}
+                                                {%- assign treatmentphoto = block.settings.treatmentphoto | img_url: 'large' -%}
+                                                <img class="lazyload" alt="{{ block.settings.treatmentphoto.alt | default: section.settings.link_text }}" src="{{ block.settings.treatmentphoto | img_url: 'large' }}" data-src="{{ treatmentphoto }}" data-aspectratio="{{ section.settings.treatmentphoto.aspect_ratio }}" data-sizes="auto" style="width:100%"/>
+                                                <noscript>
+                                                    <img src="{{ section.settings.treatmentphoto | img_url: 'large' }}" alt="{{ section.settings.treatmentphoto.alt | default: section.settings.link_text }}" class="image--flex"/>
+                                                </noscript>
+                                            {% endif %}
+
+
+                                            <button aria-label="Close Drawer" class="drawer__close" data-drawer-close></button>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="drawer__inner">
+
+                                    <div class="popup_description">{{ popup_description }}</div>
+                                  <div class="popup_subheader" style="padding-bottom:8px;"><i class="far fa-clock"></i> {{ popup_duration }}</div>
+                                    <div class="popup_subheader">{{ popup_subheader1 }}</div>
+                                    <div class="popup_whatwetreat">{{ popup_description1 }}</div>
+                                    <div class="popup_subheader">{{ popup_subheader2 }}</div>
+                                    <div class="popup_whatwetreat">{{ popup_description2 }}</div>
+                                    <div class="popup_subheader">{{ popup_subheader3 }}</div>
+                                    <div class="popup_whatwetreat">{{ popup_description3 }}</div>
+                                    <div class="popup_subheader">{{ popup_subheader4 }}</div>
+                                    <div class="popup_whatwetreat">{{ popup_description4 }}</div>
+                                    <div class="popup_subheader">{{ popup_subheader5 }}</div>
+                                    <div class="popup_whatwetreat">{{ popup_description5 }}</div>
+                                    <div class="popup_subheader">{{ popup_subheader6 }}</div>
+                                    <div class="popup_whatwetreat">{{ popup_description6 }}</div>
+                                    <div class="popup_subheader">{{ popup_subheader7 }}</div>
+                                    <div class="popup_whatwetreat">{{ popup_description7 }}</div>
+                                    <div class="popup_subheader">{{ popup_subheader8 }}</div>
+                                    <div class="popup_whatwetreat">{{ popup_description8 }}</div>
+
+                                    <div class="popup_technology">{{ popup_fineprint }}</div>
+
+
+                                    <div class="popup_buttons">
+                                        <a href="{{ popup_learnmore_link }}">
+                                            <div class="popup_learnmore_link">Learn More</div>
+                                        </a>
+                                        <a href="{{ booknow_link }}">
+                                            <div class="popup_booknow_link">Book Now</div>
+                                        </a>
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+                        </section>
+                    {%- endunless -%}
+
+                    {%- unless booknow_link == blank -%}
+                        <a role="button" class="treatments__booknow__btn" href="{{ booknow_link }}">
+                            <div>Book Now</div>
+                        </a>
+                    {%- endunless -%}
+                </div>
+            </div>
+        </div>
+
+    {%- endfor -%}
+
+{%- endunless -%}
+
+
+<script>
+
+    /*!
+    * Based on articles on
+    * https://gomakethings.com
+    */
+
+    var drawer = function () {
+
+      /**
+      * Element.closest() polyfill
+      * https://developer.mozilla.org/en-US/docs/Web/API/Element/closest#Polyfill
+      */
+      if (!Element.prototype.closest) {
+        if (!Element.prototype.matches) {
+          Element.prototype.matches = Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector;
+        }
+        Element.prototype.closest = function (s) {
+          var el = this;
+          var ancestor = this;
+          if (!document.documentElement.contains(el)) return null;
+          do {
+            if (ancestor.matches(s)) return ancestor;
+            ancestor = ancestor.parentElement;
+          } while (ancestor !== null);
+          return null;
+        };
+      }
+
+
+      // Trap Focus 
+      // https://hiddedevries.nl/en/blog/2017-01-29-using-javascript-to-trap-focus-in-an-element
+      //
+      function trapFocus(element) {
+        var focusableEls = element.querySelectorAll('a[href]:not([disabled]), button:not([disabled]), textarea:not([disabled]), input[type="text"]:not([disabled]), input[type="radio"]:not([disabled]), input[type="checkbox"]:not([disabled]), select:not([disabled])');
+        var firstFocusableEl = focusableEls[0];  
+        var lastFocusableEl = focusableEls[focusableEls.length - 1];
+        var KEYCODE_TAB = 9;
+
+        element.addEventListener('keydown', function(e) {
+          var isTabPressed = (e.key === 'Tab' || e.keyCode === KEYCODE_TAB);
+
+          if (!isTabPressed) { 
+            return; 
+          }
+
+          if ( e.shiftKey ) /* shift + tab */ {
+            if (document.activeElement === firstFocusableEl) {
+              lastFocusableEl.focus();
+                e.preventDefault();
+              }
+            } else /* tab */ {
+            if (document.activeElement === lastFocusableEl) {
+              firstFocusableEl.focus();
+                e.preventDefault();
+              }
+            }
+        });
+      }       
+
+
+      //
+      // Settings
+      //
+      var settings = {
+        speedOpen: 50,
+        speedClose: 350,
+        activeClass: 'is-active',
+        visibleClass: 'is-visible',
+        selectorTarget: '[data-drawer-target]',
+        selectorTrigger: '[data-drawer-trigger]',
+        selectorClose: '[data-drawer-close]',
+
+      };
+
+
+      //
+      // Methods
+      //
+
+      // Toggle accessibility
+      var toggleAccessibility = function (event) {
+        if (event.getAttribute('aria-expanded') === 'true') {
+          event.setAttribute('aria-expanded', false);
+        } else {
+          event.setAttribute('aria-expanded', true);
+        }   
+      };
+
+      // Open Drawer
+      var openDrawer = function (trigger) {
+
+        // Find target
+        var target = document.getElementById(trigger.getAttribute('aria-controls'));
+
+        // Make it active
+        target.classList.add(settings.activeClass);
+
+        // Make body overflow hidden so it's not scrollable
+        document.documentElement.style.overflow = 'hidden';
+
+        // Toggle accessibility
+        toggleAccessibility(trigger);
+
+        // Make it visible
+        setTimeout(function () {
+          target.classList.add(settings.visibleClass);
+          trapFocus(target);
+        }, settings.speedOpen); 
+
+      };
+
+      // Close Drawer
+      var closeDrawer = function (event) {
+
+        // Find target
+        var closestParent = event.closest(settings.selectorTarget),
+          childrenTrigger = document.querySelector('[aria-controls="' + closestParent.id + '"');
+
+        // Make it not visible
+        closestParent.classList.remove(settings.visibleClass);
+
+        // Remove body overflow hidden
+        document.documentElement.style.overflow = '';
+
+        // Toggle accessibility
+        toggleAccessibility(childrenTrigger);
+
+        // Make it not active
+        setTimeout(function () {
+          closestParent.classList.remove(settings.activeClass);
+        }, settings.speedClose);             
+
+      };
+
+      // Click Handler
+      var clickHandler = function (event) {
+
+        // Find elements
+        var toggle = event.target,
+          open = toggle.closest(settings.selectorTrigger),
+          close = toggle.closest(settings.selectorClose);
+
+        // Open drawer when the open button is clicked
+        if (open) {
+          openDrawer(open);
+        }
+
+        // Close drawer when the close button (or overlay area) is clicked
+        if (close) {
+          closeDrawer(close);
+        }
+
+        // Prevent default link behavior
+        if (open || close) {
+          event.preventDefault();
+        }
+
+      };
+
+      // Keydown Handler, handle Escape button
+      var keydownHandler = function (event) {
+
+        if (event.key === 'Escape' || event.keyCode === 27) {
+
+          // Find all possible drawers
+          var drawers = document.querySelectorAll(settings.selectorTarget),
+            i;
+
+          // Find active drawers and close them when escape is clicked
+          for (i = 0; i < drawers.length; ++i) {
+            if (drawers[i].classList.contains(settings.activeClass)) {
+              closeDrawer(drawers[i]);
+            }
+          }
+
+        }
+
+      };
+
+
+      //
+      // Inits & Event Listeners
+      //
+      document.addEventListener('click', clickHandler, false);
+      document.addEventListener('keydown', keydownHandler, false);
+
+
+    };
+
+    drawer();
+
+  </script>
